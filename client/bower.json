@@ -1,0 +1,22 @@
+{
+  "name": "client",
+  "homepage": "https://github.com/Courageous-Climbers/GaussHyrax.git",
+  "authors": [
+    "Karun Siddana <ksiddana@gmail.com>"
+  ],
+  "description": "Manage your relationships",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-ui-router": "~0.2.15"
+  }
+}
