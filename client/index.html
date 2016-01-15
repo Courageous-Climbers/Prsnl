@@ -1,8 +1,22 @@
-<html>
+<html ng-app="gaussHyrax">
 <head>
   <title></title>
 </head>
 <body>
   <h1>Manage the people in your life </h1>
+  <div class="container">
+  <div ng-include="'navbar/nav.html'"></div>
+  <div ng-include="'tasksView/tasks.html'"></div>
+
+  <div ng-view></div>
+</div>
+
+
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="login/login.js"></script>
+  <script src="app.js"></script>
 </body>
+
 </html>
