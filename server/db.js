@@ -53,7 +53,7 @@ db.once('open', function() {
         return data;
       }
     });
-  }
+  };
 
   exports.getFamily = function  (userName) {
     return Family.find({userName:userName},function(err,data){
@@ -63,7 +63,7 @@ db.once('open', function() {
         return data;
       }
     });
-  }
+  };
 
   exports.saveTask = function  (taskObj) {
 
@@ -74,20 +74,6 @@ db.once('open', function() {
       // console.log('promised save', user);
       return task;
     });
-  }
+  };
 
 });  // end of db.once
-
-
-
-
-
-
-
-
-
-
-
-
-
-

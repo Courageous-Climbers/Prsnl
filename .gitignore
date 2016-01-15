@@ -1,0 +1,3 @@
+# Files that we need to ignore
+node_modules/
+bower_components/
