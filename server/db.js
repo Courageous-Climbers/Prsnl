@@ -7,12 +7,10 @@ var exports = module.exports;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 
-console.log("running db")
-
 db.once('open', function() {
-console.log("here is db open", db);
+  console.log("db open");
 
-// schemas needed: family, user, task
+  // schemas needed: family, user, task
   var FamilySchema = mongoose.Schema({
     firstName: String,
     lastName: String,
@@ -71,10 +69,10 @@ console.log("here is db open", db);
 
     var task = new Task(taskObj);
 
-    return task.save(function(err,user){
+    return task.save(function(err,task){
       if (err) return console.error(err);
       // console.log('promised save', user);
-      return user;
+      return task;
     });
   }
 
