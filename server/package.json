@@ -18,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/Courageous-Climbers/GaussHyrax/issues"
   },
-  "homepage": "https://github.com/Courageous-Climbers/GaussHyrax#readme"
+  "homepage": "https://github.com/Courageous-Climbers/GaussHyrax#readme",
+  "devDependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1"
+  },
+  "dependencies": {
+    "mongoose": "^4.3.5"
+  }
 }
