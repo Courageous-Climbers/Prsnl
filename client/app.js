@@ -40,7 +40,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     //   controller : 'actionControlller'
     // })
 
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/login');
 
 
 });
