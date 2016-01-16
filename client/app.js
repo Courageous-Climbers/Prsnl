@@ -1,6 +1,6 @@
-var app = angular.module('gaussHyrax', ['ui.router', 'gaussHyrax.login']);
+angular.module('gaussHyrax', ['ui.router', 'gaussHyrax.login'])
 
-app.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 
 
   $stateProvider

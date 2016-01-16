@@ -76,4 +76,22 @@ db.once('open', function() {
     });
   };
 
+  exports.verifyUser = function (userObj) {
+    console.log('verifying user in the db',userObj);
+    return User.find(userObj).exec();
+  };
+
+  exports.saveUser = function (userObj) {
+    var user = new User(userObj); 
+    console.log(userObj)
+
+    return user.save(function (err, user){
+      if (err){
+        return console.error(err);
+      } else {
+        return user;
+      }
+    });
+  };
+
 });  // end of db.once

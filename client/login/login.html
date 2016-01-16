@@ -2,6 +2,9 @@
   <h1>Manage the people in your life </h1>
   <a ui-sref="dashboard">Login</a>
   <form>
-    <input type="text" name="username" ng-model required>
+    <input type="text" ng-model="user.userName">
+    <input type="text" ng-model="user.password">
+    <input type="submit" ng-click="saveUser()" value="Save"/>
+    <input type="submit" ng-click="verifyUser()" value="VerifyUser"/>
   </form>
 </div>
