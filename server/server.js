@@ -36,15 +36,12 @@ app.get('/api/user', function (req, res, next){
   db.verifyUser({
     userName: req.param('userName'),  //GET request has parameters from userObj in login.js
     password: req.param('password')
-  }).then(function (data){
+  }).then(function (data,err){
     console.log("varify", data)
     console.log('>>>>>>>>',data);
     
-    if(data.length){
-      res.status(200).send(data);
-    }else{
-      res.status(200).send("not authorized");
-    }
+    res.status(200).send(data);
+    
 
   })
 })

@@ -1,4 +1,4 @@
-angular.module('LoginServices', ['gaussHyrax.login'])
+angular.module('LoginServices', [])
 
 .factory('UserFactory', ['$http', function($http) {
   var userFactory = {}
@@ -16,16 +16,18 @@ angular.module('LoginServices', ['gaussHyrax.login'])
   }
 
   userFactory.verifyUser = function(userObj) {
-    console.log(userObj)
-      return $http({
-        method : 'GET',
-        url : '/api/user',
-        params : userObj  // {userName:"Nick",password:"123"}
-      })
-      .then(function(res) {
-        console.log("Verifying the user: ", res);
-      })
-    }
+
+    return $http({
+      method : 'GET',
+      url : '/api/user',
+      params : userObj  // {userName:"Nick",password:"123"}
+    });
+    // .then(function(res){
+    //   console.log(res);
+    //   return res;
+    // })
+
+  }
 // May need to return an object with the function
 
 return userFactory; 
