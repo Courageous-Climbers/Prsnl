@@ -41,7 +41,7 @@ app.post('/api/user', function (req, res, next){
 
 //add new family member to user
 app.post('/api/family/:userId',function(req,res,next){
-  db.addFamilyMember(req.params.userId,req.body).then(function(){
+  db.addFamilyMember(req.params.userd,req.body).then(function(){
     res.sendStatus(201);
   });
 })

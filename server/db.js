@@ -46,12 +46,12 @@ db.once('open', function() {
   });
 
   //store the possible actions 
+  //will be its own independent doc/collection
   var TaskSchema = mongoose.Schema({
     // _id will be task_id
     points: Number,
     action: String
   });
-
 
 // instantiate the models
 
@@ -59,28 +59,64 @@ db.once('open', function() {
   var Task = mongoose.model('Task',TaskSchema);
   var Family = mongoose.model('Family',FamilySchema);
 
-  exports.getTasksFor = function  (userId) {
-    return Task.find({user_id:userId},function(err,data){
-      if(err){
-        console.log(err);
-      }else{
-        return data;
-      }
-    });
-  };
+//insert data for testing purposes
+// 2 users
+// each have 5 family
+// each family has 1 - 10 tasks
+  db.collections['users'].remove();
+  var user1 = {
+    userName: 'Gandalf',
+    password: 'DeezNuts',
+    family:[{
+      firstName:"frodo",
+      lastName:"baggins",
+      nextContactDate: new Date(),
+      contactFrequency: 14,
+      history:[
+        {
+          action:"call",
+          notes:"this guy is a nn",
+          points:10,
+          date: new Date()
+        },
+        {
+          action:"email",
+          notes:"no, wait, I am a nn",
+          points:5,
+          date: new Date()
+        },
+        {
+          action:"email",
+          notes:"love emailing this guy",
+          points:5,
+          date: new Date()
+        }
+      ]
 
-  exports.createNewTask = function(userName,familyName,taskType){
-    var task = new Task({user_id: '', family_id:'' });
-    
-    return task.save(function (err, task){
-      if (err){
-        return console.error(err);
-      } else {
-        return task;
-      }
-    });
-
+    },{
+      firstName:"bilbo",
+      lastName:"baggins",
+      nextContactDate: new Date(),
+      contactFrequency: 7,
+      history:[
+        {
+          action:"text",
+          notes:"I love ice cream",
+          points:2,
+          date: new Date()
+        },
+        {
+          action:"call",
+          notes:"he does a great impression of Pee Wee Herman",
+          points:5,
+          date: new Date()
+        }
+      ]
+    }
+    ]
   };
+  // See http://mongoosejs.com/docs/models.html for details on the `create` method
+  User.create([user1]);
 
   exports.getAllFamily = function  (userId) {
     return User.findOne({_id:userId},'family',function(err,user){
