@@ -19,8 +19,8 @@ angular.module('LoginServices', [])
 
     return $http({
       method : 'GET',
-      url : '/api/user',
-      params : userObj  // {userName:"Nick",password:"123"}
+      url : '/api/user/' + userObj.userName + '/' + userObj.password,
+      //params : userObj  // {userName:"Nick",password:"123"}
     });
     // .then(function(res){
     //   console.log(res);
