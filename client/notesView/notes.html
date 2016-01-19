@@ -14,10 +14,15 @@
     <form>
       <input type="text" ng-model="singleNote">
       <input type="submit" ng-click="saveNote(singleNote)" value="Save"/>
-      <br>
-      <br>
       <!-- <input type="submit" ng-click="showAllNotes" value="Show Notes"/> -->
     </form>
+
+    <button>
+    <!-- THIS IS HARD CODED UNTIL WE SET UP ROUTES!!! -->
+      <a href="http://localhost:3000/actionView/action.html">Back to Actions</a>
+    </button>
+    <br>
+    <br>
     <!-- {{note}} -->
     <li ng-repeat="note in notesArray">
         <span>{{note}}</span>
