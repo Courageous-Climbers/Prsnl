@@ -1,21 +1,15 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js'></script>
 <script type="text/javascript" src="familyServices.js"></script>
 <script type="text/javascript" src="familyController.js"></script>
-  <link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="familyView.css">
 
-
-<div ng-app="gaussHyrax.family">
 <h1>Family Members Page</h1>
-<div class="" ng-controller="familyController">
-
-  <div class="">
-
-      <div ng-repeat="member in familyData">
-        <div class="eachFamilyMember">
+<div ng-app="gaussHyrax.family">
+  <div ng-controller="familyController">
+    <button class="addFamilyMemberButton"> + </button>
+      <div class="eachFamilyMember" ng-repeat="member in familyData">
           <li style="color:blue"> {{ member.firstName }} {{ member.lastName }} </li>
           <li>{{ member.nextContactDate }} </li>
-        </div>
       </div>
-
   </div>
 </div>
