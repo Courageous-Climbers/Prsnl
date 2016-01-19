@@ -1,0 +1,19 @@
+ul.actionwrapper{
+  color:red;
+  font-size: 23px;
+}
+
+table, th, td {
+/*   border: 1px solid black;
+*/}
+
+th {
+  text-align: left;
+  width:200px;
+  font-size: 23px;
+  color:red;
+}
+
+td {
+  font-size: 18px;
+}
