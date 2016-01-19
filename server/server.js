@@ -11,63 +11,86 @@ app.use(morgan('combined'))
 app.use(express.static(__dirname + '/../client'));  //serve files in client
 app.use(bodyParser.json())  // parse application/json
 
-//console.log("this is db: ", db);
-
-// Find a user
-app.get('/api/user/:userName/:password', function (req, res, next){
-
-  db.verifyUser(req.params,function(err,data){
+//function to configure the standard response handler
+var configHandler = function(successCode,failCode,res){
+  return function(err,data){
     if(err){
-      res.status(404).send(err);
+      res.status(successCode).send(err);
     }else{
-      res.status(201).send(data);
+      res.status(failCode).send(data);
     }
-  });
-})
+  }
+}
 
-// Save a user to DB 
+//////////////////////////////////////////
+//CREATE
+//////////////////////////////////////////
+
+//save a user to DB 
 app.post('/api/user', function (req, res, next){
-
-  db.addUser(req.body,function (err,data){
-    if(err){
-      res.status(404).send(err);
-    }else{
-      res.status(201).send(data);
-    }
-  });
+  db.addUser(req.body, configHandler(201,400,res));
 })
 
 //add new family member to user
-app.post('/api/family/:userId',function (req,res,next){
-  db.addFamilyMember(req.params.userId,req.body, function(err,data){
-    if(err){
-      res.status(404).send(err);
-    }else{
-      res.status(201).send(data);
-    }
-  });
+.post('/api/family/:userId',function (req,res,next){
+  db.addFamilyMember(req.params, req.body, configHandler(201,400,res));
 })
 
 //add new history to user's family member
-app.post('/api/history/:userId/:familyId',function(req,res,next){
-  db.addHistory(req.params.userId, req.params.familyId, req.body, function(err,data){
-    if(err){
-      res.status(404).send(err);
-    }else{
-      res.status(201).send(data);
-    }
-  });
+.post('/api/history/:userId/:familyId',function(req,res,next){
+  db.addHistory(req.params, req.body, configHandler(201,400,res));
+})
+
+
+//////////////////////////////////////////
+//READ
+//////////////////////////////////////////
+
+// find a user
+.get('/api/user/:userName/:password', function (req, res, next){
+  db.verifyUser(req.params, configHandler(200,404,res));
 })
 
 //get all family info for a user
-app.get('/api/family/:userId',function(req,res,next){
-  db.getAllFamily(req.params.userId, function(err,data){
-    if(err){
-      res.status(404).send(err);
-    }else{
-      res.status(200).send(data);
-    }
-  });
-});
+.get('/api/family/:userId',function(req,res,next){
+  db.getAllFamily(req.params, configHandler(200,400,res));
+})
+
+//get all actions
+.get('/api/actions',function(req,res,next){
+  db.getAllActions(configHandler(200,400,res));
+})
+
+
+//////////////////////////////////////////
+//UPDATE
+//////////////////////////////////////////
+
+//update family member
+.put('/api/family/:userId/:familyId',function (req,res,next){
+  db.updateFamilyMember(req.params, req.body, configHandler(201,400,res));
+})
+
+//update history member
+.put('/api/history/:userId/:familyId/:historyId',function (req,res,next){
+  db.updateHistory(req.params, req.body, configHandler(201,400,res));
+})
+
+
+//////////////////////////////////////////
+//DELETE
+//////////////////////////////////////////
+
+//delete family member
+.delete('/api/family/:userId/:familyId',function (req,res,next){
+  db.deleteFamilyMember(req.params, configHandler(201,400,res));
+})
+
+//delete history
+.delete('/api/history/:userId/:familyId/:historyId',function (req,res,next){
+  db.deleteHistory(req.params, configHandler(201,400,res));
+})
+
 
 app.listen(port);
+console.log('server listening on port ' + port + '...')
