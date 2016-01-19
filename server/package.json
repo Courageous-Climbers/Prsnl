@@ -25,6 +25,7 @@
     "morgan": "^1.6.1"
   },
   "dependencies": {
-    "mongoose": "^4.3.5"
+    "mongoose": "^4.3.5",
+    "underscore": "^1.8.3"
   }
 }
