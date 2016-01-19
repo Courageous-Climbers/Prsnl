@@ -16,10 +16,16 @@ body{
 
 }
 
-.tasksWrapper{
+.familyWrapper{
   border: 1px solid;
   width: 40%;
 
+}
+
+.eachFamilyMember {
+  position: absolute;
+  border: 1px solid black;
+  color: red;
 }
 
 .hyraxContent {

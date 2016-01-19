@@ -1,22 +1,30 @@
-angular.module('familyServices', [])
+angular.module('FamilyServices', [])
 
-.factory('FamilyFactor', ['$http', function($http) {
+.factory('FamilyFactory', ['$http', function($http) {
 
   var familyFactory = {}
 
-  familyFactory.getAllFamilyMembers = function(userObj) {
+  console.log('factory loaded');
+
+  familyFactory.getUserID = function() {
+    return $http({
+      method : 'GET',
+      url : '/api/user/Gandalf/DeezNuts'
+    })
+  }
+
+  familyFactory.getAllFamilyMembers = function(userID) {
     
     return $http({
       method : 'GET',
-      url : '/api/family/569d8421b95c59b0339c5617'
+      url : '/api/family/' + userID
     })
     .then(function(res) {
-      console.log("getting the Family Members from the User ID", res);
+      console.log("Getting the Family Members from the User ID", res);
+      return res;
     })
   }
 
   return familyFactory;
-
-
 
 }])

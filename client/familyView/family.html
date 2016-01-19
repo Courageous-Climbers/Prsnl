@@ -1,5 +1,14 @@
-<div class="familyWrapper">
-  <div ng-repeat= "member in familyData">
-    <p> {{ member.firstName }} </p>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js'></script>
+<script type="text/javascript" src="familyServices.js"></script>
+<script type="text/javascript" src="familyController.js"></script>
+
+
+<div class="" ng-app="gaussHyrax.family">
+  <div ng-controller="familyController">
+    <div ng-repeat= "member in familyData">
+      <div class="eachFamilyMember">
+        <li>{{ member.firstName }} {{ member.lastName }} </li> 
+      </div>
+    </div>
   </div>
 </div>
