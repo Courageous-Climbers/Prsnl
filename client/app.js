@@ -1,4 +1,4 @@
-angular.module('gaussHyrax', ['ui.router', 'gaussHyrax.login','gaussHyrax.family'])
+angular.module('gaussHyrax', ['ui.router', 'gaussHyrax.login'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -13,12 +13,6 @@ angular.module('gaussHyrax', ['ui.router', 'gaussHyrax.login','gaussHyrax.family
       url : '/login',
       templateUrl : '/login/login.html',
       controller : 'loginController'
-    })
-
-    .state('family', {
-      url : '/family',
-      templateUrl : '/familyView/family.html',
-      controller : 'familyController'
     })
 
 
