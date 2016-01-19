@@ -14,8 +14,6 @@ angular.module('gaussHyrax', ['ui.router', 'gaussHyrax.login'])
       templateUrl : '/login/login.html',
       controller : 'loginController'
     })
-
-
     //
     //
     // .state('tasks', {
