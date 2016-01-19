@@ -6,19 +6,13 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
   var userID;
   var familyData;
 
-   FamilyFactory.getUserID()
+  $scope.fs = FamilyFactory.getUserID()
     .then(function(userID){
-    
-    userID = userID.data;
-    console.log("userID:", userID);
-
-    FamilyFactory.getAllFamilyMembers(userID)
-    .then(function(familyMembers) {
-      $scope.familyData = familyMembers.data;
-      console.log("Controller Response:", familyData);
-    })
-
-  });
+      FamilyFactory.getAllFamilyMembers(userID.data)
+      .then(function(familyMember) {
+        $scope.familyData = familyMember.data;
+      });
+    });
 
 
 

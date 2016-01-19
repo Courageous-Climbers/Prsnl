@@ -18,7 +18,7 @@ angular.module('gaussHyrax', ['ui.router', 'gaussHyrax.login','gaussHyrax.family
     .state('family', {
       url : '/family',
       templateUrl : '/familyView/family.html',
-      controller : 'loginController'
+      controller : 'familyController'
     })
 
 
