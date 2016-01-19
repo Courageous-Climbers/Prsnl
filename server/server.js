@@ -15,9 +15,9 @@ app.use(bodyParser.json())  // parse application/json
 var configHandler = function(successCode,failCode,res){
   return function(err,data){
     if(err){
-      res.status(successCode).send(err);
+      res.status(failCode).send(err);
     }else{
-      res.status(failCode).send(data);
+      res.status(successCode).send(data);
     }
   }
 }
