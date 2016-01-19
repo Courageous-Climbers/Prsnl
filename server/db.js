@@ -10,7 +10,7 @@ var exports = module.exports;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 db.once('open', function() {
-  console.log("db open");
+  console.log("db connected!");
 
   // information about a family member
   // each family member has a contact frequency (user specified)
@@ -47,8 +47,7 @@ db.once('open', function() {
 
   //store the possible actions 
   //will be its own independent doc/collection
-  var TaskSchema = mongoose.Schema({
-    // _id will be task_id
+  var ActionSchema = mongoose.Schema({
     points: Number,
     action: String
   });
@@ -56,11 +55,11 @@ db.once('open', function() {
 // instantiate the models
 
   var User = mongoose.model('User',UserSchema);
-  var Task = mongoose.model('Task',TaskSchema);
+  var Action = mongoose.model('Action',ActionSchema);
 
   //task table
-  db.collections['tasks'].remove();
-  var tasks = [
+  db.collections['actions'].remove();
+  var actions = [
     {
       action:"make call",
       points:8
@@ -87,7 +86,7 @@ db.once('open', function() {
       points:10
     }
   ]
-  Task.create(tasks);
+  Action.create(actions);
 
   //insert default data for testing purposes
   // 2 users
@@ -145,64 +144,149 @@ db.once('open', function() {
     }
     ]
   };
-  // See http://mongoosejs.com/docs/models.html for details on the `create` method
+  
   User.create([user1]);
 
-  exports.getAllFamily = function  (userId,callback) {
-    return User.findOne({_id:userId},'family',function(err,user){
-      if(!user){
-        return callback('user _id ' + userId + ' not found',null);
-      }else{
-        return callback(err,user.family);
-      }
-    });
-  };
 
-  exports.addFamilyMember = function(userId,familyObj,callback){
-    return User.findOne({_id:userId},function(err,user){
-      if(err){
-        return callback(err,null);
-      }else if(!user){
-        return callback('user _id ' + userId + ' not found',null);
-      }
-
-      //if we get here, we found the user without error.  So update the family
-      user.family.push(familyObj);
-
+  //handles the different possible 'action' values
+  var performActionOnUser = {
+    "get family": function(user, callback){
+      return callback(null,user.family);
+    },
+    "get id": function(user, callback){
+      return callback(null,user['_id']);
+    },
+    "add family": function(user, callback, properties){
+      user.family.push(properties);
       user.save(function(err,user){
         return callback(err,user.family[user.family.length-1]); 
       });
-    
-    });
+    },
+    "update family": function(user, callback, properties, familyMember){
+      if(!familyMember){
+        return callback('update family: a family id must be provided',null);
+      }
+      _.extend(familyMember,properties);
+      user.save(function(err,user){
+        return callback(err,familyMember); 
+      });
+    },
+    "add history":function(user, callback, properties, familyMember){
+      if(!familyMember){
+        return callback('add history: a family id must be provided',null);
+      }
+      familyMember.history.push(properties);
+      user.save(function(err,user){
+        return callback(err,familyMember.history[familyMember.history.length-1]); 
+      });
+    },
+    "delete family": function(user, callback, properties, familyMember){
+     if(!familyMember){
+        return callback('add history: a family id must be provided',null);
+      }
+      user.family = _.reject(user.family,function(user){
+        return user === familyMember;
+      });
+      user.save(function(err,user){
+        return callback(err,familyMember); 
+      });
+    },
+    "update history": function(user, callback, properties, familyMember, historyEvent){
+      if(!historyEvent){
+        return callback('update history: a history id must be provided',null);
+      }
+      _.extend(historyEvent,properties);
+      user.save(function(err,user){
+        return callback(err,historyEvent); 
+      });
+    },
+    "delete history": function(user, callback, properties, familyMember, historyEvent){
+      if(!historyEvent){
+        return callback('delete history: a history id must be provided',null);
+      }
+      familyMember.history = _.reject(familyMember.history,function(event){
+        return event === historyEvent;
+      });
+      user.save(function(err,user){
+        return callback(err,historyEvent); 
+      }); 
+    }
   }
 
-  exports.addHistory = function(userId, familyId, histObj, callback){
-    return User.findOne({_id:userId},function(err,user){
+  //function to handle accessing a user document
+  var accessUserById = function(ids,action,properties,callback){
+
+    return User.findOne({_id:ids.userId},'family',function(err,user){
       
+      //check for error and make sure we have a valid user
       if(err){
         return callback(err,null);
       }else if(!user){
-        return callback('user _id ' + userId + ' not found',null);
+        return callback('user _id ' + ids.userId + ' not found',null);
       }
-
-      //we found a user without error, now we need to find the family member
-      var familyMember = _.find(user.family,function(family){
-        return family._id.toString() === familyId;
-      })
       
-      if(!familyMember){
-        return callback('family member _id ' + familyId + ' not found',null);
+      //lookup family id, if provided
+      var familyMember;
+
+      if(ids.familyId){
+        familyMember = _.find(user.family,function(family){
+          return family._id.toString() === ids.familyId;
+        });
+        if(!familyMember){
+          return callback('family member _id ' + ids.familyId + ' not found',null);
+        }
+      }
+      //lookup history id, if provided
+      var historyEvent;
+
+      if(ids.historyId && familyMember){
+        historyEvent = _.find(familyMember.history,function(history){
+          return history._id.toString() === ids.historyId;
+        });
+        if(!historyEvent){
+          return callback('history _id ' + ids.historyId + ' not found',null);
+        }
       }
 
-      //we found a user, and a family member, now need to update
-      familyMember.history.push(histObj);
+      //ok, whew! looked up all the relevant stuff, now do the action
+      performActionOnUser[action](user,callback,properties,familyMember,historyEvent);
 
-      user.save(function(err){
-        return callback(err, familyMember.history[familyMember.history.length-1]); 
-      });
-    
     });
+
   }
+
+//////////////////////////////////////////
+//CREATE
+//////////////////////////////////////////
+
+  exports.addUser = function (userObj,callback) {
+
+    //user validation
+    if(!userObj.password){
+      return callback('password field required',null);
+    }else if(!userObj.userName){
+      return callback('userName field required',null);
+    }
+
+    var user = new User(userObj); 
+
+    user.save(function (err, user){
+      return callback(err,user);
+    });
+  };
+  
+  exports.addFamilyMember = function(idObj,familyObj,callback){
+    return accessUserById(idObj,"add family",familyObj,callback);
+  };
+
+  exports.addHistory = function(idObj, historyObj, callback){
+    return accessUserById(idObj,"add history",historyObj,callback);
+  };
+  
+//////////////////////////////////////////
+//READ
+//////////////////////////////////////////
+
   exports.verifyUser = function (userObj,callback) {
 
     User.findOne(userObj, '_id',function(err,user){
@@ -214,19 +298,38 @@ db.once('open', function() {
     });
   };
 
-  exports.addUser = function (userObj,callback) {
-    var user = new User(userObj); 
-
-    //user validation
-    if(!userObj.password){
-      return callback('password field required',null);
-    }else if(!userObj.userName){
-      return callback('userName field required',null);
-    }
-
-    user.save(function (err, user){
-      return callback(err,user);
-    });
+  exports.getAllFamily = function  (idObj,callback) {
+    return accessUserById(idObj,"get family",{},callback);
   };
+
+  exports.getAllActions = function (callback){
+    Action.find({},callback);
+  }
+
+//////////////////////////////////////////
+//UPDATE
+//////////////////////////////////////////
+
+  exports.updateFamilyMember = function(idObj,familyObj,callback){
+    return accessUserById(idObj,"update family",familyObj,callback);
+  };
+
+  exports.updateHistory = function(idObj,historyObj,callback){
+    return accessUserById(idObj,"update history",historyObj,callback);
+  };
+
+//////////////////////////////////////////
+//DELETE
+//////////////////////////////////////////
+
+  exports.deleteFamilyMember = function(idObj,callback){
+    return accessUserById(idObj,"delete family",{},callback);
+  };
+
+  exports.deleteHistory = function(idObj,callback){
+    return accessUserById(idObj,"delete history",{},callback);
+  };
+
+
 
 });  // end of db.once
