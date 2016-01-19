@@ -1,0 +1,53 @@
+<!-- to be inculded in the main file -->
+<link rel="stylesheet" href="../newFamilyMemberView/member.css" charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../bower_components/angularjs-slider/dist/rzslider.min.css"/>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angularjs-slider/dist/rzslider.min.js"></script>
+
+<script src="newFamilyMemberCtrl.js"></script>
+<script src="newFamilyMemberService.js"></script>
+
+
+<!-- Remember to add "gaussHyraxx.newFamilyMember" to the config file. remove ng controller when routes are created -->
+
+<div class="container" ng-app="gaussHyraxx.newFamilyMember">
+<h1>New Member</h1>
+<div class="members" ng-controller='memberCtrl'>
+  <form class="familyMember" >
+
+    First Name: *</br>
+      <input type="text" name="firstName" ng-model="member.firstName"></br>
+    Last Name: </br>
+      <input type="text" name="lastName" ng-model="member.lastName"></br>
+    <span>Phone: </br>
+      <input type="tel" name="phoneNumber" ng-model="member.phone" ></span></br>
+    <span>Email: </br>
+      <input type="email" name="email" ng-model="member.email" ></span></br>
+    Street Address: </br>
+      <input type="text" name="address" ng-model="member.streetAddress"></br>
+    City: </br>
+      <input type="text" name="city" ng-model="member.city" ></br>
+    State: </br>
+      <input type="text" name="state" ng-model="member.state" ></br>
+    Country: </br>
+      <input type="text" name="country" ng-model="member.country" ></br>
+    Zipcode: </br>
+      <input type="text" name="zipcode" ng-model="member.zipcode" >
+
+
+  <div class="interaction">
+    <span>Contact Frequency: </span>
+    <span>Next Contact Date: </span>
+  </div>
+
+  <div class='slider'>
+    <rzslider
+    rz-slider-model="slider_toggle.value"
+    rz-slider-options="slider_toggle.options"></rzslider>
+  </div>
+
+    <input type="button" value="Save" ng-click="saveMember(member)" >
+
+  </form>
+</div>
+</div>
