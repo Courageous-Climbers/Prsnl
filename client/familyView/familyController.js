@@ -6,8 +6,9 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
   var userID;
   var familyData;
 
-  $scope.fs = FamilyFactory.getUserID()
+  $scope.familyData = FamilyFactory.getUserID()
     .then(function(userID){
+      console.log(userID.data);
       FamilyFactory.getAllFamilyMembers(userID.data)
       .then(function(familyMember) {
         $scope.familyData = familyMember.data;
