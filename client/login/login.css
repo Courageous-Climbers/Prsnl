@@ -1,0 +1,72 @@
+body{
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffaf4b+0,ffaf4b+22,ff920a+100 */
+  background: #ffaf4b; /* Old browsers */
+  background: -moz-radial-gradient(center, ellipse cover,  #ffaf4b 0%, #ffaf4b 22%, #ff920a 100%); /* FF3.6-15 */
+  background: -webkit-radial-gradient(center, ellipse cover,  #ffaf4b 0%,#ffaf4b 22%,#ff920a 100%); /* Chrome10-25,Safari5.1-6 */
+  background: radial-gradient(ellipse at center,  #ffaf4b 0%,#ffaf4b 22%,#ff920a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#ff920a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  color:#3A3A3A;
+}
+
+.loginWrapper {
+    box-shadow: 0px 7px 185px #FFCD8F;
+    border: 1px solid #E29C43;
+    /* background-color: #FFA330; */
+    width: 100%;
+    padding: 8px;
+    top: 22%;
+    position: absolute;
+}
+
+
+.loginWrapper h1{
+  text-align: center;
+  font-family: 'Montez', cursive;
+  font-size: 90px;
+  margin: 0;
+  padding: 0;
+}
+
+.loginWrapper h2{
+  text-align: center;
+  font-family: 'Montez', cursive;
+  font-size: 34px;
+  margin-top:0;
+}
+
+.loginWrapper input {
+  padding: 11px;
+  font-size: 14px;
+  display: block;
+  margin: 7px auto;
+  border: 1px solid #7D7D7D;
+  border-radius: 4px;
+  width: 250px;
+}
+
+.loginWrapper .sign-in{
+    border: none;
+    text-decoration: underline;
+    background-color: transparent;
+    padding: 0;
+    color: #00f;
+}
+
+.loginWrapper .sign-up{
+  color: #fff;
+  background-color: #29D22E;
+}
+
+
+.loginWrapper .sign-up:active{
+  color: #fff;
+  background-color: #39AF2F;
+}
+
+.loginWrapper .sign-up:hover{
+  box-shadow: 2px 2px 2px #3A7535;
+}
+
+.loginWrapper .btn{
+  cursor: pointer;
+}
