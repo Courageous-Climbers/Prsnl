@@ -3,22 +3,42 @@ angular.module('gaussHyrax.login', ['LoginServices'])
 .controller('loginController', ['$scope', '$location','$window','UserFactory', 
   function($scope, $location, $window, UserFactory) {
 
+  $scope.showLoginError = false;
   //login page is loading
   //delete the token if exists
   $window.localStorage.removeItem('com.hyrax');
 
   $scope.saveUser = function() {
-    UserFactory.saveUser($scope.user).then(function(){
+    
+    $scope.showLoginError = false;
+
+    if(!$scope.user || !$scope.user.userName || !$scope.user.password){
+      $scope.showLoginError = true;
+      $scope.errorMessage = "Please provide a username and password."
+      return;
+    }
+
+    UserFactory.saveUser($scope.user).then(function(res){
+      console.log(res);
       $window.localStorage.setItem('com.hyrax',res.data);
       $location.path('/dashboard');
+    },function(err){
+      $scope.showLoginError = true;
+      $scope.errorMessage = "Cannot create. This user already exists."
+      console.log('user create failed',err);
     });
     
   }
 
   $scope.verifyUser = function () {
+    $scope.showLoginError = false;
+    if(!$scope.user || !$scope.user.userName || !$scope.user.password){
+      $scope.showLoginError = true;
+      $scope.errorMessage = "Please provide a username and password."
+      return;
+    }
     UserFactory.verifyUser($scope.user).then(function(res){
-      console.log('here is the response',res);
-      console.log('storing');
+      console.log(res);
       //save user id in local storage
       $window.localStorage.setItem('com.hyrax',res.data);
       
@@ -29,7 +49,9 @@ angular.module('gaussHyrax.login', ['LoginServices'])
       //else no user object was returned, so keep here
 
     },function(err){
-      console.log('!error',err);
+      $scope.showLoginError = true;
+      $scope.errorMessage = "Login failed!"
+      console.log('login failed',err);
     });
   }
 
