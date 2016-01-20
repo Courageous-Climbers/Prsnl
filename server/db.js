@@ -92,7 +92,7 @@ db.once('open', function() {
   // 2 users
   // each have 5 family
   // each family has 1 - 10 tasks
-  db.collections['users'].remove();
+  //db.collections['users'].remove();
   var user1 = {
     userName: 'Gandalf',
     password: 'DeezNuts',
