@@ -1,4 +1,4 @@
-input:not([type=button]) {
+.familyMember input:not([type=button]) {
   border: none;
   border-bottom: 3px solid lightgrey;
   box-shadow:
@@ -10,7 +10,7 @@ input:not([type=button]) {
   width: 100%;
 }
 
-input[type=button] {
+.familyMember input[type=button] {
   border: 3px solid lightgrey;
   background: white;
   margin: 10px 0 10px 0;
@@ -19,7 +19,7 @@ input[type=button] {
   width: 80px;
 }
 
-input {
+.familyMember input {
   font-size: 20px;
 }
 
