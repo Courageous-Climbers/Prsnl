@@ -8,9 +8,11 @@ angular.module('notesModule', [])
 
   $scope.saveNote = function(note){
     $scope.notesArray.push(note);
+    console.log("Note saved so far", $scope.notesArray)
 
   }
 
+  // Currently not being used
   $scope.showAllNotes = function(){
 
   }

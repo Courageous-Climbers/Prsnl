@@ -1,19 +1,32 @@
-ul.actionwrapper{
-  color:red;
-  font-size: 23px;
-}
-
-table, th, td {
-/*   border: 1px solid black;
-*/}
-
-th {
+.actionwrapper th {
   text-align: left;
   width:200px;
   font-size: 23px;
   color:red;
 }
 
-td {
+.actionwrapper td {
   font-size: 18px;
+  /*border-top: 1px solid black;*/
+/*  border: 1px solid black;
+*/
+}
+
+.actionList li{
+  width: 50%;
+  border: 1px solid #000;
+  background-color: yellow;
+  margin: 10px;
+  box-shadow: 5px 5px 4px #9E9E9E;
+
+}
+
+.actionList{
+  list-style: none;
+}
+
+.actionwrapper p{
+    margin: 4px;
+    margin-left: 10px;
+    padding: 0px;
 }
