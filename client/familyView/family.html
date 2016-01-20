@@ -6,9 +6,16 @@
     <div>
       <button ng-click='toggleModal()'>+</button>
     </div>
+
+    
+
     <div class="eachFamilyMember" ng-repeat="member in familyData">
       <li style="color:blue"> {{ member.firstName }} {{ member.lastName }} </li>
-      <li>{{ member.nextContactDate }} </li>
+      <li> {{ member.nextContactDate }} </li>
+      <button class="dropDownActionButton" ng-click='checkActions(member)'>Drop Down</button>
+        <div class="slide-animate-container" ng-show="expandActionsView === member">
+          <div class="slide-animate" ng-include="'../actionView/action.html'"></div>
+        </div>
     </div>
 </div>
 </div>
