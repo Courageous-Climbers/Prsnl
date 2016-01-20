@@ -10,9 +10,7 @@ angular.module('LoginServices', [])
       url : '/api/user',
       data : userObj
     })
-    .then(function(res) {
-      console.log("Response from the saveUser POST Request: ", res);
-    })
+
   }
 
   userFactory.verifyUser = function(userObj) {

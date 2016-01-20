@@ -56,6 +56,12 @@ app.post('/api/user', function (req, res, next){
   db.getAllFamily(req.params, configHandler(200,400,res));
 })
 
+//get a single family member
+.get('/api/family/:userId/:familyId',function(req,res,next){
+  db.getSingleFamilyMember(req.params, configHandler(200,400,res));
+})
+
+
 //get all actions
 .get('/api/actions',function(req,res,next){
   db.getAllActions(configHandler(200,400,res));
