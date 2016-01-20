@@ -1,4 +1,7 @@
-angular.module('gaussHyrax', ['ui.router', 'gaussHyrax.login'])
+angular.module('gaussHyrax', ['ui.router',
+'gaussHyrax.login',
+"gaussHyrax.family",
+"gaussHyrax.newFamilyMember"])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -14,13 +17,8 @@ angular.module('gaussHyrax', ['ui.router', 'gaussHyrax.login'])
       templateUrl : '/login/login.html',
       controller : 'loginController'
     })
-    //
-    //
-    // .state('tasks', {
-    //   url : '/tasks',
-    //   templateUrl : 'tasksView/tasks.html',
-    //   controller : 'tasksController'
-    // })
+
+
     //
     // .state('summary', {
     //   url : '/summary',
