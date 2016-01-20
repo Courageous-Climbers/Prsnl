@@ -92,7 +92,7 @@ db.once('open', function() {
   // 2 users
   // each have 5 family
   // each family has 1 - 10 tasks
-  db.collections['users'].remove();
+  //db.collections['users'].remove();
   var user1 = {
     userName: 'Gandalf',
     password: 'DeezNuts',
@@ -155,6 +155,9 @@ db.once('open', function() {
     },
     "get id": function(user, callback){
       return callback(null,user['_id']);
+    },
+    "get member": function(user, callback,properties,familyMember){
+      return callback(null,familyMember);
     },
     "add family": function(user, callback, properties){
       user.family.push(properties);
@@ -301,7 +304,9 @@ db.once('open', function() {
   exports.getAllFamily = function  (idObj,callback) {
     return accessUserById(idObj,"get family",{},callback);
   };
-
+  exports.getSingleFamilyMember = function  (idObj,callback) {
+    return accessUserById(idObj,"get member",{},callback);
+  };
   exports.getAllActions = function (callback){
     Action.find({},callback);
   }
