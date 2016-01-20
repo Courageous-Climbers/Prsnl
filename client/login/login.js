@@ -8,7 +8,11 @@ angular.module('gaussHyrax.login', ['LoginServices'])
   $window.localStorage.removeItem('com.hyrax');
 
   $scope.saveUser = function() {
-    UserFactory.saveUser($scope.user)
+    UserFactory.saveUser($scope.user).then(function(){
+      $window.localStorage.setItem('com.hyrax',res.data);
+      $location.path('/dashboard');
+    });
+    
   }
 
   $scope.verifyUser = function () {
