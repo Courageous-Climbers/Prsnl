@@ -1,4 +1,4 @@
-body{
+.login-background{
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffaf4b+0,ffaf4b+22,ff920a+100 */
   /*background: #ffaf4b; /* Old browsers */
   /*background: -moz-radial-gradient(center, ellipse cover,  #ffaf4b 0%, #ffaf4b 22%, #ff920a 100%); /* FF3.6-15 */
@@ -10,20 +10,18 @@ body{
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;;
+  background-size: cover;
+  height:100%;
 }
 
 .loginWrapper {
-    /*box-shadow: 0px 7px 185px #FFCD8F;*/
-    /*border: 1px solid #E29C43;*/
-    width: 30%;
-    padding: 8px;
-    top: 22%;
-    /*position: absolute;*/
-    position: relative;
-    margin: 10% auto;
-    background-color: rgba(0, 0, 0, .3);
-    border-radius: 5px;
+  width: 320px;
+  padding: 8px;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, .3);
+  border-radius: 5px;
+  top: 13%;
+  position: relative;
 }
 
 
@@ -59,7 +57,7 @@ body{
     text-decoration: underline;
     background-color: transparent;
     padding: 0;
-    color: #00f;
+    color: #DEDEDE;
 }
 
 .loginWrapper .sign-up{
@@ -69,8 +67,7 @@ body{
 
 
 .loginWrapper .sign-up:active{
-  color: #fff;
-  background-color: #39AF2F;
+  box-shadow: inset 0px 0px 14px #0A0E09;
 }
 
 .loginWrapper .sign-up:hover{
@@ -80,3 +77,16 @@ body{
 .loginWrapper .btn{
   cursor: pointer;
 }
+
+.loginError {
+    border: 1px solid #FFA1A1;
+    background-color: rgba(255, 184, 184, 0.8);
+    color: #2D2D2D;
+    padding: 5px;
+    text-align: center;
+    font-family: Arial;
+    box-shadow: 0px 0px 15px 3px #FF2828;
+    border-radius: 2px;
+}
+}
+
