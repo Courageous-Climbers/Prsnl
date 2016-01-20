@@ -1,3 +1,38 @@
-<div class="notesWrapper">
+<!-- IMPORTANT -->
+<!-- Added for MODULAR testing only. Remove when done. -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js'></script>
+
+
+
+
+
+
+<script type="text/javascript" src="notes.js"></script>
+
+
+<div ng-app="notesModule" class="notesWrapper">
   <h1>Notes Page</h1>
+
+  <div ng-controller="notesController">
+
+    <form>
+      <input type="text" ng-model="singleNote">
+      <input type="submit" ng-click="saveNote(singleNote)" value="Save"/>
+      <!-- <input type="submit" ng-click="showAllNotes" value="Show Notes"/> -->
+    </form>
+
+    <button>
+    <!-- THIS IS HARD CODED UNTIL WE SET UP ROUTES!!! -->
+      <a href="http://localhost:3000/actionView/action.html">Back to Actions</a>
+    </button>
+    <br>
+    <br>
+    <!-- {{note}} -->
+    <li ng-repeat="note in notesArray">
+        <span>{{note}}</span>
+    </li>
+
+
+
+  </div>
 </div>
