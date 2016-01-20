@@ -4,10 +4,16 @@
   <link rel="stylesheet" type="text/css" href="styles.css">
   <link rel="stylesheet" type="text/css" href="login/login.css">
   <link href='https://fonts.googleapis.com/css?family=Montez' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="../bower_components/angularjs-slider/dist/rzslider.min.css"/>
 </head>
-<body>
-  <div class="container">
+<body ng-controller="familyController">
+  <div>
+    <modal-dialog show='modalShown' width='850px' height='auto'>
+      <p ng-include="'../newFamilyMemberView/newFamilyMember.html'"></p>
+    </modal-dialog>
+  </div>
 
+  <div class="container">
     <div ui-view></div>
   </div>
 
@@ -16,11 +22,15 @@
 <!-- Angular -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-
-
+  <script src="bower_components/angularjs-slider/dist/rzslider.min.js"></script>
+<!-- Services -->
   <script src="login/loginServices.js"></script>
+  <script type="text/javascript" src="familyView/familyServices.js"></script>
+  <script src="newFamilyMemberView/newFamilyMemberService.js"></script>
 <!-- Contoller -->
   <script src="login/login.js"></script>
+  <script type="text/javascript" src="familyView/familyController.js"></script>
+  <script src="newFamilyMemberView/newFamilyMemberCtrl.js"></script>
 <!-- Config -->
   <script src="app.js"></script>
 </body>

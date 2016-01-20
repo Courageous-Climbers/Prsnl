@@ -1,0 +1,64 @@
+<!-- to be inculded in the main file -->
+<link rel="stylesheet" href="../newFamilyMemberView/member.css" charset="utf-8">
+
+<!-- Remember to add "gaussHyraxx.newFamilyMember" to the config file. remove ng controller when routes are created -->
+
+<div class="container">
+<h1>New Member</h1>
+<div class="members" ng-controller='memberCtrl'>
+  <form class="familyMember" >
+
+    <div style="width:48%; position:relative; display:inline-block;">
+      First Name: *</br>
+      <input type="text" name="firstName" ng-model="member.firstName">
+    </div>
+    <div style="width:48%; position:relative; display:inline-block;">
+      Last Name: </br>
+      <input type="text" name="lastName" ng-model="member.lastName">
+    </div>
+    <div style="width:48%; position:relative; display:inline-block;">
+      Phone: </br>
+      <input type="tel" name="phoneNumber" ng-model="member.phone" >
+    </div>
+    <div style="width:48%; position:relative; display:inline-block;">
+    Email:
+      <input type="email" name="email" ng-model="member.email" >
+    </div>
+    <div style="width:48%; position:relative; display:inline-block;">
+    Street Address: </br>
+      <input type="text" name="address" ng-model="member.streetAddress">
+    </div>
+    <div style="width:48%; position:relative; display:inline-block;">
+    City: </br>
+      <input type="text" name="city" ng-model="member.city" >
+    </div>
+    <div style="width:28%; position:relative; display:inline-block;">
+    State: </br>
+      <input type="text" name="state" ng-model="member.state" >
+    </div>
+    <div style="width:28%; position:relative; display:inline-block; padding-left: 25px;">
+    Country: </br>
+      <input type="text" name="country" ng-model="member.country" >
+    </div>
+    <div style="width:28%; position:relative; display:inline-block; padding-left: 25px;">
+    Zipcode: </br>
+      <input type="text" name="zipcode" ng-model="member.zipcode" >
+    </div>
+
+
+  <div class="interaction">
+    <span>Contact Frequency: </span>
+    <span>Next Contact Date: </span>
+  </div>
+
+  <div class='slider'>
+    <rzslider
+    rz-slider-model="slider_toggle.value"
+    rz-slider-options="slider_toggle.options"></rzslider>
+  </div>
+
+    <input type="button" value="Save" ng-click="saveMember(member)" >
+
+  </form>
+</div>
+</div>

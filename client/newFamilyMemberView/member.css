@@ -1,0 +1,33 @@
+.familyMember input:not([type=button]) {
+  border: none;
+  border-bottom: 3px solid lightgrey;
+  box-shadow:
+    inset 0 0 8px rgba(0,0,0,0.1);
+  border-radius: 3px;
+  padding: 15px;
+  background: rgba(255,255,255,0.5);
+  margin: 0 0 10px 0;
+  width: 100%;
+}
+
+.familyMember input[type=button] {
+  border: 3px solid lightgrey;
+  background: white;
+  margin: 10px 0 10px 0;
+  border-radius: 3px;
+  padding: 15px;
+  width: 80px;
+}
+
+.familyMember input {
+  font-size: 20px;
+}
+
+.members {
+  padding: 15px;
+}
+
+.slider {
+  width: 50%;
+  padding: 0 45px;
+}
