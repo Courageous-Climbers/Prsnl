@@ -1,4 +1,4 @@
-angular.module('actionModule', [])
+angular.module('gaussHyrax.action', [])
 
 .controller('actionController',['$scope', '$http', function($scope, $http){
 

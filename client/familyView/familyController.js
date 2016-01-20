@@ -1,6 +1,7 @@
 angular.module('gaussHyrax.family', ['FamilyServices'])
 
-.controller('familyController', ['$scope', 'FamilyFactory', function($scope, FamilyFactory){
+.controller('familyController', ['$scope', 'FamilyFactory', 
+  function($scope, FamilyFactory){
 
   console.log('controller loaded');
   var userID;
@@ -21,6 +22,17 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
     $scope.toggleModal = function() {
       $scope.modalShown = !$scope.modalShown;
     };
+
+    // $scope.expandActionsView = false;
+    $scope.checkActions = function(familyMemberObj) {
+      console.log(familyMemberObj);
+      $scope.expandActionsView = familyMemberObj;
+
+      // if DIV is visible it will be hidden and vice versa
+      console.log("clicked on drop down menu");
+      // $scope.expandActionsView = $scope.expandActionsView ? false : true;
+    }
+
 }])
 .directive('modalDialog', function() {
   return {
