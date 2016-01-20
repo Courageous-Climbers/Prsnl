@@ -156,6 +156,9 @@ db.once('open', function() {
     "get id": function(user, callback){
       return callback(null,user['_id']);
     },
+    "get member": function(user, callback,properties,familyMember){
+      return callback(null,familyMember);
+    },
     "add family": function(user, callback, properties){
       user.family.push(properties);
       user.save(function(err,user){
@@ -301,7 +304,9 @@ db.once('open', function() {
   exports.getAllFamily = function  (idObj,callback) {
     return accessUserById(idObj,"get family",{},callback);
   };
-
+  exports.getSingleFamilyMember = function  (idObj,callback) {
+    return accessUserById(idObj,"get member",{},callback);
+  };
   exports.getAllActions = function (callback){
     Action.find({},callback);
   }
