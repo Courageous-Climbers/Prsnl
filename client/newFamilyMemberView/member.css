@@ -7,7 +7,7 @@ input:not([type=button]) {
   padding: 15px;
   background: rgba(255,255,255,0.5);
   margin: 0 0 10px 0;
-  width: 80%
+  width: 100%;
 }
 
 input[type=button] {
@@ -20,7 +20,7 @@ input[type=button] {
 }
 
 input {
-  font-size: 20px; 
+  font-size: 20px;
 }
 
 .members {

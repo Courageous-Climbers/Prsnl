@@ -1,4 +1,4 @@
-angular.module('gaussHyraxx.newFamilyMember', ['rzModule', 'newFamilyMemberServices'])
+angular.module('gaussHyrax.newFamilyMember', ['rzModule', 'newFamilyMemberServices'])
 
 .controller('memberCtrl', ['$scope', 'NewFamilyMemberFactory',
 function($scope, NewFamilyMemberFactory){
@@ -13,18 +13,12 @@ function($scope, NewFamilyMemberFactory){
       }
     };
 
-
-    console.log("contoller");
     // Save family member to userId
     $scope.saveMember = function(member){
-      console.log("inside save member");
-
-      console.log($scope.member);
       NewFamilyMemberFactory.getUserID()
       .then(function (res){
-        console.log(typeof res.data[0]._id);
-        NewFamilyMemberFactory.saveMember(res.data[0]._id, $scope.member);
+        NewFamilyMemberFactory.saveMember(res.data, $scope.member);
+        $scope.member = '';
       });
     };
-
-}]);
+}])
