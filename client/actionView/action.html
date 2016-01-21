@@ -1,3 +1,89 @@
+
+<link rel="stylesheet" type="text/css" href="actionView/action.css">
+<!-- IMPORTANT -->
+<!-- Added for MODULAR testing only. Remove when done. -->
 <div class="actionWrapper">
-  <h1>Action Page</h1>
+  
+  <div ng-controller="actionController">
+
+<table>
+  <tr>
+    <th>Action</th><th>Point Value</th><th>Date</th><th></th>
+  </tr>
+  
+       <!-- <td>Call</td> <td>10</td></tr> -->
+
+  <form>
+    <tr>
+      <td>Call</td> <td>8</td> <td><input type="text" ng-model="callDate"></td> <td><input type="submit" ng-click="saveAction('Call', 8, callDate)" value="Save"/></td>
+    </tr>
+  </form>
+  <form>
+    <tr>
+      <td>Text</td> <td>3</td> <td><input type="text" ng-model="textDate"></td> <td><input type="submit" ng-click="saveAction('Text', 3, textDate)" value="Save"/></td>
+    </tr>
+  </form>
+  <form>
+    <tr>
+      <td>Send Letter</td> <td>6</td> <td><input type="text" ng-model="sendLetterDate"></td> <td><input type="submit" ng-click="saveAction('Send Letter', 6, sendLetterDate)" value="Save"/></td>
+    </tr>
+  </form>
+  <form>
+    <tr>
+      <td>Send Email</td> <td>4</td> <td><input type="text" ng-model="sendEmailDate"></td> <td><input type="submit" ng-click="saveAction('Send Email', 4, sendEmailDate)" value="Save"/></td>
+    </tr>
+  </form>
+  <form>
+    <tr>
+      <td>Dinner</td> <td>10</td> <td><input type="text" ng-model="dinnerDate"></td> <td><input type="submit" ng-click="saveAction('Dinner', 10, dinnerDate)" value="Save"/></td>
+    </tr>
+  </form>
+  <form>
+    <tr>
+      <td>Drinks</td> <td>10</td> <td><input type="text" ng-model="drinksDate"></td> <td><input type="submit" ng-click="saveAction('Drinks', 10, drinksDate)" value="Save"/></td>
+    </tr>
+  </form>
+  <form>
+    <tr>
+      <td>Lunch</td> <td>10</td> <td><input type="text" ng-model="lunchDate"></td> <td><input type="submit" ng-click="saveAction('Lunch', 10, lunchDate)" value="Save"/></td>
+    </tr>
+  </form>
+    <form>
+    <tr>
+      <td>Coffee</td> <td>10</td> <td><input type="text" ng-model="coffeeDate"></td> <td><input type="submit" ng-click="saveAction('Coffee', 10, coffeeDate)" value="Save"/></td>
+    </tr>
+  </form>
+</table>
+
+
+
+
+    <button>
+      <!-- THIS IS HARD CODED UNTIL WE SET UP ROUTES!!! -->
+      <!-- Notes currently are NOT connected to the action view -->
+      <a href="http://localhost:3000/notesView/notes.html">Add/view Notes</a>
+    </button>
+
+    <!-- Get the actions of EVERY family member.  NOT NEEDED IN ACTION VIEW
+    
+    <form>
+      <input type="submit" ng-click="getAllSubmittedActions()" value="Get All Actions List"/>
+    </form>
+    <li ng-repeat="oneAction in allFamilyActionsArray">
+        <span>{{oneAction}}</span>
+    </li> -->
+      
+    <form>
+      <input type="submit" ng-click="getAFamilyMemberActions()" value="Get Actions of a family member"/>
+    </form>
+    <ul class="actionList">
+    <li ng-repeat="action in actionArray">
+        <p>Action: {{action.action}}</p>
+        <p>Points: {{action.points}}</p>
+        <p>Date: {{action.date}}</p>
+        <p>Notes: {{action.notes}}</p>
+    </li>
+    </ul>
+
+  </div>
 </div>

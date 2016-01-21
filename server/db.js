@@ -106,13 +106,13 @@ db.once('open', function() {
           action:"call",
           notes:"this guy is a nn",
           points:10,
-          date: new Date()
+          date: new Date("1/1/16")
         },
         {
           action:"email",
           notes:"no, wait, I am a nn",
           points:5,
-          date: new Date()
+          date: new Date("1/10/16")
         },
         {
           action:"email",
@@ -132,7 +132,7 @@ db.once('open', function() {
           action:"text",
           notes:"I love ice cream",
           points:2,
-          date: new Date()
+          date: new Date("12/1/15")
         },
         {
           action:"call",

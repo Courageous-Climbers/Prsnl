@@ -1,7 +1,10 @@
 angular.module('gaussHyrax', ['ui.router',
 'gaussHyrax.login',
-"gaussHyrax.family",
-"gaussHyrax.newFamilyMember"])
+'gaussHyrax.family',
+'gaussHyrax.newFamilyMember',
+'gaussHyrax.action',
+'gaussHyrax.summary'
+])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
