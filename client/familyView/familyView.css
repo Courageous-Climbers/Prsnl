@@ -75,10 +75,11 @@
   border: 1px solid black;
   height: 200px;
   overflow: auto;
+  transition: all linear 0.5s;
 }
 
-.slide-animate {
-  padding:10px;
+.slide-animate-container.ng-hide {
+  height: 0px;
   transition: all linear 0.5s;
 }
 

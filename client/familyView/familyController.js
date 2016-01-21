@@ -1,4 +1,4 @@
-angular.module('gaussHyrax.family', ['FamilyServices'])
+angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
 
 .controller('familyController', ['$scope', 'FamilyFactory', 
   function($scope, FamilyFactory){
@@ -7,15 +7,10 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
   var userID;
   var familyData;
 
-  $scope.familyData = FamilyFactory.getUserID()
-    .then(function(userID){
-      console.log(userID.data);
-      FamilyFactory.getAllFamilyMembers(userID.data)
-      .then(function(familyMember) {
-        $scope.familyData = familyMember.data;
+    FamilyFactory.getAllFamilyMembers()
+      .then(function(res) {
+        $scope.familyData = res.data;
       });
-    });
-
 
     // Modal controller
     $scope.modalShown = false;
