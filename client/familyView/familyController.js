@@ -13,6 +13,10 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
         $scope.date = moment($scope.familyData.nextContactDate).format('MMM Do YYYY');
       });
 
+
+    $scope.$on('points',function(event,data){
+      console.log('here are the points',data);
+    })
     // Modal controller
     $scope.modalShown = false;
     $scope.toggleModal = function() {
