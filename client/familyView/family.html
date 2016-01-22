@@ -9,12 +9,12 @@
 
     
 
-    <div class="eachFamilyMember" ng-repeat="member in familyData">
+    <div class="eachFamilyMember" ng-repeat="member in familyData" ng-click="singleFamilyMemberInfo(member)">
       <li style="color:blue"> {{ member.firstName }} {{ member.lastName }} </li>
-      <li> {{ member.nextContactDate }} </li>
+      <li ng-model="date"> {{ date }} </li>
       <button class="dropDownActionButton" ng-click="showDetails = !showDetails">Drop Down</button>
         <div class="slide-animate-container" ng-show="showDetails">
-          <div class="slide-animate" ng-include="'../actionView/action.html'"></div>
+          <div ng-include="'../actionView/action.html'"></div>
         </div>
     </div>
 </div>
