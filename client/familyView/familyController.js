@@ -5,6 +5,7 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
 
   var userID;
   $scope.familyData;
+  $scope.activeFamilyMember;
 
     FamilyFactory.getAllFamilyMembers()
       .then(function(res) {
@@ -22,12 +23,13 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
     $scope.checkActions = function(familyMemberObj) {
       console.log(familyMemberObj);
       $scope.expandActionsView = familyMemberObj;
+      
     }
 
     $scope.singleFamilyMemberInfo = function(familyMemberObj) {
       console.log(familyMemberObj);
-      singleFamilyMember = familyMemberObj;
-      return familyMemberObj;
+      //change the $scope.activeFamilyMember so that a $watch event will fire
+      $scope.activeFamilyMember = familyMemberObj;
     }
 
 }])
