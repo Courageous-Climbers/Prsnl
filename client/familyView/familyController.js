@@ -6,6 +6,8 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
   var userID;
   $scope.familyData;
   $scope.activeFamilyMember;
+  
+
 
   
     $scope.$on('points', function(event, totalPoints) {
@@ -28,6 +30,9 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
         _.each($scope.familyData, function(eachFamilyMember, index) {
           $scope.familyData[index].nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
         })
+        for (var i = 0; i < $scope.familyData.length; i++) {
+          $scope.familyData[i].points = 0;
+        }   
 
       });
 
