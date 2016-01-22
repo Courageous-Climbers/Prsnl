@@ -4,8 +4,6 @@ angular.module('FamilyServices', [])
 
   var familyFactory = {}
 
-  console.log('factory loaded');
-
   familyFactory.getUserID = function() {
     return $http({
       method : 'GET',
@@ -20,10 +18,19 @@ angular.module('FamilyServices', [])
       url : '/api/family/' + $window.localStorage.getItem('com.hyrax')
     })
     .then(function(res) {
-      console.log("Getting the Family Members from the User ID", res);
+      // console.log("Getting the Family Members from the User ID", res);
       return res;
     })
   }
+
+/*  family.factory.getSingleFamilyMember = function() {
+
+    return $http({
+      method: 'GET',
+      url : '/api/family/' + 
+    })
+
+  }*/
 
   return familyFactory;
 
