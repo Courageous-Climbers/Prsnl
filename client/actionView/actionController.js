@@ -5,14 +5,14 @@ angular.module('gaussHyrax.action', [])
   $scope.actionArray = [];
   $scope.allFamilyActionsArray = [];
   
-  $scope.callDate = new Date();
-  $scope.textDate = new Date();
-  $scope.sendLetterDate = new Date();
-  $scope.sendEmailDate = new Date();
-  $scope.dinnerDate = new Date();
-  $scope.drinksDate = new Date();
-  $scope.lunchDate = new Date();
-  $scope.coffeeDate = new Date();
+  $scope.callDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.textDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.sendLetterDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.sendEmailDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.dinnerDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.drinksDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.lunchDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.coffeeDate = moment(new Date()).format('MMM DD YYYY');
 
 // get the user ID
   var userId = $window.localStorage.getItem('com.hyrax');
