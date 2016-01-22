@@ -1,27 +1,36 @@
+
+/*Column header*/
 .actionwrapper th {
   text-align: left;
   width:200px;
-  font-size: 23px;
+  font-size: 15px;
   color:red;
 }
 
+/*Column entries*/
 .actionwrapper td {
-  font-size: 18px;
+  font-size: 15px;
   /*border-top: 1px solid black;*/
 /*  border: 1px solid black;
 */
 }
 
-.actionList li{
-  width: 50%;
+/*.actionList li{
+  width: 100%;
+  padding: 50px;
+  padding-top: 50px;
   border: 1px solid #000;
   background-color: yellow;
   margin: 10px;
   box-shadow: 5px 5px 4px #9E9E9E;
 
-}
+}*/
+/*.actionwrapper li{
+    background-color: yellow;
+}*/
 
-.actionList{
+
+.actionList ul{
   list-style: none;
 }
 
@@ -30,3 +39,20 @@
     margin-left: 10px;
     padding: 0px;
 }
+
+/*Not working, fix later*/
+.dropDownNotesButton button{
+  position:absolute;
+  margin-left: 300px;
+}
+
+.actionwrapper .slide-animate-container {
+  position: relative;
+  background: white;
+  border: 1px solid black;
+  height: 100px;
+  overflow: auto;
+  transition: all linear 0.4s;
+}
+
+

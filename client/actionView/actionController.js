@@ -1,6 +1,6 @@
 angular.module('gaussHyrax.action', [])
 
-.controller('actionController',['$scope', '$http', function($scope, $http){
+.controller('actionController',['$scope', '$http', '$window', function($scope, $http, $window){
 
   $scope.actionArray = [];
   $scope.allFamilyActionsArray = [];
@@ -14,79 +14,62 @@ angular.module('gaussHyrax.action', [])
   $scope.lunchDate = new Date();
   $scope.coffeeDate = new Date();
 
+// get the user ID
+  var userId = $window.localStorage.getItem('com.hyrax');
+  // console.log("\nUserID: ", userId);
+  
+  var famMemberId = $scope.member._id;
+  //console.log("All the info for a this fam member: ", $scope.member);
+  // console.log("Family Member Id: ", famMemberId);
 
-  $scope.saveAction = function(someAction, pointValue, dateOccured, someNote){
+  var currentNote;
+  // Listen for the note to be emitted from the event in the child view (notes.js)
+  $scope.$on('noteSavedEvent', function(event, data) { 
+    currentNote = data;
+  });
+
+  $scope.saveAction = function(someAction, pointValue, dateOccured){
     var actionObj = {
       action: someAction,
       points: pointValue,
       date: dateOccured,
-      // notes are HARD CODED.  FIX THIS LATER IF TIME ALLOWS
-      notes: "ITS HOT IN THIS CAFE!!!!"
+      notes: currentNote || "" 
     };
 
-    //$scope.actionArray.push(actionObj);  //may not need
-    //console.log ("The action array: ", $scope.actionArray);
-
+   
     $http({
       method : 'POST',
-      // url : '/api/history/:userId/:familyId',
-      // hard coded the userid and familyid 
-      url : '/api/history/569ec22768237e7114d26c19/569ec22768237e7114d26c1d',
+      // url : '/api/history/569ec22768237e7114d26c19/569ec22768237e7114d26c1d',
+      url : '/api/history/' + userId + "/" + famMemberId,
       data : actionObj,
       headers: {'Content-Type': 'application/json'}
     })
     .then(function(res) {
-      //console.log("Response from the saveAction POST Request: ", res);
+      console.log("Response from the saveAction POST Request: ", res);
     })
   
   };
 
-  // Commented out because we don't EVERY FAMLIY MEMBERS action in the action view
-  
-  // $scope.getAllSubmittedActions = function(){
-  //   console.log("Get getSubmittedAllActions called");
-  //   $http({
-  //     method : 'GET',
-  //     url: '/api/family/'+ '569ec22768237e7114d26c19'
-  //   }).then(function(res){
-  //     console.log('here is the response',res);
-      
-  //     if(res.data.length){
-  //       console.log("Here is the response data", res.data)
-  //       for (var i=0; i<res.data.length; i++){
-  //         $scope.allFamilyActionsArray.push(res.data[i].history)
-  //       }
-  //     }
-  //   },function(err){
-  //     console.log('!error',err);
-  //   });
-    
-
-
-  // };
-
   $scope.getAFamilyMemberActions = function (familyId){
-    //console.log("Get getAFamilyMemberActions called");
     $http({
       method : 'GET',
-      url: '/api/family/'+ '569ec22768237e7114d26c19'+'/'+'569ec22768237e7114d26c1d'
+      // url: '/api/family/'+ '569ec22768237e7114d26c19'+'/'+'569ec22768237e7114d26c1d'
+      url: '/api/family/' + userId + "/" + famMemberId
     }).then(function(res){
       //console.log('here is the response',res);
       
       if(res.data.history.length){
+        console.log("Heres is the response.data: ", res.data)
        // console.log("Here is the response data", res.data.history)
         //an array of actions were returned
         // $scope.actionArray = res.data;
         for (var i=0; i<res.data.history.length; i++){
           $scope.actionArray.push(res.data.history[i])
         }
-
-
       }
     },function(err){
       console.log('!error',err);
     });
-
   }
 
 

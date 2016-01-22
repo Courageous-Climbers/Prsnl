@@ -1,15 +1,14 @@
-angular.module('notesModule', [])
+angular.module('gaussHyrax.notes', [])
 
 .controller('notesController',['$scope',function($scope){
 
-  $scope.singleNote = "";
+  $scope.singleNote = "";  // Keep the note field blank by default
 
-  $scope.notesArray = []
-
+  // Note gets captured from the DOM
+  // The note is then emitted so the parent controller (in action.js) can see it
   $scope.saveNote = function(note){
-    $scope.notesArray.push(note);
-    console.log("Note saved so far", $scope.notesArray)
-
+    $scope.$emit('noteSavedEvent', note);
+    $scope.singleNote = "";  
   }
 
   // Currently not being used

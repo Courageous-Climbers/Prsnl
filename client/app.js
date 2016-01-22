@@ -3,6 +3,7 @@ angular.module('gaussHyrax', ['ui.router',
 'gaussHyrax.family',
 'gaussHyrax.newFamilyMember',
 'gaussHyrax.action',
+'gaussHyrax.notes',
 'gaussHyrax.summary'
 ])
 
