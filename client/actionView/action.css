@@ -50,7 +50,7 @@
   position: relative;
   background: white;
   border: 1px solid black;
-  height: 100px;
+  height: auto;
   overflow: auto;
   transition: all linear 0.4s;
 }

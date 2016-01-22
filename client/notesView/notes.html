@@ -9,12 +9,13 @@
 
 <div ng-app="notesModule" class="notesWrapper">
   <h3>Enter a note</h3>
+  <h5>(This note will be added to the action you submit)</h5>
 
   <div ng-controller="notesController">
 
     <form>
       <input type="text" ng-model="singleNote">
-      <input type="submit" ng-click="saveNote(singleNote)" value="Save"/>
+      <input type="submit" ng-click="saveNote(singleNote)" value="Save note"/>
       <!-- <input type="submit" ng-click="showAllNotes" value="Show Notes"/> -->
     </form>
 
