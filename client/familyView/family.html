@@ -12,7 +12,7 @@
     <div class="eachFamilyMember" ng-repeat="member in familyData" ng-click="singleFamilyMemberInfo(member)">
       <li> {{ member.firstName }} {{ member.lastName }} </li>
       <li> {{ member.nextContactDate }} </li>
-      <div class="circle"><p> {{ member.points }} </p></div>
+      <div class="circle"><p> {{ member.totalPoints }} </p></div>
       <button class="dropDownActionButton" ng-click="showDetails = !showDetails"> V </button>
         <div class="slide-animate-container" ng-show="showDetails">
           <div ng-include="'../actionView/action.html'"></div>

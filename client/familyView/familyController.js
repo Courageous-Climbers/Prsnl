@@ -7,15 +7,13 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
   $scope.familyData;
   $scope.activeFamilyMember;
   
-
-
-  
     $scope.$on('points', function(event, totalPoints) {
+      // console.log("Here are the Points from the Summary Controller: ", totalPoints);
       for (var i = 0; i < $scope.familyData.length; i++) {
         for (var key in totalPoints) {
           if (key === $scope.familyData[i]._id){
             // Set the property of points on the familyData to be the totalPoints
-            $scope.familyData[i].points = totalPoints[key];
+            $scope.familyData[i].points = totalPoints[key] || 0;
           }
         }
       } 
@@ -29,7 +27,16 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
         // Format the date from the Database into more readable format using moment
         _.each($scope.familyData, function(eachFamilyMember, index) {
           $scope.familyData[index].nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
-        })
+        });
+
+        // Calculate the total Points from the Family History Action Points Property
+        // The points are not currently coming from the Summary View.
+        _.each($scope.familyData, function(eachFamilyMember, index) {
+          eachFamilyMember.totalPoints = _.reduce(eachFamilyMember.history, function(total, action) {
+            total += action.points;
+            return total;
+          }, 0);
+        });
 
         //when summary controller loads, let it know that there is family data available
         $scope.$on('summaryCtrlLoaded',function(){
