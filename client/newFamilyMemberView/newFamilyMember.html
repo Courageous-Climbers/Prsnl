@@ -18,7 +18,7 @@
     </div>
     <div style="width:48%; position:relative; display:inline-block;">
       Phone: </br>
-      <input type="tel" name="phoneNumber" ng-model="member.phone" >
+      <input type="tel" name="phoneNumber" ng-model="member.phoneNumber" >
     </div>
     <div style="width:48%; position:relative; display:inline-block;">
     Email:
@@ -44,12 +44,12 @@
     Zipcode: </br>
       <input type="text" name="zipcode" ng-model="member.zipcode" >
     </div>
-
-
-  <div class="interaction">
-    <span>Contact Frequency: </span>
-    <span>Next Contact Date: </span>
-  </div>
+    <div class="frequency" style="width:28%; position:relative; display:inline-block; padding-left: 25px;">
+      <span ng-model="slider_toggle.value">Contact Frequency: {{ slider_toggle.value }}</span>
+    </div>
+    <div class="date" style="width:28%; position:relative; display:inline-block; padding-left: 25px;">
+      <span ng-model="nextDate">Next Contact Date: {{ nextDate }}</span>
+    </div>
 
   <div class='slider'>
     <rzslider
@@ -57,7 +57,7 @@
     rz-slider-options="slider_toggle.options"></rzslider>
   </div>
 
-    <input type="button" value="Save" ng-click="saveMember(member)" >
+    <input type="button" value="Save" ng-click="saveMember()" >
 
   </form>
 </div>
