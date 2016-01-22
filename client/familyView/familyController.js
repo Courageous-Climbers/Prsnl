@@ -1,21 +1,16 @@
-angular.module('gaussHyrax.family', ['FamilyServices'])
+angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
 
 .controller('familyController', ['$scope', 'FamilyFactory', 
   function($scope, FamilyFactory){
 
-  console.log('controller loaded');
   var userID;
-  var familyData;
+  $scope.familyData;
 
-  $scope.familyData = FamilyFactory.getUserID()
-    .then(function(userID){
-      console.log(userID.data);
-      FamilyFactory.getAllFamilyMembers(userID.data)
-      .then(function(familyMember) {
-        $scope.familyData = familyMember.data;
+    FamilyFactory.getAllFamilyMembers()
+      .then(function(res) {
+        $scope.familyData = res.data;
+        $scope.date = moment($scope.familyData.nextContactDate).format('MMM Do YYYY');
       });
-    });
-
 
     // Modal controller
     $scope.modalShown = false;
@@ -27,10 +22,12 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
     $scope.checkActions = function(familyMemberObj) {
       console.log(familyMemberObj);
       $scope.expandActionsView = familyMemberObj;
+    }
 
-      // if DIV is visible it will be hidden and vice versa
-      console.log("clicked on drop down menu");
-      // $scope.expandActionsView = $scope.expandActionsView ? false : true;
+    $scope.singleFamilyMemberInfo = function(familyMemberObj) {
+      console.log(familyMemberObj);
+      singleFamilyMember = familyMemberObj;
+      return familyMemberObj;
     }
 
 }])
