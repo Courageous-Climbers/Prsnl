@@ -69,6 +69,7 @@ angular.module('SummaryServicesModule',[])
 
   factory.calculateGraphForSetOfFamilyMembers = function(family){
     //min date will be the first history item of the first person added
+    console.log('here is the family',family);
     var minDate = family[0].history[0].date;
     var day = moment(minDate);
     var now = moment();

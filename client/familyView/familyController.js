@@ -30,11 +30,15 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
         _.each($scope.familyData, function(eachFamilyMember, index) {
           $scope.familyData[index].nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
         })
-        for (var i = 0; i < $scope.familyData.length; i++) {
-          $scope.familyData[i].points = 0;
-        }   
 
+        //when summary controller loads, let it know that there is family data available
+        $scope.$on('summaryCtrlLoaded',function(){
+          console.log('triggering family change');
+          $scope.$broadcast('familyChange',$scope.familyData);
+        });
+        
       });
+
 
 
     // Modal controller
