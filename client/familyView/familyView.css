@@ -84,13 +84,13 @@
   font-family: 'arial', 'sans-serif';
 }
 
-/* Adding Task View */
+/* Adding Action View */
 
 .slide-animate-container {
   position: relative;
   background: white;
   border: 1px solid black;
-  height: 200px;
+  height: auto;   /* Updated to auto to hold all the action view contents*/
   overflow: auto;
   transition: all linear 0.4s;
 }
