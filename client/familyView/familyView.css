@@ -6,14 +6,31 @@
   border-radius: 5px;
   padding: 5px 5px;
   margin: 5px 10px;
-  font-family: Arial, sans-serif;
+  font-family: sans-serif;
+  font-size: 14px;
 }
 
 .eachFamilyMember li {
-  color: red;
   display: inline;
   padding: 5px;
+  font-size: 
+}
 
+.circle {
+  display: inline-block;
+  border: 0.1em solid #000;
+  border-radius: 100%;
+  height: 2.0em;
+  width: 2.0em;
+  text-align: center;
+}
+
+.circle p {
+  margin-top: 0.10em;
+  font-size: 1.2em;
+  font-weight: bold;
+  font-family: sans-serif;
+  color: #FF5C5C;
 }
 
 .addFamilyMemberButton {
