@@ -5,22 +5,22 @@ angular.module('gaussHyrax.action', [])
   $scope.actionArray = [];
   $scope.allFamilyActionsArray = [];
   
-  $scope.callDate = new Date();
-  $scope.textDate = new Date();
-  $scope.sendLetterDate = new Date();
-  $scope.sendEmailDate = new Date();
-  $scope.dinnerDate = new Date();
-  $scope.drinksDate = new Date();
-  $scope.lunchDate = new Date();
-  $scope.coffeeDate = new Date();
+  // Using moment to convert date into a simpler format
+  $scope.callDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.textDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.sendLetterDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.sendEmailDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.dinnerDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.drinksDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.lunchDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.coffeeDate = moment(new Date()).format('MMM DD YYYY');
 
-// get the user ID
+  // get the user ID
   var userId = $window.localStorage.getItem('com.hyrax');
   // console.log("\nUserID: ", userId);
   
   var famMemberId = $scope.member._id;
   //console.log("All the info for a this fam member: ", $scope.member);
-  // console.log("Family Member Id: ", famMemberId);
 
   var currentNote;
   // Listen for the note to be emitted from the event in the child view (notes.js)
@@ -56,19 +56,16 @@ angular.module('gaussHyrax.action', [])
       // url: '/api/family/'+ '569ec22768237e7114d26c19'+'/'+'569ec22768237e7114d26c1d'
       url: '/api/family/' + userId + "/" + famMemberId
     }).then(function(res){
-      //console.log('here is the response',res);
-      
+      // Check that history of actions exist for this family member
       if(res.data.history.length){
-        console.log("Heres is the response.data: ", res.data)
-       // console.log("Here is the response data", res.data.history)
-        //an array of actions were returned
-        // $scope.actionArray = res.data;
         for (var i=0; i<res.data.history.length; i++){
+          // convert the date into a simpler format
+          res.data.history[i].date = moment(res.data.history[i].date).format('MMM DD YYYY');
           $scope.actionArray.push(res.data.history[i])
         }
       }
     },function(err){
-      console.log('!error',err);
+      console.log('error!!',err);
     });
   }
 
@@ -90,11 +87,6 @@ angular.module('gaussHyrax.action', [])
 
 // RETURN THE FAMILY INFO:
 //curl -i http://localhost:3000/api/family/569ea8771d5b871d1419735f
-
-// TRYING TO ADD ACTION..BUT EMPTY REPLY AND SERVER CRASH:
-// curl -d '{"action":"HISTORY UPDATE WITH NEW ACTION SOLA"}' -H "Content-Type: application/json" http://localhost:3000/api/history/569e819c795f2dd613ae3619/569ea8771d5b871d14197363
-// curl: (52) Empty reply from server
-
 
 
 // add history to a user's family member '/api/history/:userId/:familyId' 
