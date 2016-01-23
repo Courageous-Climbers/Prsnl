@@ -18,7 +18,7 @@ angular.module('FamilyServices', [])
       url : '/api/family/' + $window.localStorage.getItem('com.hyrax')
     })
     .then(function(res) {
-      // console.log("Getting the Family Members from the User ID", res);
+      console.log("Getting the Family Members from with USER ID: ", $window.localStorage.getItem('com.hyrax'), res);
       return res;
     })
   }

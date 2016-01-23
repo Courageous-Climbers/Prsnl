@@ -1,9 +1,10 @@
 angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
 
-.controller('familyController', ['$scope', 'FamilyFactory', 
-  function($scope, FamilyFactory){
+.controller('familyController', ['$scope', '$window', 'FamilyFactory', 
+  function($scope, $window, FamilyFactory){
 
-  var userID;
+  var userID = $window.localStorage.getItem('com.hyrax');  
+  // var userID = FamilyFactory.getUserID();
   $scope.familyData;
   $scope.activeFamilyMember;
   
@@ -19,32 +20,36 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
       } 
     });
 
+    if (userID) {
 
-    FamilyFactory.getAllFamilyMembers()
-      .then(function(res) {
-        $scope.familyData = res.data;
+      FamilyFactory.getAllFamilyMembers()
+        .then(function(res) {
+          $scope.familyData = res.data;
 
-        // Format the date from the Database into more readable format using moment
-        _.each($scope.familyData, function(eachFamilyMember, index) {
-          $scope.familyData[index].nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
+          // Format the date from the Database into more readable format using moment
+          _.each($scope.familyData, function(eachFamilyMember, index) {
+            $scope.familyData[index].nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
+          });
+
+          // Calculate the total Points from the Family History Action Points Property
+          // The points are not currently coming from the Summary View.
+          _.each($scope.familyData, function(eachFamilyMember, index) {
+            eachFamilyMember.totalPoints = _.reduce(eachFamilyMember.history, function(total, action) {
+              total += action.points;
+              return total;
+            }, 0);
+          });
+
+          //when summary controller loads, let it know that there is family data available
+          $scope.$on('summaryCtrlLoaded',function(){
+            console.log('triggering family change');
+            $scope.$broadcast('familyChange',$scope.familyData);
+          });
+          
         });
-
-        // Calculate the total Points from the Family History Action Points Property
-        // The points are not currently coming from the Summary View.
-        _.each($scope.familyData, function(eachFamilyMember, index) {
-          eachFamilyMember.totalPoints = _.reduce(eachFamilyMember.history, function(total, action) {
-            total += action.points;
-            return total;
-          }, 0);
-        });
-
-        //when summary controller loads, let it know that there is family data available
-        $scope.$on('summaryCtrlLoaded',function(){
-          console.log('triggering family change');
-          $scope.$broadcast('familyChange',$scope.familyData);
-        });
-        
-      });
+    } else {
+      console.log("Family Data is not present, Please enter some Family Data");
+    }
 
 
 
