@@ -24,7 +24,7 @@ angular.module('gaussHyrax.summary',['SummaryServicesModule'])
   $scope.$on('familyChange',function(event,familyData){
     console.log('familyData changed, recomputing all graphs...');
       var data = SummaryFactory.calculateGraphForSetOfFamilyMembers($scope.familyData);
-      SummaryFactory.makeChart(data);
+      SummaryFactory.makeChart(data,true);
       $scope.$emit('points', SummaryFactory.currentPointValue);
   });
 
