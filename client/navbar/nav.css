@@ -43,6 +43,8 @@ ul.nav{
   padding: 24px;
   color: white;
   font-size: 14px;
+  font-family: 'Lora', serif;
+  font-weight: 400;
   /*border-left: 2px solid rgba(255, 255, 255, 0.2);*/
 }
 

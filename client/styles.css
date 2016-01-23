@@ -1,8 +1,13 @@
+html{
+  font-family: 'Lora', serif;
+}
 body{
   padding:0;
   margin:0;
   background-color: #F9FAFA;
+  overflow: hidden;
 }
+
 
 .summaryWrapper{
   position: absolute;
@@ -28,8 +33,8 @@ body{
   position: absolute;
   right: 64%;
   height: 639px;
-  overflow: scroll;
-  padding: 0 10px;
+  /*overflow: scroll;*/
+  /*padding: 0 10px;*/
   background-color: #efefeb;
   box-shadow: 1px 1px 8px #DEDEDC;
   border-radius: 3px;
