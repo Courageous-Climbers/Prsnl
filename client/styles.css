@@ -1,15 +1,20 @@
 body{
   padding:0;
   margin:0;
+  background-color: #F9FAFA;
 }
 
 .summaryWrapper{
   position: absolute;
-  left: 40%;
-  border: 1px solid;
+  left: 38%;
+  border: 1px solid #DEDEDC;
   width: 60%;
   display: inline-block;
-  top: 0;
+  top: 30px;
+  background-color: #efefeb;
+  box-shadow: 1px 1px 8px #DEDEDC;
+  border-radius: 3px;
+
 }
 
 .notesWrapper{
@@ -17,9 +22,18 @@ body{
 }
 
 .familyWrapper{
-  border: 1px solid;
-  width: 40%;
-}
+  border: 1px solid #DEDEDC;
+  width: 32%;
+  top: 30px;
+  position: absolute;
+  right: 64%;
+  height: 639px;
+  overflow: scroll;
+  padding: 0 10px;
+  background-color: #efefeb;
+  box-shadow: 1px 1px 8px #DEDEDC;
+  border-radius: 3px;
+  }
 
 .hyraxContent {
   position: relative;
