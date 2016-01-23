@@ -22,13 +22,9 @@ angular.module('gaussHyrax.summary',['SummaryServicesModule'])
   //will also emit a points event so that family controller has access to them
   $scope.$on('familyChange',function(event,familyData){
     console.log('familyData changed, recomputing all graphs...');
-    if($scope.familyData){
       var data = SummaryFactory.calculateGraphForSetOfFamilyMembers($scope.familyData);
       SummaryFactory.makeChart(data);
       $scope.$emit('points', SummaryFactory.currentPointValue);
-    }else{
-      console.log('cannot plot, family not specified');
-    }
   });
 
   //let the familyView controller know that this controller has loaded

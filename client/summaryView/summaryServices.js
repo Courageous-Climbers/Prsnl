@@ -68,8 +68,19 @@ angular.module('SummaryServicesModule',[])
 
 
   factory.calculateGraphForSetOfFamilyMembers = function(family){
+
+    //check if there is anything to plot
+    if(!family || !family[0] || !family[0].history[0]){
+      //return empty data to plot
+      return {
+        linePlot: [],
+        donutPlot: []
+      }
+    }
+
+    console.log('calculating graph for family',family);
+    
     //min date will be the first history item of the first person added
-    console.log('here is the family',family);
     var minDate = family[0].history[0].date;
     var day = moment(minDate);
     var now = moment();
@@ -136,6 +147,14 @@ angular.module('SummaryServicesModule',[])
   };
 
   factory.calculateGraphForOneFamilyMember = function(familyMemberId){
+    //check if there is anything to plot
+    if(!this.pointGraph[familyMemberId]){
+      return {
+        linePlot:[],
+        donutPlot: []
+      }
+    }
+
     var output = [this.pointGraph[familyMemberId].slice()];
     output.unshift(this.xLabels);
     return {
