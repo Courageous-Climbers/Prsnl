@@ -1,0 +1,49 @@
+.summaryWrapper{
+  min-width:600px;
+}
+
+.c3-tooltip{
+  min-width:120px;
+}
+
+g .c3-axis-x .tick{
+  display: none;
+}
+
+#chart{
+  width:90%;
+  margin: 0 auto;
+  margin:20px 0;
+  padding-top:30px;
+}
+
+#donut{
+  width:50%;
+  height:90%;
+  margin:20px 0;
+  top:-60px;
+}
+
+.summaryContent{
+  margin-left:50px;
+}
+
+.contactInfo ul{
+  list-style: none;
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+.familyImg{
+    width: 80px;
+    position: absolute;
+    top: 10px;
+}
+
+.mainInfo{
+  margin: 10px 0 0 100px;
+}
+.mainInfo h1{
+  margin: 0;
+}
