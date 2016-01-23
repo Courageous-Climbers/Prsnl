@@ -21,6 +21,10 @@ angular.module('gaussHyrax.login', ['LoginServices'])
     UserFactory.saveUser($scope.user).then(function(res){
       console.log(res);
       $window.localStorage.setItem('com.hyrax',res.data['_id']);
+
+      //emit login event so familyController can fetch data
+      $scope.$emit('login'); 
+
       $location.path('/dashboard');
     },function(err){
       $scope.showLoginError = true;
@@ -44,6 +48,10 @@ angular.module('gaussHyrax.login', ['LoginServices'])
       
       if(res.data.length){
         //a user profile was returned, so forward them to their dashboard
+
+        //emit login event so familyController can fetch data
+        $scope.$emit('login');        
+        console.log('changing location')
         $location.path('/dashboard');
       }
       //else no user object was returned, so keep here

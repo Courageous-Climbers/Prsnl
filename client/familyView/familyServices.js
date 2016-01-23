@@ -2,23 +2,16 @@ angular.module('FamilyServices', [])
 
 .factory('FamilyFactory', ['$http', '$window', function($http, $window) {
 
-  var familyFactory = {}
+  var familyFactory = {};
 
-  familyFactory.getUserID = function() {
-    return $http({
-      method : 'GET',
-      url : '/api/user/' + $window.localStorage.getItem('com.hyrax')
-    })
-  }
-
-  familyFactory.getAllFamilyMembers = function() {
+  familyFactory.getAllFamilyMembers = function(id) {
     
     return $http({
       method : 'GET',
-      url : '/api/family/' + $window.localStorage.getItem('com.hyrax')
+      url : '/api/family/' + id
     })
     .then(function(res) {
-      console.log("Getting the Family Members from with USER ID: ", $window.localStorage.getItem('com.hyrax'), res);
+      console.log("Getting the Family Members from with USER ID: ", id);
       return res;
     })
   }
