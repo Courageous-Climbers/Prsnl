@@ -20,7 +20,7 @@ angular.module('gaussHyrax.login', ['LoginServices'])
 
     UserFactory.saveUser($scope.user).then(function(res){
       console.log(res);
-      $window.localStorage.setItem('com.hyrax',res.data);
+      $window.localStorage.setItem('com.hyrax',res.data['_id']);
       $location.path('/dashboard');
     },function(err){
       $scope.showLoginError = true;
