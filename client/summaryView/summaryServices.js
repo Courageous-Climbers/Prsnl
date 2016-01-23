@@ -168,11 +168,11 @@ angular.module('SummaryServicesModule',[])
     }
   };
 
-  factory.makeChart = function(data){
+  factory.makeChart = function(data,refresh){
     var xAxis;
     var rendered;
 
-    if(chart){
+    if(chart && !refresh){
       chart.load({
         columns:data.linePlot,
         unload:true
@@ -242,7 +242,7 @@ angular.module('SummaryServicesModule',[])
          }
       });
     }
-    if(donut){
+    if(donut && !refresh){
       donut.load({
         columns:data.donutPlot,
         unload:true
