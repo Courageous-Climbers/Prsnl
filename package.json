@@ -8,7 +8,6 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "postinstall": "bower install",
     "test": "mocha test/test.js"
   },   
   "engines": {
