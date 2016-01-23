@@ -1,40 +1,74 @@
 .eachFamilyMember {
-  border: 1px solid black;
-  width: 92%;
+  /*border: 1px solid black;
+  width: 92%;*/
   /*box-shadow: inset 0px 0px 30px 0px rgb(131, 59, 59);*/
   background-color: #F5F5F5;
-  border-radius: 5px;
+  border-left: 4px solid rgb(44, 160, 44);
+  /*border-radius: 3px;*/
   padding: 5px 5px;
-  margin: 5px 10px;
-  font-family: sans-serif;
-  font-size: 14px;
+  margin: 0 0 4px;
+  /*font-family: sans-serif;*/
+  font-size: 16px;
+  text-transform: capitalize;
 }
 
 .eachFamilyMember li {
-  display: inline;
+  /*display: inline;*/
   padding: 5px;
-  font-size: 
+  list-style: none;
+  /*font-size:*/
 }
 
 .circle {
   display: inline-block;
-  border: 0.1em solid #000;
-  border-radius: 100%;
-  height: 2.0em;
-  width: 2.0em;
+  border: 2px solid rgb(183, 207, 221);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  padding: 1px 4px 4px 3px;
   text-align: center;
+  background: #C5D7E0;
+  /*float: right;
+  margin: 0 6px;*/
 }
 
 .circle p {
-  margin-top: 0.10em;
-  font-size: 1.2em;
+  margin-top: 0;
+  font-size: 16px;
   font-weight: bold;
-  font-family: sans-serif;
+  /*font-family: sans-serif;*/
   color: #FF5C5C;
 }
 
 .addFamilyMemberButton {
   float: relative;
+}
+.familyHeader {
+  padding: 10px;
+  display: block;
+  border-bottom: 3px solid #DEDEDC;
+  margin: 9px 9px 0;
+}
+
+.familyHeader a img{
+  width: auto;
+  height: 2.5%;
+  cursor: pointer;
+  float: right;
+  top: 10px;
+  position: relative;
+  right: 8px;
+}
+
+.familyHeader h2{
+  display: inline-block;
+  margin: 0;
+}
+
+.familyInfo{
+  /*padding: 10px;*/
+  height: 550px;
+  overflow-y: scroll;
 }
 
 
@@ -65,7 +99,7 @@
   -moz-transform: translate(-50%, -50%);
 
   background-color: #fff;
-  border-radius: 5px; 
+  border-radius: 5px;
   box-shadow: 4px 4px 80px #000;
 }
 .ng-modal-dialog-content {
@@ -81,7 +115,7 @@
   font-size: 120%;
   display: inline-block;
   font-weight: bold;
-  font-family: 'arial', 'sans-serif';
+  /*font-family: 'arial', 'sans-serif';*/
 }
 
 /* Adding Action View */
@@ -100,6 +134,12 @@
   transition: all ease-in 0.5s;
 }
 
-.dropDownActionButton {
+.dropDownActionButton img{
   float: right;
+  width: auto;
+  height: 2%;
+  cursor: pointer;
+  position: relative;
+  top: -20px;
+  right: 22px;
 }
