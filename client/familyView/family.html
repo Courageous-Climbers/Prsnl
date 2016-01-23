@@ -2,21 +2,21 @@
 <div class="container">
 
 <div class="familyWrapper" >
-  <h1>Family Members Page</h1>
-    <div>
-      <button ng-click='toggleModal()'>+</button>
-    </div>
+  <div class="familyHeader">
+    <h2>Family</h2>
+    <a ng-click='toggleModal()'> <img src="../assets/add.png" alt="Add Family" /> </a>
+  </div>
 
-    
 
+  <div class="familyInfo">
     <div class="eachFamilyMember" ng-repeat="member in familyData" ng-click="singleFamilyMemberInfo(member)">
-      <li> {{ member.firstName }} {{ member.lastName }} </li>
+      <li> {{ member.firstName }} {{ member.lastName }} <div class="circle"><p> {{ member.points }} </p></div></li>
       <li> {{ member.nextContactDate }} </li>
-      <div class="circle"><p> {{ member.totalPoints }} </p></div>
-      <button class="dropDownActionButton" ng-click="showDetails = !showDetails"> V </button>
-        <div class="slide-animate-container" ng-show="showDetails">
-          <div ng-include="'../actionView/action.html'"></div>
-        </div>
+      <a class="dropDownActionButton" ng-click="showDetails = !showDetails"> <img src="../assets/doubledown.png" alt="Add Family" /> </a>
+      <div class="slide-animate-container" ng-show="showDetails">
+        <div ng-include="'../actionView/action.html'"></div>
+      </div>
     </div>
+  </div>
 </div>
 </div>

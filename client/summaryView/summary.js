@@ -4,7 +4,7 @@ angular.module('gaussHyrax.summary',['SummaryServicesModule'])
   console.log('summary controller loaded');
 
   $scope.who = "Everybody"
-
+  $scope.myActiveFamilyMember;
   //will change the plot to a single family member when the active member is clicked
   //activeFamilyMember is set by familyController
   $scope.$watch('activeFamilyMember',function(){
@@ -13,6 +13,7 @@ angular.module('gaussHyrax.summary',['SummaryServicesModule'])
       var singlePlot = SummaryFactory.calculateGraphForOneFamilyMember($scope.activeFamilyMember['_id'])
       SummaryFactory.makeChart(singlePlot);
       $scope.who = $scope.activeFamilyMember.firstName + ' ' + $scope.activeFamilyMember.lastName 
+      $scope.myActiveFamilyMember = $scope.activeFamilyMember
     }else{
       console.log('cannot plot, family member not specified');
     }
@@ -23,7 +24,7 @@ angular.module('gaussHyrax.summary',['SummaryServicesModule'])
   $scope.$on('familyChange',function(event,familyData){
     console.log('familyData changed, recomputing all graphs...');
       var data = SummaryFactory.calculateGraphForSetOfFamilyMembers($scope.familyData);
-      SummaryFactory.makeChart(data);
+      SummaryFactory.makeChart(data,true);
       $scope.$emit('points', SummaryFactory.currentPointValue);
   });
 

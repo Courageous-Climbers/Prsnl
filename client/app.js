@@ -4,7 +4,8 @@ angular.module('gaussHyrax', ['ui.router',
 'gaussHyrax.newFamilyMember',
 'gaussHyrax.action',
 'gaussHyrax.notes',
-'gaussHyrax.summary'
+'gaussHyrax.summary',
+'gaussHyrax.nav'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -13,7 +14,8 @@ angular.module('gaussHyrax', ['ui.router',
   $stateProvider
     .state('dashboard', {
       url : '/dashboard',
-      templateUrl : '/dashboard/dashboard.html'
+      templateUrl : '/dashboard/dashboard.html',
+      controller: 'navCtrl'
     })
 
     .state('login', {

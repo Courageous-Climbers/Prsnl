@@ -8,7 +8,7 @@ angular.module('gaussHyrax.notes', [])
   // The note is then emitted so the parent controller (in action.js) can see it
   $scope.saveNote = function(note){
     $scope.$emit('noteSavedEvent', note);
-    $scope.singleNote = "";  
+    $scope.singleNote = "";  //Empty notes field once its submitted
   }
 
   // Currently not being used
