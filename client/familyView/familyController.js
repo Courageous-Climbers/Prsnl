@@ -1,14 +1,16 @@
 angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
 
-.controller('familyController', ['$scope', 'FamilyFactory', 
-  function($scope, FamilyFactory){
+.controller('familyController', ['$scope', '$window', 'FamilyFactory', 
+  function($scope, $window, FamilyFactory){
 
-  var userID;
-  $scope.familyData;
-  $scope.activeFamilyMember;
+    $scope.familyData;
+    $scope.activeFamilyMember;
   
     $scope.$on('points', function(event, totalPoints) {
       // console.log("Here are the Points from the Summary Controller: ", totalPoints);
+      if(!$scope.familyData){
+        return;
+      }
       for (var i = 0; i < $scope.familyData.length; i++) {
         for (var key in totalPoints) {
           if (key === $scope.familyData[i]._id){
@@ -19,8 +21,26 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
       } 
     });
 
+    //on login, get family data
+    $scope.$on('login',function(event,id){
+      getFamilyData($window.localStorage.getItem('com.hyrax'));
+    });
 
-    FamilyFactory.getAllFamilyMembers()
+    //when summary controller loads, let it know that there is family data available
+    $scope.$on('summaryCtrlLoaded',function(){
+      console.log('plot initialization');
+      $scope.$broadcast('familyChange',$scope.familyData);
+    });
+    
+
+    //helper function
+    function getFamilyData(id){
+
+     if(!id){
+      return;
+     }
+
+     FamilyFactory.getAllFamilyMembers(id)
       .then(function(res) {
         $scope.familyData = res.data;
 
@@ -38,14 +58,15 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
           }, 0);
         });
 
-        //when summary controller loads, let it know that there is family data available
-        $scope.$on('summaryCtrlLoaded',function(){
-          console.log('triggering family change');
-          $scope.$broadcast('familyChange',$scope.familyData);
-        });
-        
-      });
+        //let the summaryView know that there are new things to graph
+        console.log('new family data loaded');
+        $scope.$broadcast('familyChange',$scope.familyData);
 
+      });
+    }
+
+    //on controller load (page refresh), get family data
+    getFamilyData($window.localStorage.getItem('com.hyrax'));
 
 
     // Modal controller

@@ -33,11 +33,9 @@ function($scope, NewFamilyMemberFactory){
         contactFrequency: $scope.slider_toggle.value
       }
       console.log("This is an obj create in controller: ", member)
-      NewFamilyMemberFactory.getUserID()
-      .then(function (res){
-        NewFamilyMemberFactory.saveMember(res.data, member);
-        $scope.member = '';
-      });
-    };
+      
+      NewFamilyMemberFactory.saveMember(member);
+      $scope.member = '';
+    }
 
 }])

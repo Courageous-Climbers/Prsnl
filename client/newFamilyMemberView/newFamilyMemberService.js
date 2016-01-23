@@ -1,22 +1,22 @@
 angular.module('newFamilyMemberServices', [])
 
-.factory('NewFamilyMemberFactory', ['$http', function($http) {
+.factory('NewFamilyMemberFactory', ['$http', '$window', function($http, $window) {
   var familyMemberFactory = {};
 
   familyMemberFactory.getUserID = function() {
     return $http({
       method: 'GET',
-      url: '/api/user/Gandalf/DeezNuts'
+      url: '/api/user/' + $window.localStorage.getItem('com.hyrax')
     });
   };
 
 
-  familyMemberFactory.saveMember = function(userId, memberObj) {
-    console.log("this is userID: ", userId);
+  familyMemberFactory.saveMember = function(memberObj) {
+    
     console.log("this is memberObj: ", memberObj);
     return $http({
       method : 'POST',
-      url : '/api/family/' + userId,
+      url : '/api/family/' + $window.localStorage.getItem('com.hyrax'),
       headers: {
         'Content-Type': 'application/json'
       },

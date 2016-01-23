@@ -1,9 +1,20 @@
 <div class="summaryWrapper" ng-controller="summaryCtrl">
-  <h1>Summary of {{who}}</h1>
-    <div style="width:90%">
-      <div id="chart"></div>
+  <div class="summaryContent">
+    <div class="mainInfo">
+      <h1>{{who}}</h1>
+      <div class="phone">{{activeFamilyMember.phoneNumber}}</div>
+      <div class="email">{{activeFamilyMember.email}}</div>
     </div>
-    <div style="width:50%;margin: 0 auto;">
-      <div id="donut"></div>
+    <div class="contactInfo">
+    <img src="assets/batman.jpg" class="familyImg">
+      <ul>
+      
+      <li class="email">{{activeFamilyMember.streetAddress}}</li>
+      <li class="email">{{activeFamilyMember.city}} {{activeFamilyMember.state}}, {{activeFamilyMember.zipcode}}</li>
+      <li class="email">{{activeFamilyMember.country}}</li>
+      </ul>
     </div>
+    <div id="chart"></div>
+    <div id="donut"></div>
+  </div>
 </div>

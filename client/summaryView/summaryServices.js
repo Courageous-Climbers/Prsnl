@@ -3,6 +3,8 @@ angular.module('SummaryServicesModule',[])
 .factory('SummaryFactory',['$http','$window',function($http,$window){
 
   var dateFormat = "MMM D, YYYY";
+  var chart;
+  var donut;
 
   var factory = {};
   factory.currentPointValue = {};
@@ -68,8 +70,19 @@ angular.module('SummaryServicesModule',[])
 
 
   factory.calculateGraphForSetOfFamilyMembers = function(family){
+
+    //check if there is anything to plot
+    if(!family || !family[0] || !family[0].history[0]){
+      //return empty data to plot
+      return {
+        linePlot: [],
+        donutPlot: []
+      }
+    }
+
+    console.log('calculating graph for family',family);
+
     //min date will be the first history item of the first person added
-    console.log('here is the family',family);
     var minDate = family[0].history[0].date;
     var day = moment(minDate);
     var now = moment();
@@ -115,7 +128,10 @@ angular.module('SummaryServicesModule',[])
       //create a history lookup so that information can be shown on the tooltip
       factory.historyLookUp[family[i]['_id']] = {};
       for (var j = 0; j < family[i].history.length; j++) {
-        factory.historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)] = _.extend(family[i].history[j],{name:family[i].firstName + ' ' + family[i].lastName});
+        if(!factory.historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)]){
+          factory.historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)]  = []
+        }
+        factory.historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)].push(_.extend(family[i].history[j],{name:family[i].firstName + ' ' + family[i].lastName}));
       }
 
     };
@@ -136,6 +152,14 @@ angular.module('SummaryServicesModule',[])
   };
 
   factory.calculateGraphForOneFamilyMember = function(familyMemberId){
+    //check if there is anything to plot
+    if(!this.pointGraph[familyMemberId]){
+      return {
+        linePlot:[],
+        donutPlot: []
+      }
+    }
+
     var output = [this.pointGraph[familyMemberId].slice()];
     output.unshift(this.xLabels);
     return {
@@ -148,87 +172,107 @@ angular.module('SummaryServicesModule',[])
     var xAxis;
     var rendered;
 
-    var chart = c3.generate({
-      
-      bindto: '#chart',
-      size: {
-        height: 240,
-        width: 480
-      },
-      data:{
-        x:'x',
-        columns: data.linePlot,
-        type: 'area'
-        //groups: data.x,
-      },
-      onrendered:function(){
-        if(!rendered){
-          xAxis = d3.selectAll('g .c3-axis-x .tick');
-          rendered = true;
-        }
-        xAxis.style({'opacity':0});
-      },
-      axis: {
-        x: {
-            type: 'category', // this needed to load string x value
-            label: {
-              text: 'Time',
-              position: 'outer-center'
-            }
-        },
-        y: {
-          label: {
-              text: 'Points',
-              position: 'outer-middle'
-            }
-        }
-      },
-      legend: {
-        hide: true
-      },
-      subchart: {
-        show: true,
+    if(chart){
+      chart.load({
+        columns:data.linePlot,
+        unload:true
+      });
+    }else{
+      chart = c3.generate({
+        
+        bindto: '#chart',
         size: {
-          height: 20
-        }
-      },
-      zoom: {
-        enabled: true
-      },
-      tooltip: {
-         format:{
-           name: function (name, ratio, id, index) {
-            if(factory.historyLookUp[id][factory.xLabels[index+1]]){
-               return factory.historyLookUp[id][factory.xLabels[index+1]].name + '<br><b>' + 
-                        factory.historyLookUp[id][factory.xLabels[index+1]].action + 
-                        ' (' + factory.historyLookUp[id][factory.xLabels[index+1]].points + ' pts)' + '</b><br>"' + 
-                          factory.historyLookUp[id][factory.xLabels[index+1]].notes + '"' ;
-            }else{
-              return "";
-            }
-           }
+          height: 240
+          // /width: 480
         },
-         grouped: false // Default true
-       }
-    });
- 
-    var donut = c3.generate({
-      bindto: '#donut',
-      data:{
-        columns: data.donutPlot,
-        type: 'donut'
-      },
-      donut:{
-        label:{
-          format: function(value, ratio){
-            return  value;
+        data:{
+          x:'x',
+          columns: data.linePlot,
+          type: 'area'
+          //groups: data.x,
+        },
+        axis: {
+          x: {
+              type: 'category', // this needed to load string x value
+              label: {
+                text: 'Time',
+                position: 'outer-center'
+              }
+          },
+          y: {
+            label: {
+                text: 'Points',
+                position: 'outer-middle'
+              }
           }
+        },
+        legend: {
+          hide: true
+        },
+        subchart: {
+          show: true,
+          size: {
+            height: 20
+          }
+        },
+        zoom: {
+          enabled: true
+        },
+        transition: {
+          duration: 1000
+        },
+        tooltip: {
+          format:{
+            name: function (name, ratio, id, index) {
+              var tasks = factory.historyLookUp[id][factory.xLabels[index+1]];
+              var displayStr = "";
+              if(!tasks){
+                return displayStr;
+              }
+              displayStr += tasks[0].name + '<br>';
+              for (var i = 0; i < tasks.length; i++) {
+                  displayStr += '<b>' + tasks[i].action + 
+                  ' (+' + tasks[i].points + ' pts)' + '</b><br>"' + 
+                  tasks[i].notes + '"<br>' ;
+              }
+              return displayStr;
+             }
+          },
+           grouped: false // Default true
+         }
+      });
+    }
+    if(donut){
+      donut.load({
+        columns:data.donutPlot,
+        unload:true
+      });
+    }else{
+      donut = c3.generate({
+        bindto: '#donut',
+        size: {
+          height:260,
+          width: 260
+        },
+        data:{
+          columns: data.donutPlot,
+          type: 'donut'
+        },
+        donut:{
+          label:{
+            format: function(value, ratio){
+              return  value;
+            }
+          }
+        },
+        legend:{
+          position:'bottom'
+        },
+         transition: {
+          duration: 1500
         }
-      },
-      legend:{
-        position:'right'
-      }
-    });
+      });
+    }
   };
   return factory;
 
