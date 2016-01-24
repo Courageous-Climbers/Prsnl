@@ -9,13 +9,15 @@
   width: 100%;
 }
 
-.familyMember input[type=button] {
+.familyMember input[type=submit] {
   border: 1px solid lightgrey;
+  font-family: 'Lora', serif;
+  font-size: 15px;
   background: white;
   margin: 20px 0 ;
   border-radius: 3px;
   padding: 9px;
-  width: 95px;
+  width: auto;
   float: right;
   position: relative;
   right: 20px;
