@@ -7,7 +7,12 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/test.js"
+    "start": "node server/server.js",
+    "postinstall": "bower install"
+  },
+  "engines": {
+    "node": "5.3.0",
+    "npm": "3.3.12"
   },
   "repository": {
     "type": "git",
@@ -19,13 +24,12 @@
     "url": "https://github.com/Courageous-Climbers/GaussHyrax/issues"
   },
   "homepage": "https://github.com/Courageous-Climbers/GaussHyrax#readme",
-  "devDependencies": {
-    "body-parser": "^1.14.2",
-    "express": "^4.13.3",
-    "morgan": "^1.6.1"
-  },
   "dependencies": {
+    "body-parser": "^1.14.2",
+    "bower": "^1.7.2",
+    "express": "^4.13.3",
     "mongoose": "^4.3.5",
+    "morgan": "^1.6.1",
     "underscore": "^1.8.3"
   }
 }
