@@ -55,3 +55,14 @@ ul.nav{
 .nav a:visited{
   color: orange;
 }
+
+.username {
+  font-size: 20px;
+  font-family: 'Lora', cursive;
+  margin: 0;
+  display: inline-block;
+  padding: 0 10px;
+  left: 75px;
+  position: relative;
+  color: #FDA300;
+} 

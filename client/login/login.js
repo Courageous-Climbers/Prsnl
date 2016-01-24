@@ -54,6 +54,9 @@ angular.module('gaussHyrax.login', ['LoginServices'])
         //emit login event so familyController can fetch data
         $scope.$emit('login');        
         console.log('changing location')
+
+        //emit an event to the parent familyController to display the usernaem on login
+        $scope.$emit('userLoggedIn', $scope.user.userName);
         $location.path('/dashboard');
       }
       //else no user object was returned, so keep here

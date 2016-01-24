@@ -42,6 +42,11 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
       console.log('plot initialization');
       $scope.$broadcast('familyChange',$scope.familyData);
     });
+
+    // Listen for an emit Event from the login Controller (Child Scope)
+    $scope.$on('userLoggedIn', function(event, data){
+       $scope.login = data;
+    });
     
 
     //helper function
