@@ -204,10 +204,15 @@ angular.module('SummaryServicesModule',[])
         columns:[chartValues],
         unload:[id]
       })
+
+      //update pointGraph so if it is loaded again, we have the new info
+      this.pointGraph[id] = chartValues;
+
+      //update the current point value
+      factory.currentPointValue[id] = chartValues[chartValues.length-1];
     }
 
-    //update the current point value
-    factory.currentPointValue[id] = chartValues[chartValues.length-1];
+    
 
 
     //modify donut
@@ -216,6 +221,21 @@ angular.module('SummaryServicesModule',[])
       columns:[[historyEvent.action, parseInt(donutValue)+1]],
       unload:[historyEvent.action]
     });
+
+    //save the donut info so it can be loaded later
+    var found = false;
+
+    for (var i = 0; i < this.actionsDonut.length; i++) {
+      if(this.actionsDonut[id][i][0] === historyEvent.action){
+        this.actionsDonut[id][i][1] = parseInt(donutValue)+1;
+        found= true;
+        break;
+      }
+    }
+
+    if(!found){
+      this.actionsDonut[id].push([historyEvent.action, 1])
+    }
 
   };
 
