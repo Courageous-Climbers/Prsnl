@@ -225,7 +225,7 @@ angular.module('SummaryServicesModule',[])
     //save the donut info so it can be loaded later
     var found = false;
 
-    for (var i = 0; i < this.actionsDonut.length; i++) {
+    for (var i = 0; i < this.actionsDonut[id].length; i++) {
       if(this.actionsDonut[id][i][0] === historyEvent.action){
         this.actionsDonut[id][i][1] = parseInt(donutValue)+1;
         found= true;
