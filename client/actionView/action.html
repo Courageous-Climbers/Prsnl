@@ -65,13 +65,16 @@
     <div class="notesClass">
       <br>
       <p><i>Enter a note (to add to your action)</i></p>
-      <form>
-        <input type="text" ng-model="singleNote">
-        <input type="submit" ng-click="saveNote(singleNote)" value="Save note"/>
-      </form>
+      <!-- <form> -->
+        <!-- <input type="text" ng-model="singleNote"> -->
+        <textarea rows="4" cols="50" ng-model="singleNote">
+        </textarea>
+
+        <!-- <input type="submit" ng-click="saveNote(singleNote)" value="Save note"/> -->
+      <!-- </form> -->
     </div>
     <br>
-    <input class="submitAction" type="submit" ng-click="saveAction(selectedAction, points, dateEntered)" value="Submit Action"/>
+    <input class="submitAction" type="submit" ng-click="saveAction(selectedAction, points, dateEntered, singleNote)" value="Submit Action"/>
 
     </div>
 
