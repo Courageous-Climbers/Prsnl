@@ -12,36 +12,29 @@ angular.module('SummaryServicesModule',[])
   var chart;
   var donut;
 
+  var xIdx = {};
+  var familyLookUp = {};
+  var historyLookUp = {};
   var factory = {};
+
   factory.currentPointValue = {};
   factory.pointGraph = {};
   factory.actionsDonut = {};
   factory.xLabels = [];
-  factory.historyLookUp = {};
 
   //helper function
-  var makeSeriesForOneFamilyMember = function(familyMember,dayIdx){
+  var calculatePointsGraphFromHistory = function(history){
     var points=[];
-    var actionCount = {};
-    var actionArray = [];
-
     var lastPoints = 0;
-    var numDays = Object.keys(dayIdx).length;
-
+    var numDays = Object.keys(xIdx).length;
     //initialize points array to be 0
     for (var i = 0; i < numDays; i++) {
       points[i] = 0;
     }
 
     //add points that are earned
-    for (var i = 0; i < familyMember.history.length; i++) {
-      points[dayIdx[moment(familyMember.history[i].date).format(dateFormat)]]+=familyMember.history[i].points;
-      
-      if(!actionCount[familyMember.history[i].action]){
-        actionCount[familyMember.history[i].action] = 0
-      }
-
-      actionCount[familyMember.history[i].action]++;
+    for (var i = 0; i < history.length; i++) {
+      points[xIdx[moment(history[i].date).format(dateFormat)]]+=history[i].points;
     }
 
     //interpolate
@@ -61,6 +54,23 @@ angular.module('SummaryServicesModule',[])
 
       //update the previous point value
       lastPoints = points[i];
+    }
+    return points;
+  }
+
+  var makeSeriesForOneFamilyMember = function(familyMember,dayIdx){
+
+    var actionCount = {};
+    var actionArray = [];
+
+    var points = calculatePointsGraphFromHistory(familyMember.history);
+
+    for (var i = 0; i < familyMember.history.length; i++) {
+      if(!actionCount[familyMember.history[i].action]){
+        actionCount[familyMember.history[i].action] = 0
+      }
+
+      actionCount[familyMember.history[i].action]++;
     }
 
     //turn actionCount object into an array
@@ -110,6 +120,7 @@ angular.module('SummaryServicesModule',[])
     }
     //store this so it can be used later
     this.xLabels = _.flatten(['x',days]);
+    xIdx = dayIdx;
 
     //calculate series for each family member
     var points = [];
@@ -130,14 +141,15 @@ angular.module('SummaryServicesModule',[])
       this.pointGraph[family[i]['_id']] = series.linePlot.slice();
       this.currentPointValue[family[i]['_id']] = series.linePlot[series.linePlot.length-1];
       this.actionsDonut[family[i]['_id']] = series.donutPlot.slice();
+      familyLookUp[family[i]['_id']] = family[i];
 
       //create a history lookup so that information can be shown on the tooltip
-      factory.historyLookUp[family[i]['_id']] = {};
+      historyLookUp[family[i]['_id']] = {};
       for (var j = 0; j < family[i].history.length; j++) {
-        if(!factory.historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)]){
-          factory.historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)]  = []
+        if(!historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)]){
+          historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)]  = []
         }
-        factory.historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)].push(_.extend(family[i].history[j],{name:family[i].firstName + ' ' + family[i].lastName}));
+        historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)].push(_.extend(family[i].history[j],{name:family[i].firstName + ' ' + family[i].lastName}));
       }
 
     };
@@ -172,6 +184,37 @@ angular.module('SummaryServicesModule',[])
       linePlot:output,
       donutPlot: this.actionsDonut[familyMemberId]
     }
+  };
+
+  factory.addSingleEvent = function(id,historyEvent){
+    var prettyDate = moment(historyEvent.date).format(dateFormat);
+
+    //add event to history lookup so it shows up on tooltip
+    if(!historyLookUp[id][prettyDate]){
+      historyLookUp[id][prettyDate] = [];
+    }
+    historyLookUp[id][prettyDate].push(_.extend(historyEvent,{name:familyLookUp[id].firstName + ' ' + familyLookUp[id].lastName}));
+
+    //modify graph
+    //var chartValues = chart.data.values(id);
+    if(xIdx[prettyDate]){
+      //chartValues[xIdx[prettyDate]] += historyEvent.points;
+      var chartValues = calculatePointsGraphFromHistory(familyLookUp[id].history);
+      console.log('new chart values',chartValues);
+      chartValues.unshift(id)
+      chart.load({
+        columns:[chartValues],
+        unload:[id]
+      })
+    }
+
+    //modify donut
+    var donutValue = donut.data.values(historyEvent.action) || 0;
+    donut.load({
+      columns:[[historyEvent.action, parseInt(donutValue)+1]],
+      unload:[historyEvent.action]
+    });
+
   };
 
   factory.makeChart = function(data,refresh){
@@ -230,7 +273,7 @@ angular.module('SummaryServicesModule',[])
         tooltip: {
           format:{
             name: function (name, ratio, id, index) {
-              var tasks = factory.historyLookUp[id][factory.xLabels[index+1]];
+              var tasks = historyLookUp[id][factory.xLabels[index+1]];
               var displayStr = "";
               if(!tasks){
                 return displayStr;
