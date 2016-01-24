@@ -4,12 +4,15 @@
 <div class="familyWrapper" >
   <div class="familyHeader">
     <h2>Family</h2>
+    <div class="searchBox">
+      <input type="search" ng-model="search" class="query">  
+    </div>
     <a ng-click='toggleModal()'> <img src="../assets/add.png" alt="Add Family" /> </a>
   </div>
 
 
   <div class="familyInfo">
-    <div class="eachFamilyMember" ng-repeat="member in familyData" ng-click="singleFamilyMemberInfo(member)">
+    <div class="eachFamilyMember" ng-repeat="member in familyData | filter:search" ng-click="singleFamilyMemberInfo(member)">
       <li> {{ member.firstName }} {{ member.lastName }} <div class="circle"><p> {{ member.points }} </p></div></li>
       <li> {{ member.nextContactDate }} </li>
       <a class="dropDownActionButton" ng-click="showDetails = !showDetails"> <img src="../assets/doubledown.png" alt="Add Family" /> </a>

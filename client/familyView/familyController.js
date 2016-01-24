@@ -1,16 +1,10 @@
 angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
 
-.controller('familyController', ['$scope', '$window', 'FamilyFactory', 
+.controller('familyController', ['$scope', '$window', 'FamilyFactory',
   function($scope, $window, FamilyFactory){
 
     $scope.familyData;
     $scope.activeFamilyMember;
-    
-    //this event is triggered from the actions view
-    $scope.$on('historyUpdateEvent',function(event,famMemberId,historyEvent){
-      //broadcast this event down to the summary view
-      $scope.$broadcast('updateGraph',famMemberId,historyEvent);
-    });
 
     $scope.$on('logout',function(event,data){
       $scope.familyData = [];
@@ -29,7 +23,7 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
             $scope.familyData[i].points = totalPoints[key] || 0;
           }
         }
-      } 
+      }
     });
 
     //on login, get family data
@@ -42,7 +36,7 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
       console.log('plot initialization');
       $scope.$broadcast('familyChange',$scope.familyData);
     });
-    
+
 
     //helper function
     function getFamilyData(id){
@@ -90,7 +84,7 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
     $scope.checkActions = function(familyMemberObj) {
       // console.log(familyMemberObj);
       $scope.expandActionsView = familyMemberObj;
-      
+
     }
 
     $scope.singleFamilyMemberInfo = function(familyMemberObj) {
