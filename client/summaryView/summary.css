@@ -86,6 +86,7 @@ g .c3-axis-x .tick{
 .summaryContent .rightContent{
   position:absolute;
   right: 10px;
+  top: 0;
 }
 
 .summaryContent .actionWrapper h2{
