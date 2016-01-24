@@ -75,9 +75,6 @@
   transition: all linear 0.4s;
 }
 
-.notesClass {
-  /*border: 1px dashed;*/
-}
 .notesClass h3{
   margin: 0px;
   padding: 0px;
@@ -90,6 +87,3 @@
   border: 0px;
 }
 
-.notesClass input{
-  background: white;
-}
