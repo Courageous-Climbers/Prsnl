@@ -5,7 +5,12 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
 
     $scope.familyData;
     $scope.activeFamilyMember;
-  
+    
+    $scope.$on('logout',function(event,data){
+      $scope.familyData = [];
+      $scope.activeFamilyMember = undefined;
+    });
+
     $scope.$on('points', function(event, totalPoints) {
       // console.log("Here are the Points from the Summary Controller: ", totalPoints);
       if(!$scope.familyData){

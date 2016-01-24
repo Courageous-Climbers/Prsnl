@@ -7,6 +7,8 @@ angular.module('gaussHyrax.login', ['LoginServices'])
   //login page is loading
   //delete the token if exists
   $window.localStorage.removeItem('com.hyrax');
+  //emit a logout event so that the family controller can delete the activeFamilyMember and data
+  $scope.$emit('logout');
 
   $scope.saveUser = function() {
     

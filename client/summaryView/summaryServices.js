@@ -1,5 +1,11 @@
 angular.module('SummaryServicesModule',[])
 
+.filter('niceDate', function() {
+  return function(input) {
+    return moment(input).format("MMM D, YYYY");
+  };
+})
+
 .factory('SummaryFactory',['$http','$window',function($http,$window){
 
   var dateFormat = "MMM D, YYYY";
@@ -242,6 +248,7 @@ angular.module('SummaryServicesModule',[])
          }
       });
     }
+
     if(donut && !refresh){
       donut.load({
         columns:data.donutPlot,
@@ -251,8 +258,8 @@ angular.module('SummaryServicesModule',[])
       donut = c3.generate({
         bindto: '#donut',
         size: {
-          height:260,
-          width: 260
+          height:240,
+          width: 240
         },
         data:{
           columns: data.donutPlot,
