@@ -6,6 +6,17 @@ angular.module('gaussHyrax.family', ['FamilyServices', 'ngAnimate'])
     $scope.familyData;
     $scope.activeFamilyMember;
     
+    $scope.$on('historyUpdateEvent',function(event,famMemberId,historyEvent){
+      console.log('history event heard in family controller');
+      // for (var i = 0; i < $scope.familyData.length; i++) {
+      //   if($scope.familyData[i]['_id'] === famMemberId){
+      //     console.log('pushing history to ',famMemberId, historyEvent);
+          //$scope.familyData[i].history.push(historyEvent);
+          $scope.$broadcast('updateGraph',famMemberId,historyEvent);
+        // }
+ //     }
+    });
+
     $scope.$on('logout',function(event,data){
       $scope.familyData = [];
       $scope.activeFamilyMember = undefined;
