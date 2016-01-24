@@ -198,15 +198,17 @@ angular.module('SummaryServicesModule',[])
     //modify graph
     //var chartValues = chart.data.values(id);
     if(xIdx[prettyDate]){
-      //chartValues[xIdx[prettyDate]] += historyEvent.points;
       var chartValues = calculatePointsGraphFromHistory(familyLookUp[id].history);
-      console.log('new chart values',chartValues);
       chartValues.unshift(id)
       chart.load({
         columns:[chartValues],
         unload:[id]
       })
     }
+
+    //update the current point value
+    factory.currentPointValue[id] = chartValues[chartValues.length-1];
+
 
     //modify donut
     var donutValue = donut.data.values(historyEvent.action) || 0;

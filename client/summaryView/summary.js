@@ -35,6 +35,7 @@ angular.module('gaussHyrax.summary',['SummaryServicesModule'])
   $scope.$on('updateGraph',function(event,famMemberId,historyEvent){
     console.log('heard history in summary summaryCtrl');
     SummaryFactory.addSingleEvent(famMemberId, historyEvent);
+    $scope.$emit('points', SummaryFactory.currentPointValue);
   });
 
   //let the familyView controller know that this controller has loaded
