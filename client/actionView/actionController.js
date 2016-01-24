@@ -4,23 +4,28 @@ angular.module('gaussHyrax.action', [])
 
   $scope.actionArray = [];
   $scope.allFamilyActionsArray = [];
+  $scope.selectedAction = "Click an action";
+  $scope.points = 0;
   
   // Using moment to convert date into a simpler format
-  $scope.callDate = moment(new Date()).format('MMM DD YYYY');
-  $scope.textDate = moment(new Date()).format('MMM DD YYYY');
-  $scope.sendLetterDate = moment(new Date()).format('MMM DD YYYY');
-  $scope.sendEmailDate = moment(new Date()).format('MMM DD YYYY');
-  $scope.dinnerDate = moment(new Date()).format('MMM DD YYYY');
-  $scope.drinksDate = moment(new Date()).format('MMM DD YYYY');
-  $scope.lunchDate = moment(new Date()).format('MMM DD YYYY');
-  $scope.coffeeDate = moment(new Date()).format('MMM DD YYYY');
+  $scope.dateEntered = moment(new Date()).format('MMM DD YYYY');
+
+
+  // $scope.callDate = moment(new Date()).format('MMM DD YYYY');
+  // $scope.textDate = moment(new Date()).format('MMM DD YYYY');
+  // $scope.sendLetterDate = moment(new Date()).format('MMM DD YYYY');
+  // $scope.sendEmailDate = moment(new Date()).format('MMM DD YYYY');
+  // $scope.dinnerDate = moment(new Date()).format('MMM DD YYYY');
+  // $scope.drinksDate = moment(new Date()).format('MMM DD YYYY');
+  // $scope.lunchDate = moment(new Date()).format('MMM DD YYYY');
+  // $scope.coffeeDate = moment(new Date()).format('MMM DD YYYY');
 
   // get the user ID
   var userId = $window.localStorage.getItem('com.hyrax');
   // console.log("\nUserID: ", userId);
   
   var famMemberId = $scope.member._id;
-  //console.log("All the info for a this fam member: ", $scope.member);
+  // console.log("All the info for a this fam member: ", $scope.member);
 
   var currentNote;
   // Listen for the note to be emitted from the event in the child view (notes.js)
@@ -28,7 +33,25 @@ angular.module('gaussHyrax.action', [])
     currentNote = data;
   });
 
+  $scope.setAction = function(anAction, pts){
+    $scope.selectedAction = anAction;
+    $scope.points = pts;
+  }
+
+  $scope.singleNote = "";  // Keep the note field blank by default
+
+  // Note gets captured from the DOM
+  // The note is then emitted so the parent controller (in action.js) can see it
+  $scope.saveNote = function(note){
+    $scope.$emit('noteSavedEvent', note);
+    $scope.singleNote = "";  //Empty notes field once its submitted
+  }
+
   $scope.saveAction = function(someAction, pointValue, dateOccured){
+    if (someAction === "Click an action"){
+      console.log("No action selected, submit ignored");
+      return
+    }
     var actionObj = {
       action: someAction,
       points: pointValue,
@@ -45,7 +68,16 @@ angular.module('gaussHyrax.action', [])
       headers: {'Content-Type': 'application/json'}
     })
     .then(function(res) {
-      console.log("Response from the saveAction POST Request: ", res);
+      // console.log("Response from the saveAction POST Request: ", res);
+      //console.log("\n\nrepsonse.data is: ", res.data);
+      //console.log("history before: ", $scope.member.history);
+      
+      // added by request of Nick, may need to emit this res.data and the  famMemberId
+      $scope.member.history.push(res.data);
+      console.log("history after: ", $scope.member.history);
+      $scope.$emit('historyUpdateEvent', famMemberId, res.data);
+
+
     })
   
   };

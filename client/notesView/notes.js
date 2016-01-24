@@ -1,5 +1,8 @@
 angular.module('gaussHyrax.notes', [])
 
+// No longer being used
+// Adding a note is now part of the action view
+
 .controller('notesController',['$scope',function($scope){
 
   $scope.singleNote = "";  // Keep the note field blank by default
