@@ -12,9 +12,8 @@ g .c3-axis-x .tick{
 
 #chart{
   width:90%;
-  margin: 0 auto;
-  margin:20px 0;
-  padding-top:30px;
+  margin: 0;
+  padding-top:10px;
 }
 
 #donut{
@@ -25,25 +24,88 @@ g .c3-axis-x .tick{
 }
 
 .summaryContent{
-  margin-left:50px;
+  margin-left:20px;
 }
 
-.contactInfo ul{
+.summaryContent .contactInfo ul{
   list-style: none;
   position: absolute;
   top: 0;
   right: 10px;
 }
 
-.familyImg{
-    width: 80px;
-    position: absolute;
-    top: 10px;
+.summaryContent .familyImg{
+  width: 80px;
+  position: absolute;
+  top: 10px;
 }
 
-.mainInfo{
+.summaryContent .mainInfo{
   margin: 10px 0 0 100px;
+  min-height: 90px;
 }
-.mainInfo h1{
+
+.summaryContent .mainInfo h2{
   margin: 0;
+  text-transform: capitalize;
+}
+
+.summaryContent .actionWrapper{
+  position: absolute;
+  bottom: 31px;
+  right: 63px;
+  height: 280px;
+  width:280px;
+  overflow: hidden;
+  color:#444;
+  font-size:14px;
+}
+
+.summaryContent .scrollbox{
+  overflow: scroll;
+  height:100%;
+}
+
+
+
+.summaryContent .scrollbox ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.summaryContent .scrollbox .actionList{
+  padding-bottom: 50px;
+}
+
+.summaryContent .actionList li{
+  position: relative;
+  padding: 2px;
+}
+
+.summaryContent .rightContent{
+  position:absolute;
+  right: 10px;
+}
+
+.summaryContent .actionWrapper h2{
+  margin: 0;
+  border-bottom: 3px solid #DEDEDC;
+}
+
+.summaryContent.leftContent{
+  float:left;
+}
+
+.summaryContent .notesContent{
+  clear:both;
+  padding-top:10px;
+}
+
+.summaryContent .actionItem{
+  border-bottom:1px solid #B1B1B1;
+}
+
+.summaryContent .action-text{
+  text-transform: lowercase;
 }

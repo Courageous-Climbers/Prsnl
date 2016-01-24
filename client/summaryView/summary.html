@@ -6,7 +6,7 @@
       <div class="email">{{activeFamilyMember.email}}</div>
     </div>
     <div class="contactInfo">
-    <img src="assets/batman.jpg" class="familyImg">
+    <img src="assets/batman.jpg" class="familyImg" ng-show="activeFamilyMember">
       <ul>
 
       <li class="email">{{activeFamilyMember.streetAddress}}</li>
@@ -16,5 +16,29 @@
     </div>
     <div id="chart"></div>
     <div id="donut"></div>
+        <!-- class="actionList" -->
+    <div class="actionWrapper">
+      <h2>Notes</h2>
+      <div class="scrollBox">
+        <ul class="actionList">
+          <!-- <h3>Actions with {{member.firstName}} {{member.lastName}}</h3> -->
+          <li class="actionItem" ng-repeat="action in activeFamilyMember.history | orderBy:'-date'">
+              <div class="leftContent">
+                <ul>
+                  <li>{{action.date | niceDate}}</li>
+                </ul>
+              </div>
+              <div class="rightContent">
+                <ul>
+                  <li class="action-text">{{action.action}}</li>
+                </ul>
+              </div>
+              <div class="notesContent">
+                "{{action.notes}}"
+              </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

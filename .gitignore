@@ -1,4 +1,4 @@
 # Files that we need to ignore
-server/node_modules/
-client/bower_components/
+node_modules/
+bower_components/
 .DS_Store
