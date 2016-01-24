@@ -8,46 +8,55 @@
 <div class="members" ng-controller='memberCtrl'>
   <form class="familyMember" >
 
-    <div style="width:48%; position:relative; display:inline-block;">
-      First Name: *</br>
+    <div class="large" >
+      <label for="firstName">First Name *</label>
       <input type="text" name="firstName" ng-model="member.firstName">
     </div>
-    <div style="width:48%; position:relative; display:inline-block;">
-      Last Name: </br>
+
+    <div class="large">
+      <label for="lastName">Last Name *</label>
       <input type="text" name="lastName" ng-model="member.lastName">
     </div>
-    <div style="width:48%; position:relative; display:inline-block;">
-      Phone: </br>
+
+    <div class="large">
+      <label for="Phone">Phone *</label>
       <input type="tel" name="phoneNumber" ng-model="member.phoneNumber" >
     </div>
-    <div style="width:48%; position:relative; display:inline-block;">
-    Email:
+
+    <div class="large">
+      <label for="Email">Email *</label>
       <input type="email" name="email" ng-model="member.email" >
     </div>
-    <div style="width:48%; position:relative; display:inline-block;">
-    Street Address: </br>
+
+    <div class="large">
+      <label for="StreetAddress">Street Address *</label>
       <input type="text" name="address" ng-model="member.streetAddress">
     </div>
-    <div style="width:48%; position:relative; display:inline-block;">
-    City: </br>
+
+    <div class="large">
+      <label for="City">City *</label>
       <input type="text" name="city" ng-model="member.city" >
     </div>
-    <div style="width:28%; position:relative; display:inline-block;">
-    State: </br>
+
+    <div class="small" >
+      <label for="State">State *</label>
       <input type="text" name="state" ng-model="member.state" >
     </div>
-    <div style="width:28%; position:relative; display:inline-block; padding-left: 25px;">
-    Country: </br>
+
+    <div class="small">
+      <label for="Country">Country *</label>
       <input type="text" name="country" ng-model="member.country" >
     </div>
-    <div style="width:28%; position:relative; display:inline-block; padding-left: 25px;">
-    Zipcode: </br>
+
+    <div class="small">
+      <label for="Zipcode">Zipcode *</label>
       <input type="text" name="zipcode" ng-model="member.zipcode" >
     </div>
-    <div class="frequency" style="width:28%; position:relative; display:inline-block; padding-left: 25px;">
+
+    <div class="frequency" >
       <span ng-model="slider_toggle.value">Contact Frequency: {{ slider_toggle.value }}</span>
     </div>
-    <div class="date" style="width:28%; position:relative; display:inline-block; padding-left: 25px;">
+    <div class="date" >
       <span ng-model="nextDate">Next Contact Date: {{ nextDate }}</span>
     </div>
 

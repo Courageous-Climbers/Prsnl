@@ -1,26 +1,61 @@
 .familyMember input:not([type=button]) {
-  border: none;
-  border-bottom: 3px solid lightgrey;
+  border: 1px solid #DEDEDC;
   box-shadow:
-    inset 0 0 8px rgba(0,0,0,0.1);
+    inset 0 0 3px rgba(222, 222,220,1);
   border-radius: 3px;
-  padding: 15px;
+  padding: 10px;
   background: rgba(255,255,255,0.5);
-  margin: 0 0 10px 0;
+  margin: 6px 0 15px 0;
   width: 100%;
 }
 
 .familyMember input[type=button] {
-  border: 3px solid lightgrey;
+  border: 1px solid lightgrey;
   background: white;
-  margin: 10px 0 10px 0;
+  margin: 20px 0 ;
   border-radius: 3px;
-  padding: 15px;
-  width: 80px;
+  padding: 9px;
+  width: 95px;
+  float: right;
+  position: relative;
+  right: 20px;
 }
 
 .familyMember input {
   font-size: 20px;
+}
+
+.familyMember label{
+  font-weight: bold;
+}
+
+.familyMember .large{
+  width:49%;
+  position:relative;
+  display:inline-block;
+}
+
+.familyMember .small{
+  width:28%;
+  position:relative;
+  display:inline-block;
+  margin: 0 35px 0 0;
+}
+
+.familyMember .frequency{
+  width: 46%;
+  position: relative;
+  display: inline-block;
+  padding: 10px 5px 20px;
+  font-weight: bold;
+}
+
+.familyMember .date{
+  width: 46%;
+  position: relative;
+  display: inline-block;
+  padding: 10px 5px 20px;
+  font-weight: bold;
 }
 
 .members {
@@ -28,6 +63,6 @@
 }
 
 .slider {
-  width: 50%;
-  padding: 0 45px;
+  width: 97%;
+  /*padding: 0 45px;*/
 }
