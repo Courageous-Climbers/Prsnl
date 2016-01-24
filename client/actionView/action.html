@@ -1,6 +1,7 @@
-<link rel="stylesheet" type="text/css" href="actionView/action.css">
 <!-- IMPORTANT -->
-<!-- Added for MODULAR testing only. Remove when done. -->
+<!-- Added for MODULAR testing only. Move to a central css file location? -->
+<link rel="stylesheet" type="text/css" href="actionView/action.css">
+
 <div class="actionWrapper">
   <div ng-controller="actionController">
 
@@ -58,38 +59,22 @@
     
 
   <!-- Notes for the action -->
-    <!-- <button class="dropDownNotesButton" ng-click="showNotes = !showNotes">Add note to your action</button> -->
+    <!-- Removing the drop down Notes button.
+    <button class="dropDownNotesButton" ng-click="showNotes = !showNotes">Add note to your action</button> 
+    -->
     <div class="notesClass">
       <br>
       <p><i>Enter a note (to add to your action)</i></p>
       <form>
         <input type="text" ng-model="singleNote">
         <input type="submit" ng-click="saveNote(singleNote)" value="Save note"/>
-        <!-- <input type="submit" ng-click="showAllNotes" value="Show Notes"/> -->
       </form>
     </div>
     <br>
     <input class="submitAction" type="submit" ng-click="saveAction(selectedAction, points, dateEntered)" value="Submit Action"/>
 
-    <!-- <div class="slide-animate-container" ng-show="showNotes">
-      <div ng-include="'../notesView/notes.html'"></div> -->
-       <!--   -->
     </div>
 
-
-     
-<!--      NO longer using here.  Will be put in the summary view.
- -->    <!-- <form>
-      <input type="submit" ng-click="getAFamilyMemberActions()" value="Show ALL actions with {{member.firstName}} "/>
-    </form>
-    <ul class="actionList">
-      <li ng-repeat="action in actionArray">
-          <p>Action: {{action.action}}</p>
-          <p>Points: {{action.points}}</p>
-          <p>Date: {{action.date}}</p>
-          <p>Notes: {{action.notes}}</p>
-      </li>
-    </ul> -->
 
   </div>
 </div>
