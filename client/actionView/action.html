@@ -63,16 +63,6 @@
     <form>
       <input type="submit" ng-click="getAFamilyMemberActions()" value="Show ALL actions with {{member.firstName}} "/>
     </form>
-    <!-- class="actionList" -->
-    <ul class="actionList">
-      <!-- <h3>Actions with {{member.firstName}} {{member.lastName}}</h3> -->
-      <li ng-repeat="action in actionArray">
-          <p>Action: {{action.action}}</p>
-          <p>Points: {{action.points}}</p>
-          <p>Date: {{action.date}}</p>
-          <p>Notes: {{action.notes}}</p>
-      </li>
-    </ul>
 
   </div>
 </div>
