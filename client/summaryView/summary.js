@@ -12,7 +12,11 @@ angular.module('gaussHyrax.summary',['SummaryServicesModule'])
     if($scope.activeFamilyMember){
       var singlePlot = SummaryFactory.calculateGraphForOneFamilyMember($scope.activeFamilyMember['_id'])
       SummaryFactory.makeChart(singlePlot);
-      $scope.who = $scope.activeFamilyMember.firstName + ' ' + $scope.activeFamilyMember.lastName 
+      if($scope.activeFamilyMember.lastName){
+        $scope.who = $scope.activeFamilyMember.firstName + ' ' + $scope.activeFamilyMember.lastName 
+      }else{
+        $scope.who = $scope.activeFamilyMember.firstName 
+      }
       $scope.myActiveFamilyMember = $scope.activeFamilyMember
     }else{
       console.log('cannot plot, family member not specified');
