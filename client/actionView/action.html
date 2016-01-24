@@ -1,78 +1,80 @@
-<link rel="stylesheet" type="text/css" href="actionView/action.css">
 <!-- IMPORTANT -->
-<!-- Added for MODULAR testing only. Remove when done. -->
+<!-- Added for MODULAR testing only. Move to a central css file location? -->
+<link rel="stylesheet" type="text/css" href="actionView/action.css">
+
 <div class="actionWrapper">
-  
   <div ng-controller="actionController">
+
+    <p class="date"> <b>Date of your action</b> <input type="text" ng-model="dateEntered"></p>
 
     <table>
       <tr>
-        <th>Action</th><th>Point Value</th><th>Date</th><th></th>
+        <th>Action</th><th>Point Value</th>
       </tr>
       
       <form>
         <tr>
-          <td>Call</td> <td>8</td> <td><input type="text" ng-model="callDate"></td> <td><input type="submit" ng-click="saveAction('Call', 8, callDate)" value="Submit Action"/></td>
+          <td ng-click="setAction('Call', 8)">Call</td> <td>8</td>
         </tr>
       </form>
       <form>
         <tr>
-          <td>Text</td> <td>3</td> <td><input type="text" ng-model="textDate"></td> <td><input type="submit" ng-click="saveAction('Text', 3, textDate)" value="Submit Action"/></td>
+          <td ng-click="setAction('Text', 3)">Text</td> <td>3</td> 
         </tr>
       </form>
       <form>
         <tr>
-          <td>Send Letter</td> <td>6</td> <td><input type="text" ng-model="sendLetterDate"></td> <td><input type="submit" ng-click="saveAction('Send Letter', 6, sendLetterDate)" value="Submit Action"/></td>
+          <td ng-click="setAction('Send Letter', 6)">Send Letter</td> <td>6</td> 
         </tr>
       </form>
       <form>
         <tr>
-          <td>Send Email</td> <td>4</td> <td><input type="text" ng-model="sendEmailDate"></td> <td><input type="submit" ng-click="saveAction('Send Email', 4, sendEmailDate)" value="Submit Action"/></td>
+          <td ng-click="setAction('Send Email', 4)">Send Email</td> <td>4</td>  
         </tr>
       </form>
       <form>
         <tr>
-          <td>Dinner</td> <td>10</td> <td><input type="text" ng-model="dinnerDate"></td> <td><input type="submit" ng-click="saveAction('Dinner', 10, dinnerDate)" value="Submit Action"/></td>
+          <td ng-click="setAction('Dinner', 10)">Dinner</td> <td>10</td> 
         </tr>
       </form>
       <form>
         <tr>
-          <td>Drinks</td> <td>10</td> <td><input type="text" ng-model="drinksDate"></td> <td><input type="submit" ng-click="saveAction('Drinks', 10, drinksDate)" value="Submit Action"/></td>
+          <td ng-click="setAction('Drinks', 10)">Drinks</td> <td>10</td>
         </tr>
       </form>
       <form>
         <tr>
-          <td>Lunch</td> <td>10</td> <td><input type="text" ng-model="lunchDate"></td> <td><input type="submit" ng-click="saveAction('Lunch', 10, lunchDate)" value="Submit Action"/></td>
+          <td ng-click="setAction('Lunch', 10)">Lunch</td> <td>10</td>
         </tr>
       </form>
         <form>
         <tr>
-          <td>Coffee</td> <td>10</td> <td><input type="text" ng-model="coffeeDate"></td> <td><input type="submit" ng-click="saveAction('Coffee', 10, coffeeDate)" value="Submit Action"/></td>
+          <td ng-click="setAction('Coffee', 10)">Coffee</td> <td>10</td>
         </tr>
       </form>
     </table>
+    <br>
+
+    <p><b>Selected action is:</b> <span class="actionChoice">{{selectedAction}}</span> <b>   Point Value: </b><span class="actionChoice">{{points}}</span></p>
+    
 
   <!-- Notes for the action -->
-    <button class="dropDownNotesButton" ng-click="showNotes = !showNotes">Add note to your action</button>
-    <div class="slide-animate-container" ng-show="showNotes">
-      <div ng-include="'../notesView/notes.html'"></div>
-       <!--   -->
+    <!-- Removing the drop down Notes button.
+    <button class="dropDownNotesButton" ng-click="showNotes = !showNotes">Add note to your action</button> 
+    -->
+    <div class="notesClass">
+      <br>
+      <p><i>Enter a note (to add to your action)</i></p>
+      <form>
+        <input type="text" ng-model="singleNote">
+        <input type="submit" ng-click="saveNote(singleNote)" value="Save note"/>
+      </form>
+    </div>
+    <br>
+    <input class="submitAction" type="submit" ng-click="saveAction(selectedAction, points, dateEntered)" value="Submit Action"/>
+
     </div>
 
-        
-    <form>
-      <input type="submit" ng-click="getAFamilyMemberActions()" value="Show ALL actions with {{member.firstName}} "/>
-    </form>
-    <!-- class="actionList" -->
-    <ul class="actionList">
-      <!-- <h3>Actions with {{member.firstName}} {{member.lastName}}</h3> -->
-      <li ng-repeat="action in actionArray">
-          <p>Action: {{action.action}}</p>
-          <p>Points: {{action.points}}</p>
-          <p>Date: {{action.date}}</p>
-          <p>Notes: {{action.notes}}</p>
-      </li>
-    </ul>
 
   </div>
 </div>

@@ -1,6 +1,6 @@
 
 /*Column header*/
-.actionwrapper th {
+.actionWrapper th {
   text-align: left;
   width:200px;
   font-size: 15px;
@@ -8,7 +8,7 @@
 }
 
 /*Column entries*/
-.actionwrapper td {
+.actionWrapper td {
   font-size: 15px;
   /*border-top: 1px solid black;*/
 /*  border: 1px solid black;
@@ -34,19 +34,39 @@
   list-style: none;
 }
 
-.actionwrapper p{
+.actionWrapper .date{
+   font-size: 15px;
+/*    color:red;
+*/    
+/*    margin: 4px;
+*/    margin-left: 0px;
+/*    padding: 0px;
+*/}
+.date b{
+  padding: 10px;
+}
+
+.actionChoice {
+  font-size: 20px;
+  color: red;
+}
+.actionWrapper p{
     margin: 4px;
-    margin-left: 10px;
+    margin-left: 0px;
     padding: 0px;
 }
 
 /*Not working, fix later*/
-.dropDownNotesButton button{
-  position:absolute;
-  margin-left: 300px;
+.dropDownNotesButton {
+  background: white;
 }
 
-.actionwrapper .slide-animate-container {
+.submitAction {
+  color:green;
+  background: white;
+}
+
+.actionWrapper .slide-animate-container {
   position: relative;
   background: white;
   border: 1px solid black;
@@ -55,4 +75,21 @@
   transition: all linear 0.4s;
 }
 
+.notesClass {
+  /*border: 1px dashed;*/
+}
+.notesClass h3{
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
 
+.notesClass h5{
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+.notesClass input{
+  background: white;
+}
