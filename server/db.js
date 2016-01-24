@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var _ = require('underscore');
 
-mongoose.connect('mongodb://localhost/hyrax');
-//mongoose.connect('mongodb://ksiddana:itsmeagain@ds049925.mongolab.com:49925/hyrax');
+//mongoose.connect('mongodb://localhost/hyrax');
+mongoose.connect('mongodb://ksiddana:itsmeagain@ds049925.mongolab.com:49925/hyrax');
 
 var db = mongoose.connection;
 
