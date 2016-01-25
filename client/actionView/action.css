@@ -87,3 +87,6 @@
   border: 0px;
 }
 
+.actionWrapper textarea{
+  width: 100%;
+}
