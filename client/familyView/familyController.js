@@ -6,6 +6,11 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
     $scope.familyData;
     $scope.activeFamilyMember;
 
+    $scope.$on('historyUpdateEvent',function(event,famMemberId,historyEvent){   
+       //broadcast this event down to the summary view   
+       $scope.$broadcast('updateGraph',famMemberId,historyEvent);    
+    });
+    
     $scope.$on('logout',function(event,data){
       $scope.familyData = [];
       $scope.activeFamilyMember = undefined;
