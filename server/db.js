@@ -180,11 +180,15 @@ db.once('open', function() {
       if(!familyMember){
         return callback('add history: a family id must be provided',null);
       }
+      //save history into model
       familyMember.history.push(properties);
       
+      //update nextContactDate, if action is within 5 days of the current nextContactDate
       if(Math.abs(moment.duration(moment(properties.date).diff(familyMember.nextContactDate)).days()) < 5 ){
         familyMember.nextContactDate = moment(familyMember.nextContactDate).add(familyMember.contactFrequency,'days');
       }
+
+      //save it!
       user.save(function(err,user){
         return callback(err,{nextContactDate: familyMember.nextContactDate, historyItem:familyMember.history[familyMember.history.length-1]}); 
       });

@@ -73,11 +73,8 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
       .then(function(res) {
         $scope.familyData = res.data;
 
-        // Format the date from the Database into more readable format using moment
-        _.each($scope.familyData, function(eachFamilyMember, index) {
-          $scope.familyData[index].nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
-        });
-
+        _.each($scope.familyData, $scope.changeOneActionColor)
+          
         // Calculate the total Points from the Family History Action Points Property
         // The points are not currently coming from the Summary View.
         _.each($scope.familyData, function(eachFamilyMember, index) {
@@ -96,6 +93,23 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
 
     //on controller load (page refresh), get family data
     getFamilyData($window.localStorage.getItem('com.hyrax'));
+
+
+    $scope.changeOneActionColor = function(eachFamilyMember, index) {
+             
+             eachFamilyMember.nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
+
+             if(moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() < 3 ){
+                console.log("Change the border on loading color");
+                eachFamilyMember.urgency = '#D62728;';  // RED COLOR
+             } else if (moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() < 10 && 
+                        moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() >= 3) {
+                eachFamilyMember.urgency = "#FF7F0E"; // ORANGE COLOR
+
+            } else {
+                eachFamilyMember.urgency = "#2CA02C"; // GREEN COLOR
+            }
+    };
 
 
     // Modal controller
