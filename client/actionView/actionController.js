@@ -1,6 +1,6 @@
 angular.module('gaussHyrax.action', [])
 
-.controller('actionController',['$scope', '$http', '$window', function($scope, $http, $window){
+.controller('actionController',['$scope', '$http', '$window', '$timeout', function($scope, $http, $window, $timeout){
 
   $scope.actionArray = [];
   $scope.allFamilyActionsArray = [];
@@ -29,6 +29,9 @@ angular.module('gaussHyrax.action', [])
   $scope.setAction = function(anAction, pts){
     $scope.selectedAction = anAction;
     $scope.points = pts;
+    $scope.noActionYet = "";  //remove noAction msg
+    $scope.actionSaved = "";  //remove previous "Saved!" msg
+
   }
 
   $scope.singleNote = "";  // Keep the note field blank by default
@@ -66,6 +69,12 @@ angular.module('gaussHyrax.action', [])
       headers: {'Content-Type': 'application/json'}
     })
     .then(function(res) {
+      $scope.actionSaved = "Saved!";  // {{actionSaved}} will be displayed
+
+      // using Angular's version of setTimeOut, erase the message after 3 seconds
+      $timeout(function (){           
+        $scope.actionSaved = "" }, 3000); 
+
       // console.log("Response from the saveAction POST Request: ", res);
       //console.log("\n\nrepsonse.data is: ", res.data);
       //console.log("history before: ", $scope.member.history);
