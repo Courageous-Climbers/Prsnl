@@ -2,6 +2,7 @@
 /*Column header*/
 .actionWrapper {
   font-size: 15px;
+  background: whitesmoke;
 }
 
 .actionWrapper th {
