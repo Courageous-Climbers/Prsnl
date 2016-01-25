@@ -75,14 +75,15 @@ angular.module('gaussHyrax.action', [])
       $timeout(function (){           
         $scope.actionSaved = "" }, 3000); 
 
-      // console.log("Response from the saveAction POST Request: ", res);
-      //console.log("\n\nrepsonse.data is: ", res.data);
-      //console.log("history before: ", $scope.member.history);
-      
-      // added by request of Nick, may need to emit this res.data and the  famMemberId
-      $scope.member.history.push(res.data);
-      //console.log("history after: ", $scope.member.history);
-      $scope.$emit('historyUpdateEvent', famMemberId, res.data);
+      //this will put the action in the notes field in summary view
+      $scope.member.history.push(res.data.historyItem);
+
+      //action was submitted, so update the nextContactDate
+      $scope.member.nextContactDate = moment(res.data.nextContactDate).format("MMM DD YYYY");
+      console.log('action saved',res.data);
+
+      //this is to signify that the graph needs to be updated
+      $scope.$emit('historyUpdateEvent', famMemberId, res.data.historyItem);
 
 
     })
