@@ -89,20 +89,14 @@ angular.module('SummaryServicesModule',[])
   factory.calculateGraphForSetOfFamilyMembers = function(family){
 
     //check if there is anything to plot
-    if(!family || !family[0] || !family[0].history[0]){
+    if(!family || !family[0]){
       //return empty data to plot
       return {
         linePlot: [],
         donutPlot: []
       }
     }
-
     console.log('calculating graph for family',family);
-
-    //min date will be the first history item of the first person added
-    // var minDate = family[0].history[0].date;
-    // var day = moment(minDate);
-    // var now = moment();
 
     var now = moment();
     var minDate = moment().subtract(3,'months');
@@ -221,9 +215,6 @@ angular.module('SummaryServicesModule',[])
       //update the current point value
       factory.currentPointValue[id] = chartValues[chartValues.length-1];
     }
-
-    
-
 
     //modify donut
     var donutValue = donut.data.values(historyEvent.action) || 0;
