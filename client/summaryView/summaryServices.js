@@ -117,7 +117,7 @@ angular.module('SummaryServicesModule',[])
     
     //determine x values
     var i = 0;
-    while(day < now){
+    while(day <= now){
       days.push(day.format(dateFormat));
       dayIdx[day.format(dateFormat)] = i;
       if(day.date() === 1){
