@@ -45,14 +45,19 @@ angular.module('gaussHyrax.action', [])
   $scope.saveAction = function(someAction, pointValue, dateOccured, someNote){
     if (someAction === "Click an action"){
       console.log("No action selected, submit ignored");
+      $scope.noActionYet = "No action selected."
       return
     }
+    $scope.noActionYet = "";
+    
     var actionObj = {
       action: someAction,
       points: pointValue,
       date: dateOccured,
       notes: someNote 
     };
+
+    $scope.singleNote = "";  // Clear the notes field after submission
 
     $http({
       method : 'POST',
