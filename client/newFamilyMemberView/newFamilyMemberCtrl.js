@@ -3,6 +3,7 @@ angular.module('gaussHyrax.newFamilyMember', ['rzModule', 'newFamilyMemberServic
 .controller('memberCtrl', ['$scope', 'NewFamilyMemberFactory',
 function($scope, NewFamilyMemberFactory){
   // Slider for the contact frequency.
+  $scope.member = {};
 
   $scope.slider_toggle = {
       value: 14,
@@ -19,22 +20,14 @@ function($scope, NewFamilyMemberFactory){
 
     // Save family member to userId
     $scope.saveMember = function(){
-      var member = {
-        firstName: $scope.member.firstName,
-        lastName: $scope.member.lastName,
-        phoneNumber: $scope.member.phoneNumber,
-        email: $scope.member.email,
-        streetAddress: $scope.member.streetAddress,
-        city: $scope.member.city,
-        state: $scope.member.state,
-        country: $scope.member.country,
-        zipcode: $scope.member.zipcode,
-        nextContactDate: $scope.nextDate,
-        contactFrequency: $scope.slider_toggle.value
-      }
-      console.log("This is an obj create in controller: ", member)
+      $scope.member.nextContactDate = $scope.nextDate,
+      $scope.member.contactFrequency = $scope.slider_toggle.value
 
-      NewFamilyMemberFactory.saveMember(member);
+      console.log("This is an obj create in controller: ", $scope.member)
+      NewFamilyMemberFactory.saveMember($scope.member)
+      .then(function(data){
+        $scope.familyData.push(data);
+      });
       $scope.member = '';
       $scope.$parent.toggleModal()
     }

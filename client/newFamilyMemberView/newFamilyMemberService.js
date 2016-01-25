@@ -1,9 +1,9 @@
 angular.module('newFamilyMemberServices', [])
 
 .factory('NewFamilyMemberFactory', ['$http', '$window', function($http, $window) {
-  var familyMemberFactory = {};
+  var newFamilyMember = [];
 
-  familyMemberFactory.getUserID = function() {
+  var getUserID = function() {
     return $http({
       method: 'GET',
       url: '/api/user/' + $window.localStorage.getItem('com.hyrax')
@@ -11,8 +11,8 @@ angular.module('newFamilyMemberServices', [])
   };
 
 
-  familyMemberFactory.saveMember = function(memberObj) {
-    
+  var saveMember = function(memberObj) {
+
     console.log("this is memberObj: ", memberObj);
     return $http({
       method : 'POST',
@@ -24,10 +24,15 @@ angular.module('newFamilyMemberServices', [])
     })
     .then(function(res) {
       console.log("Response from the saveUser POST Request: ", res);
+      return res.data;
     });
   };
 
 
-return familyMemberFactory;
+return {
+  getUserID: getUserID,
+  saveMember: saveMember,
+  newFamilyMember: newFamilyMember
+}
 
 }]);
