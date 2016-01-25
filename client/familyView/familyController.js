@@ -36,11 +36,26 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
       getFamilyData($window.localStorage.getItem('com.hyrax'));
     });
 
-    //when summary controller loads, let it know that there is family data available
-    $scope.$on('summaryCtrlLoaded',function(){
-      console.log('plot initialization');
-      $scope.$broadcast('familyChange',$scope.familyData);
+    angular.forEach(['summaryCtrlLoaded','addedFam','reload'], function(value){
+      $scope.$on(value, function(event){
+         $scope.activeFamilyMember = undefined;
+         $scope.$broadcast('familyChange',$scope.familyData);
+      });
     });
+
+
+    // //when summary controller loads, let it know that there is family data available
+    // $scope.$on('summaryCtrlLoaded',function(){
+    //   console.log('plot initialization');
+    //   $scope.$broadcast('familyChange',$scope.familyData);
+    // });
+    //
+    // // Update when new member is added
+    // $scope.$on('addedFam, reload',  function(){
+    //   $scope.$broadcast('familyChange',$scope.familyData);
+    // })
+    //
+    //
 
     // Listen for an emit Event from the login Controller (Child Scope)
     $scope.$on('userLoggedIn', function(event, data){
@@ -58,11 +73,8 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
       .then(function(res) {
         $scope.familyData = res.data;
 
-        // Format the date from the Database into more readable format using moment
-        _.each($scope.familyData, function(eachFamilyMember, index) {
-          $scope.familyData[index].nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
-        });
-
+        _.each($scope.familyData, $scope.changeOneActionColor)
+          
         // Calculate the total Points from the Family History Action Points Property
         // The points are not currently coming from the Summary View.
         _.each($scope.familyData, function(eachFamilyMember, index) {
@@ -83,6 +95,23 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
     getFamilyData($window.localStorage.getItem('com.hyrax'));
 
 
+    $scope.changeOneActionColor = function(eachFamilyMember, index) {
+             
+             eachFamilyMember.nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
+
+             if(moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() < 3 ){
+                console.log("Change the border on loading color");
+                eachFamilyMember.urgency = '#D62728;';  // RED COLOR
+             } else if (moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() < 10 && 
+                        moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() >= 3) {
+                eachFamilyMember.urgency = "#FF7F0E"; // ORANGE COLOR
+
+            } else {
+                eachFamilyMember.urgency = "#2CA02C"; // GREEN COLOR
+            }
+    };
+
+
     // Modal controller
     $scope.modalShown = false;
     $scope.toggleModal = function() {
@@ -97,7 +126,7 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
     }
 
     $scope.singleFamilyMemberInfo = function(familyMemberObj) {
-      // console.log(familyMemberObj);
+      console.log(familyMemberObj);
       //change the $scope.activeFamilyMember so that a $watch event will fire
       $scope.activeFamilyMember = familyMemberObj;
     }
