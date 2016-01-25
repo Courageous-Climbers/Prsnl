@@ -8,20 +8,18 @@
     <div class="contactInfo">
     <img src="assets/batman.jpg" class="familyImg" ng-show="activeFamilyMember">
       <ul>
-
-      <li class="email">{{activeFamilyMember.streetAddress}}</li>
-      <li class="email">{{activeFamilyMember.city}} {{activeFamilyMember.state}}, {{activeFamilyMember.zipcode}}</li>
-      <li class="email">{{activeFamilyMember.country}}</li>
+        <li class="email">{{activeFamilyMember.streetAddress}}</li>
+        <li class="email">{{activeFamilyMember.city}} {{activeFamilyMember.state}}, {{activeFamilyMember.zipcode}}</li>
+        <li class="email">{{activeFamilyMember.country}}</li>
       </ul>
     </div>
     <div id="chart"></div>
     <div id="donut"></div>
-        <!-- class="actionList" -->
+
     <div class="actionWrapper">
       <h2>Notes</h2>
       <div class="scrollBox">
         <ul class="actionList">
-          <!-- <h3>Actions with {{member.firstName}} {{member.lastName}}</h3> -->
           <li class="actionItem" ng-repeat="action in activeFamilyMember.history | orderBy:'-date'">
               <div class="leftContent">
                 <ul>
