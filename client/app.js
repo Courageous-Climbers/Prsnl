@@ -1,4 +1,4 @@
-angular.module('gaussHyrax', ['ui.router',
+angular.module('gaussHyrax', ['ngAnimate', 'ui.router',
 'gaussHyrax.login',
 'gaussHyrax.family',
 'gaussHyrax.newFamilyMember',
