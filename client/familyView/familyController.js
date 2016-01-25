@@ -62,6 +62,15 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
         // Format the date from the Database into more readable format using moment
         _.each($scope.familyData, function(eachFamilyMember, index) {
           $scope.familyData[index].nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
+
+           if(moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() < 3 ){
+              console.log("Change the border on loading color");
+              eachFamilyMember.urgency = '#FF0000;';  // fuschia
+           } else {
+            $scope.familyData[index].urgency = "rgb(44, 160, 44)";
+
+          }
+
         });
 
         // Calculate the total Points from the Family History Action Points Property

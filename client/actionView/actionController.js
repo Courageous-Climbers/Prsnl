@@ -82,6 +82,14 @@ angular.module('gaussHyrax.action', [])
       $scope.member.nextContactDate = moment(res.data.nextContactDate).format("MMM DD YYYY");
       console.log('action saved',res.data);
 
+      console.log("next contact date: ", $scope.member.nextContactDate);
+      console.log("current date: ", $scope.member.date);
+
+      if(moment.duration(moment($scope.member.nextContactDate).diff($scope.member.date)).days() < 3 ){
+        console.log("Change the border color on action submission");
+        $scope.member.urgency = '#ff0000;';
+    }
+      console.log('changing urgency',$scope.member.urgency);
       //this is to signify that the graph needs to be updated
       $scope.$emit('historyUpdateEvent', famMemberId, res.data.historyItem);
 
