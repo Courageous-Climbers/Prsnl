@@ -36,6 +36,7 @@ function($scope, NewFamilyMemberFactory){
 
       NewFamilyMemberFactory.saveMember(member);
       $scope.member = '';
+      $scope.$parent.toggleModal()
     }
 
 }])
