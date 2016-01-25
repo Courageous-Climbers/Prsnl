@@ -98,6 +98,11 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
       $scope.activeFamilyMember = familyMemberObj;
     }
 
+    $scope.sortFamilyMembers = function(member) {
+      var date = new Date(member.nextContactDate);
+      return date;
+    };
+
 }])
 .directive('modalDialog', function() {
   return {
