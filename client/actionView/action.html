@@ -62,7 +62,7 @@
     <!-- Removing the drop down Notes button.
     <button class="dropDownNotesButton" ng-click="showNotes = !showNotes">Add note to your action</button> 
     -->
-    <div class="notesClass">
+    <div>
       <br>
       <p><i>Enter a note (to add to your action)</i></p>
       <!-- <form> -->
@@ -74,7 +74,8 @@
       <!-- </form> -->
     </div>
     <br>
-    <input class="submitAction" type="submit" ng-click="saveAction(selectedAction, points, dateEntered, singleNote)" value="Submit Action"/>
+    <input class="submitAction" type="submit" ng-click="saveAction(selectedAction, points, dateEntered, singleNote)" value="Submit"/>
+    <span class="noActionYet">{{noActionYet}}<span>
 
     </div>
 

@@ -1,47 +1,15 @@
 
 /*Column header*/
+.actionWrapper {
+  font-size: 15px;
+}
+
 .actionWrapper th {
   text-align: left;
-  width:200px;
-  font-size: 15px;
+  width: 200px;
   color:red;
 }
 
-/*Column entries*/
-.actionWrapper td {
-  font-size: 15px;
-  /*border-top: 1px solid black;*/
-/*  border: 1px solid black;
-*/
-}
-
-/*.actionList li{
-  width: 100%;
-  padding: 50px;
-  padding-top: 50px;
-  border: 1px solid #000;
-  background-color: yellow;
-  margin: 10px;
-  box-shadow: 5px 5px 4px #9E9E9E;
-
-}*/
-/*.actionwrapper li{
-    background-color: yellow;
-}*/
-
-
-.actionList ul{
-  list-style: none;
-}
-
-.actionWrapper .date{
-   font-size: 15px;
-/*    color:red;
-*/    
-/*    margin: 4px;
-*/    margin-left: 0px;
-/*    padding: 0px;
-*/}
 .date b{
   padding: 10px;
 }
@@ -56,34 +24,32 @@
     padding: 0px;
 }
 
-/*Not working, fix later*/
-.dropDownNotesButton {
-  background: white;
-}
 
 .submitAction {
-  color:green;
-  background: white;
+  background-color:#44c767;
+  -moz-border-radius:28px;
+  -webkit-border-radius:28px;
+  border-radius:28px;
+  border:1px solid #000000;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:17px;
+  margin: 3px;
+  padding:6px 21px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #2f6627;
+
 }
 
-.actionWrapper .slide-animate-container {
-  position: relative;
-  background: white;
-  border: 1px solid black;
-  height: auto;
-  overflow: auto;
-  transition: all linear 0.4s;
+textarea {
+  font-size:15px;
 }
 
-.notesClass h3{
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
+.noActionYet{
+  color:red;
 }
 
-.notesClass h5{
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
-}
+
 
