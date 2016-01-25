@@ -12,7 +12,7 @@
 
 
   <div class="familyInfo">
-    <div ng-animate="'animate'" class="eachFamilyMember" ng-repeat="member in familyData | filter:search" ng-click="singleFamilyMemberInfo(member)">
+    <div ng-animate="'animate'" class="eachFamilyMember" ng-repeat="member in familyData | filter:search | orderBy: sortFamilyMembers : true" ng-click="singleFamilyMemberInfo(member)">
       <li> {{ member.firstName }} {{ member.lastName }} <div class="circle"><p> {{ member.points }} </p></div></li>
       <li> {{ member.nextContactDate }} </li>
       <a class="dropDownActionButton" ng-click="showDetails = !showDetails"> <img src="../assets/doubledown.png" alt="Add Family" /> </a>
