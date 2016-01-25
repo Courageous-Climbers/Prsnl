@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 var _ = require('underscore');
 
 // mongoose.connect('mongodb://localhost/hyrax');
@@ -180,9 +181,14 @@ db.once('open', function() {
         return callback('add history: a family id must be provided',null);
       }
       familyMember.history.push(properties);
+      
+      if(Math.abs(moment.duration(moment(properties.date).diff(familyMember.nextContactDate)).days()) < 5 ){
+        familyMember.nextContactDate = moment(familyMember.nextContactDate).add(familyMember.contactFrequency,'days');
+      }
       user.save(function(err,user){
-        return callback(err,familyMember.history[familyMember.history.length-1]); 
+        return callback(err,{nextContactDate: familyMember.nextContactDate, historyItem:familyMember.history[familyMember.history.length-1]}); 
       });
+
     },
     "delete family": function(user, callback, properties, familyMember){
      if(!familyMember){
