@@ -16,6 +16,7 @@ angular.module('SummaryServicesModule',[])
   var familyLookUp = {};
   var historyLookUp = {};
   var factory = {};
+  var xLines = [];
 
   factory.currentPointValue = {};
   factory.pointGraph = {};
@@ -99,9 +100,14 @@ angular.module('SummaryServicesModule',[])
     console.log('calculating graph for family',family);
 
     //min date will be the first history item of the first person added
-    var minDate = family[0].history[0].date;
-    var day = moment(minDate);
+    // var minDate = family[0].history[0].date;
+    // var day = moment(minDate);
+    // var now = moment();
+
     var now = moment();
+    var minDate = moment().subtract(3,'months');
+    var day = minDate;
+
     var series;
     var actions = {};
     var actionArray = [];
@@ -112,14 +118,18 @@ angular.module('SummaryServicesModule',[])
     //determine x values
     var i = 0;
     while(day < now){
-
       days.push(day.format(dateFormat));
       dayIdx[day.format(dateFormat)] = i;
+      if(day.date() === 1){
+        xLines.push({value: day.format(dateFormat), text: day.format("MMM")})
+      }
       day.add(1,'days');
       i++;
     }
+
     //store this so it can be used later
     this.xLabels = _.flatten(['x',days]);
+    console.log('xlabels are', this.xLabels);
     xIdx = dayIdx;
 
     //calculate series for each family member
@@ -242,6 +252,7 @@ angular.module('SummaryServicesModule',[])
   factory.makeChart = function(data,refresh){
     var xAxis;
     var rendered;
+    console.log('xlines',xLines);
 
     if(chart && !refresh){
       chart.load({
@@ -277,6 +288,11 @@ angular.module('SummaryServicesModule',[])
               }
           }
         },
+        grid: {
+          x: {
+            lines: xLines
+          }
+        },
         legend: {
           hide: true
         },
@@ -298,7 +314,7 @@ angular.module('SummaryServicesModule',[])
               var tasks = historyLookUp[id][factory.xLabels[index+1]];
               var displayStr = "";
               if(!tasks){
-                return displayStr;
+                return familyLookUp[id].firstName + ' ' + familyLookUp[id].lastName ;
               }
               displayStr += tasks[0].name + '<br>';
               for (var i = 0; i < tasks.length; i++) {
@@ -312,7 +328,13 @@ angular.module('SummaryServicesModule',[])
            grouped: false // Default true
          }
       });
+
+      //zoom to the last 4 weeks
+      setTimeout(function(){
+        chart.zoom([data.linePlot[0].length-28, data.linePlot[0].length-1])
+      },1000);
     }
+
 
     if(donut && !refresh){
       donut.load({

@@ -37,6 +37,11 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
       $scope.$broadcast('familyChange',$scope.familyData);
     });
 
+    // Listen for an emit Event from the login Controller (Child Scope)
+    $scope.$on('userLoggedIn', function(event, data){
+       $scope.login = data;
+    });
+
 
     //helper function
     function getFamilyData(id){
