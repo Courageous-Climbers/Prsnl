@@ -6,7 +6,7 @@ angular.module('SummaryServicesModule',[])
   };
 })
 
-.factory('SummaryFactory',['$http','$window',function($http,$window){
+.factory('SummaryFactory',['$http','$window', '$timeout', function($http,$window,$timeout){
 
   var dateFormat = "MMM D, YYYY";
   var chart;
@@ -63,15 +63,16 @@ angular.module('SummaryServicesModule',[])
 
     var actionCount = {};
     var actionArray = [];
+    var action;
 
     var points = calculatePointsGraphFromHistory(familyMember.history);
 
     for (var i = 0; i < familyMember.history.length; i++) {
-      if(!actionCount[familyMember.history[i].action]){
-        actionCount[familyMember.history[i].action] = 0
+      action = familyMember.history[i].action.toLowerCase();
+      if(!actionCount[action]){
+        actionCount[action] = 0
       }
-
-      actionCount[familyMember.history[i].action]++;
+      actionCount[action]++;
     }
 
     //turn actionCount object into an array
@@ -96,7 +97,6 @@ angular.module('SummaryServicesModule',[])
         donutPlot: []
       }
     }
-    console.log('calculating graph for family',family);
 
     var now = moment();
     var minDate = moment().subtract(3,'months');
@@ -123,22 +123,22 @@ angular.module('SummaryServicesModule',[])
 
     //store this so it can be used later
     this.xLabels = _.flatten(['x',days]);
-    console.log('xlabels are', this.xLabels);
     xIdx = dayIdx;
 
     //calculate series for each family member
     var points = [];
+    var action;
     for (var i = 0; i < family.length; i++) {
       series  = makeSeriesForOneFamilyMember(family[i],dayIdx,dateFormat)
       points.push(series.linePlot.slice());
       
       //aggregate actions
       for(var j=0; j<series.donutPlot.length; j++){
-
-        if(!actions[series.donutPlot[j][0]]){
-          actions[series.donutPlot[j][0]] = 0;
+        action = series.donutPlot[j][0];
+        if(!actions[action]){
+          actions[action] = 0;
         }
-        actions[series.donutPlot[j][0]]+= series.donutPlot[j][1];
+        actions[action]+= series.donutPlot[j][1];
       }
 
       //store this data so it can be retrieved/updated later
@@ -217,10 +217,11 @@ angular.module('SummaryServicesModule',[])
     }
 
     //modify donut
-    var donutValue = donut.data.values(historyEvent.action) || 0;
+    var action = historyEvent.action.toLowerCase();
+    var donutValue = donut.data.values(action) || 0;
     donut.load({
-      columns:[[historyEvent.action, parseInt(donutValue)+1]],
-      unload:[historyEvent.action]
+      columns:[[action, parseInt(donutValue)+1]],
+      unload:[action]
     });
 
     //save the donut info so it can be loaded later
@@ -243,7 +244,6 @@ angular.module('SummaryServicesModule',[])
   factory.makeChart = function(data,refresh){
     var xAxis;
     var rendered;
-    console.log('xlines',xLines);
 
     if(chart && !refresh){
       chart.load({
@@ -268,13 +268,13 @@ angular.module('SummaryServicesModule',[])
           x: {
               type: 'category', // this needed to load string x value
               label: {
-                text: 'Time',
+                text: 'time',
                 position: 'outer-center'
               }
           },
           y: {
             label: {
-                text: 'Points',
+                text: 'points',
                 position: 'outer-middle'
               }
           }
@@ -321,8 +321,10 @@ angular.module('SummaryServicesModule',[])
       });
 
       //zoom to the last 4 weeks
-      setTimeout(function(){
-        chart.zoom([data.linePlot[0].length-28, data.linePlot[0].length-1])
+      $timeout(function(){
+        if(data.linePlot[0]){
+          chart.zoom([data.linePlot[0].length-28, data.linePlot[0].length-1])
+        }
       },1000);
     }
 
