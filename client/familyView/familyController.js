@@ -36,11 +36,26 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
       getFamilyData($window.localStorage.getItem('com.hyrax'));
     });
 
-    //when summary controller loads, let it know that there is family data available
-    $scope.$on('summaryCtrlLoaded',function(){
-      console.log('plot initialization');
-      $scope.$broadcast('familyChange',$scope.familyData);
+    angular.forEach(['summaryCtrlLoaded','addedFam','reload'], function(value){
+      $scope.$on(value, function(event){
+         $scope.activeFamilyMember = undefined;
+         $scope.$broadcast('familyChange',$scope.familyData);
+      });
     });
+
+
+    // //when summary controller loads, let it know that there is family data available
+    // $scope.$on('summaryCtrlLoaded',function(){
+    //   console.log('plot initialization');
+    //   $scope.$broadcast('familyChange',$scope.familyData);
+    // });
+    //
+    // // Update when new member is added
+    // $scope.$on('addedFam, reload',  function(){
+    //   $scope.$broadcast('familyChange',$scope.familyData);
+    // })
+    //
+    //
 
     // Listen for an emit Event from the login Controller (Child Scope)
     $scope.$on('userLoggedIn', function(event, data){
@@ -97,7 +112,7 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
     }
 
     $scope.singleFamilyMemberInfo = function(familyMemberObj) {
-      // console.log(familyMemberObj);
+      console.log(familyMemberObj);
       //change the $scope.activeFamilyMember so that a $watch event will fire
       $scope.activeFamilyMember = familyMemberObj;
     }
