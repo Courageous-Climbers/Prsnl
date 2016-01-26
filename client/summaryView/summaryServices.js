@@ -8,26 +8,28 @@ angular.module('SummaryServicesModule',[])
 
 .factory('SummaryFactory',['$http','$window', '$timeout', function($http,$window,$timeout){
 
-  var dateFormat = "MMM D, YYYY";
-  var chart;
-  var donut;
+  var dateFormat = "MMM D, YYYY"; //used to format dates
+  var chart;  //c3 line chart object
+  var donut;  //c3 donut chart object
 
-  var xIdx = {};
-  var familyLookUp = {};
-  var historyLookUp = {};
+  var xIdx = {};            //store the lookup for dates, example xIdx['1/1/16'] = 4 indicates that 1/1/16 is the 4th element
+  var familyLookUp = {};    //object used for finding family info by _id
+  var historyLookUp = {};   //object used for tooltip info.  Can find tasks by _id and date.
+  var xLines = [];          //vertical lines that separate the months
   var factory = {};
-  var xLines = [];
 
-  factory.currentPointValue = {};
-  factory.pointGraph = {};
-  factory.actionsDonut = {};
-  factory.xLabels = [];
+  factory.currentPointValue = {}; //will contain the point values to be displayed on the familyView
+  factory.pointGraph = {};        //will contain the data for the line plot in c3
+  factory.actionsDonut = {};      //will contain the data for the donut plot in c3
+  factory.xLabels = [];           //will contain the x labels for the line plot in c3
 
-  //helper function
+  //helper function to calculate line graph based on the history that was stored
   var calculatePointsGraphFromHistory = function(history){
-    var points=[];
-    var lastPoints = 0;
+    
+    var points=[];  //stores all the points 
+    var lastPoints = 0; //stores the previous point value
     var numDays = Object.keys(xIdx).length;
+    
     //initialize points array to be 0
     for (var i = 0; i < numDays; i++) {
       points[i] = 0;
@@ -59,14 +61,17 @@ angular.module('SummaryServicesModule',[])
     return points;
   }
 
-  var makeSeriesForOneFamilyMember = function(familyMember,dayIdx){
+  var calculateC3DataForOneFamilyMember = function(familyMember,dayIdx){
+    //just what is says ^^^
 
-    var actionCount = {};
-    var actionArray = [];
-    var action;
+    var actionCount = {};   //object used for quick insertion
+    var actionArray = [];   //data needed to plot
+    var action;             //temp variable to store single action
 
+    //calculate data for line graph
     var points = calculatePointsGraphFromHistory(familyMember.history);
 
+    //loop through history and store counts of the different action types for the donut plot
     for (var i = 0; i < familyMember.history.length; i++) {
       action = familyMember.history[i].action.toLowerCase();
       if(!actionCount[action]){
@@ -75,11 +80,12 @@ angular.module('SummaryServicesModule',[])
       actionCount[action]++;
     }
 
-    //turn actionCount object into an array
+    //turn actionCount object into an array, so it can be used in c3
     var actionArray = _.map(actionCount, function(value, index) {
       return [index,value];
     });
 
+    //return data to be used in c3, both line and donut
     return {
       linePlot: _.flatten([familyMember['_id'],points]),
       donutPlot: actionArray
@@ -88,6 +94,7 @@ angular.module('SummaryServicesModule',[])
 
 
   factory.calculateGraphForSetOfFamilyMembers = function(family){
+    //just what is says ^^^
 
     //check if there is anything to plot
     if(!family || !family[0]){
@@ -99,40 +106,43 @@ angular.module('SummaryServicesModule',[])
     }
 
     var now = moment();
-    var minDate = moment().subtract(3,'months');
+    var minDate = moment().subtract(3,'months');  //determines min date to plot
     var day = minDate;
 
     var series;
     var actions = {};
     var actionArray = [];
     var days = [];
-    var dayIdx = {};
 
     
-    //determine x values
+    //determine x values in graph
     var i = 0;
     while(day <= now){
       days.push(day.format(dateFormat));
-      dayIdx[day.format(dateFormat)] = i;
+      xIdx[day.format(dateFormat)] = i;
+
+      //store the month dividers in for the line plot, put them on the first day of a month
       if(day.date() === 1){
         xLines.push({value: day.format(dateFormat), text: day.format("MMM")})
       }
+      //increment
       day.add(1,'days');
       i++;
     }
 
-    //store this so it can be used later
+    //store xLables so it can be used everytime a graph is needed
     this.xLabels = _.flatten(['x',days]);
-    xIdx = dayIdx;
 
     //calculate series for each family member
     var points = [];
     var action;
     for (var i = 0; i < family.length; i++) {
-      series  = makeSeriesForOneFamilyMember(family[i],dayIdx,dateFormat)
+      series  = calculateC3DataForOneFamilyMember(family[i],xIdx,dateFormat);
+
+      //push the individual series into points, which will be used to plot everyone
       points.push(series.linePlot.slice());
       
-      //aggregate actions
+      //aggregate actions together
       for(var j=0; j<series.donutPlot.length; j++){
         action = series.donutPlot[j][0];
         if(!actions[action]){
@@ -141,19 +151,26 @@ angular.module('SummaryServicesModule',[])
         actions[action]+= series.donutPlot[j][1];
       }
 
-      //store this data so it can be retrieved/updated later
+      //store this data by _id so it can be retrieved/updated later
       this.pointGraph[family[i]['_id']] = series.linePlot.slice();
       this.currentPointValue[family[i]['_id']] = series.linePlot[series.linePlot.length-1];
       this.actionsDonut[family[i]['_id']] = series.donutPlot.slice();
       familyLookUp[family[i]['_id']] = family[i];
 
-      //create a history lookup so that information can be shown on the tooltip
+      //create a history lookup so that action information can be shown on the tooltip
+      //tooltip displays all tasks done on a particular day
+      var prettyDate;
       historyLookUp[family[i]['_id']] = {};
       for (var j = 0; j < family[i].history.length; j++) {
-        if(!historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)]){
-          historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)]  = []
+        
+        prettyDate = moment(family[i].history[j].date).format(dateFormat);
+
+        //create array if none exists
+        if(!historyLookUp[family[i]['_id']][prettyDate]){
+          historyLookUp[family[i]['_id']][prettyDate]  = []
         }
-        historyLookUp[family[i]['_id']][moment(family[i].history[j].date).format(dateFormat)].push(_.extend(family[i].history[j],{name:family[i].firstName + ' ' + family[i].lastName}));
+        //push history onto that date's array so multiple history items can be stored
+        historyLookUp[family[i]['_id']][prettyDate].push(_.extend(family[i].history[j],{name:family[i].firstName + ' ' + family[i].lastName}));
       }
 
     };
@@ -161,11 +178,12 @@ angular.module('SummaryServicesModule',[])
     //return data in special format for c3
     points.unshift(factory.xLabels);
     
-    //turn types into an array
+    //turn actions into an k,v pair array for c3
     var actionArray = _.map(actions, function(value, index) {
       return [index,value];
     });
 
+    //this is the data that will ultimately be plotted
     return {
       linePlot: points,
       donutPlot: actionArray
@@ -174,6 +192,8 @@ angular.module('SummaryServicesModule',[])
   };
 
   factory.calculateGraphForOneFamilyMember = function(familyMemberId){
+    //just what is says ^^^
+
     //check if there is anything to plot
     if(!this.pointGraph[familyMemberId]){
       return {
@@ -181,24 +201,29 @@ angular.module('SummaryServicesModule',[])
         donutPlot: []
       }
     }
-
+    //grab the points that are already computed from page load
     var output = [this.pointGraph[familyMemberId].slice()];
     output.unshift(this.xLabels);
+
     return {
       linePlot:output,
-      donutPlot: this.actionsDonut[familyMemberId]
+      donutPlot: this.actionsDonut[familyMemberId]    //also already computed from page load
     }
   };
 
   factory.addSingleEvent = function(id,historyEvent){
-    var prettyDate = moment(historyEvent.date).format(dateFormat);
+    //when a user clicks save on an action, this function updates the graphs
 
+    var prettyDate = moment(historyEvent.date).format(dateFormat);
+    
+    //--------------------------
     //add event to history lookup so it shows up on tooltip
     if(!historyLookUp[id][prettyDate]){
       historyLookUp[id][prettyDate] = [];
     }
     historyLookUp[id][prettyDate].push(_.extend(historyEvent,{name:familyLookUp[id].firstName + ' ' + familyLookUp[id].lastName}));
-
+    
+    //--------------------------
     //modify graph
     //var chartValues = chart.data.values(id);
     if(xIdx[prettyDate]){
@@ -215,7 +240,8 @@ angular.module('SummaryServicesModule',[])
       //update the current point value
       factory.currentPointValue[id] = chartValues[chartValues.length-1];
     }
-
+    
+    //--------------------------
     //modify donut
     var action = historyEvent.action.toLowerCase();
     var donutValue = donut.data.values(action) || 0;
@@ -240,29 +266,32 @@ angular.module('SummaryServicesModule',[])
     }
 
   };
-
+  //this will actually create the chart
   factory.makeChart = function(data,refresh){
     var xAxis;
     var rendered;
 
+    //--------------------
+    //LINE PLOT
+
+    //just load data in and don't re-create it
     if(chart && !refresh){
       chart.load({
         columns:data.linePlot,
         unload:true
       });
     }else{
+      //build the whole chart anew
       chart = c3.generate({
         
         bindto: '#chart',
         size: {
           height: 240
-          // /width: 480
         },
         data:{
           x:'x',
-          columns: data.linePlot,
+          columns: data.linePlot, //this is the data
           type: 'area'
-          //groups: data.x,
         },
         axis: {
           x: {
@@ -302,11 +331,18 @@ angular.module('SummaryServicesModule',[])
         tooltip: {
           format:{
             name: function (name, ratio, id, index) {
+              //this brings up the data into the tooltip hover
+
+              //use historyLookUp to access tasks done on this date
               var tasks = historyLookUp[id][factory.xLabels[index+1]];
               var displayStr = "";
+
+              //no tasks done, so just display name
               if(!tasks){
                 return familyLookUp[id].firstName + ' ' + familyLookUp[id].lastName ;
               }
+
+              //tasks were done, so display task info that was stored
               displayStr += tasks[0].name + '<br>';
               for (var i = 0; i < tasks.length; i++) {
                   displayStr += '<b>' + tasks[i].action + 
@@ -328,13 +364,17 @@ angular.module('SummaryServicesModule',[])
       },1000);
     }
 
-
+    //--------------------
+    //DONUT PLOT
+    
+    //just load data in and don't re-create it
     if(donut && !refresh){
       donut.load({
         columns:data.donutPlot,
         unload:true
       });
     }else{
+      //build the whole chart anew
       donut = c3.generate({
         bindto: '#donut',
         size: {
@@ -342,7 +382,7 @@ angular.module('SummaryServicesModule',[])
           width: 240
         },
         data:{
-          columns: data.donutPlot,
+          columns: data.donutPlot,    //this is the data
           type: 'donut'
         },
         donut:{
