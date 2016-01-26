@@ -21,7 +21,7 @@ angular.module('gaussHyrax.summary',['SummaryServicesModule'])
   });
 
   //will recompute all the graphs when familyData is changed
-  //will also emit a points event so that family controller has access to them
+  //will also emit a points event so that family controller knows that the points were updated
   $scope.$on('familyChange',function(event,familyData){
     console.log('familyData changed, recomputing all graphs...');
     var data = SummaryFactory.calculateGraphForSetOfFamilyMembers($scope.familyData);
@@ -30,6 +30,7 @@ angular.module('gaussHyrax.summary',['SummaryServicesModule'])
   });
 
   //will add a single event to be graphed when a new action is saved in the actionView
+  //will also emit a points event so that family controller knows that the points were updated
   $scope.$on('updateGraph',function(event,famMemberId,historyEvent){
     console.log('heard history in summary summaryCtrl');
     SummaryFactory.addSingleEvent(famMemberId, historyEvent);
