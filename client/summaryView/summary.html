@@ -1,15 +1,17 @@
 <div class="summaryWrapper" ng-controller="summaryCtrl">
   <div class="summaryContent">
     <div class="mainInfo">
-      <h2>{{who}}</h2>
-      <div class="phone">{{activeFamilyMember.phoneNumber}}</div>
-      <div class="email">{{activeFamilyMember.email}}</div>
+      <h2>{{activeFamilyMember.firstName}}  {{activeFamilyMember.lastName}}</h2>
+        <span class="editButton" ng-show="activeFamilyMember._id" ng-click='editMember()'>Edit</span>
+        <div class="phone">{{activeFamilyMember.phoneNumber}}</div>
+        <div class="email">{{activeFamilyMember.email}}</div>
+        <div ng-show="activeFamilyMember._id" class="contactFreq">{{activeFamilyMember.contactFrequency}} days</div>
     </div>
     <div class="contactInfo">
-    <img src="assets/batman.jpg" class="familyImg" ng-show="activeFamilyMember">
+    <img src="assets/batman.jpg" class="familyImg" ng-show="activeFamilyMember._id">
       <ul>
         <li class="email">{{activeFamilyMember.streetAddress}}</li>
-        <li class="email">{{activeFamilyMember.city}} {{activeFamilyMember.state}}, {{activeFamilyMember.zipcode}}</li>
+        <li ng-show="activeFamilyMember.city" class="email">{{activeFamilyMember.city}} {{activeFamilyMember.state}}, {{activeFamilyMember.zipcode}}</li>
         <li class="email">{{activeFamilyMember.country}}</li>
       </ul>
     </div>
