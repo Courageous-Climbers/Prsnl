@@ -16,7 +16,7 @@
 
 
   <div class="familyInfo">
-    <div ng-animate="'animate'" class="eachFamilyMember" ng-repeat="member in familyData | filter:search | orderBy: sortFamilyMembers : reverse" ng-click="singleFamilyMemberInfo(member)" style="border-left:4px solid {{member.urgency}};">
+    <div ng-animate="'animate'" class="eachFamilyMember" ng-repeat="member in familyData | filter:search | orderBy: sortFamilyMembers : reverse" ng-click="singleFamilyMemberInfo(member)" style="border-left-color: {{member.urgency}};">
       <li> {{ member.firstName }} {{ member.lastName }} <div class="circle"><p> {{ member.points }} </p></div></li>
       <li> {{ member.nextContactDate }} </li>
       <a class="dropDownActionButton" ng-click="showDetails = !showDetails"> <img src="../assets/doubledown.png" alt="Add Family" /> </a>
