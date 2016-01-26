@@ -11,6 +11,7 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
       firstName:"Everybody"
     }
 
+    // open modal
     $scope.plusNewMember = function(){
       $scope.toggleModal();
       $scope.$broadcast('addThisGuy');
@@ -91,7 +92,7 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
         $scope.familyData = res.data;
 
         _.each($scope.familyData, $scope.changeOneActionColor)
-          
+
         // Calculate the total Points from the Family History Action Points Property
         // The points are not currently coming from the Summary View.
         _.each($scope.familyData, function(eachFamilyMember, index) {
@@ -114,13 +115,13 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
 
 
     $scope.changeOneActionColor = function(eachFamilyMember, index) {
-             
+
              eachFamilyMember.nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
 
              if(moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() < 3 ){
                 console.log("Change the border on loading color");
                 eachFamilyMember.urgency = '#D62728;';  // RED COLOR
-             } else if (moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() < 10 && 
+             } else if (moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() < 10 &&
                         moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() >= 3) {
                 eachFamilyMember.urgency = "#FF7F0E"; // ORANGE COLOR
 
@@ -156,6 +157,7 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
 
 }])
 
+// creates the modal dialog box
 .directive('modalDialog', function() {
   return {
    restrict: 'E',
