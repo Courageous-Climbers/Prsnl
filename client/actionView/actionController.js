@@ -36,6 +36,12 @@ angular.module('gaussHyrax.action', [])
 
   $scope.singleNote = "";  // Keep the note field blank by default
 
+
+  $scope.selectedAction = null;
+  $scope.setSelected = function (actionClicked) {
+    $scope.selectedAction = actionClicked;
+  };
+
   // Note gets captured from the DOM
   // The note is then emitted so the parent controller (in action.js) can see it
 
@@ -46,7 +52,7 @@ angular.module('gaussHyrax.action', [])
   // }
 
   $scope.saveAction = function(someAction, pointValue, dateOccured, someNote){
-    if (someAction === "Click an action"){
+    if (someAction === null){
       console.log("No action selected, submit ignored");
       $scope.noActionYet = "No action selected."
       return

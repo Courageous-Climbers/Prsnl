@@ -5,57 +5,61 @@
 <div class="actionWrapper">
 
   <div ng-controller="actionController">
-    <p class="date"> <b>Date of your action</b> <input type="text" ng-model="dateEntered"></p>
+    <p class="date">Date of your action<input type="text" ng-model="dateEntered"></p>
 
     <table>
       <tr>
-        <th>Action</th><th>Point Value</th>
+        <th></th><th></th>
       </tr>
-      
+
       <form>
-        <tr>
-          <td ng-click="setAction('Call', 8)">Call</td> <td>8</td>
+        <tr ng-class="{selected: 'Call' === selectedAction}" class="highlight">
+          <td ng-click="setAction('Call', 8); setSelected('Call')">Call</td><td>8</td>
         </tr>
       </form>
       <form>
-        <tr>
-          <td ng-click="setAction('Text', 3)">Text</td> <td>3</td> 
+        <tr ng-class="{selected: 'Text' === selectedAction}">
+          <td ng-click="setAction('Text', 3); setSelected('Text')">Text</td><td>3</td> 
         </tr>
       </form>
       <form>
-        <tr>
-          <td ng-click="setAction('Send Letter', 6)">Send Letter</td> <td>6</td> 
+        <tr ng-class="{selected: 'Send Letter' === selectedAction}">
+          <td ng-click="setAction('Send Letter', 6); setSelected('Send Letter')" >Send Letter</td><td>6</td> 
         </tr>
       </form>
       <form>
-        <tr>
-          <td ng-click="setAction('Send Email', 4)">Send Email</td> <td>4</td>  
+        <tr ng-class="{selected: 'Send Email' === selectedAction}">
+          <td ng-click="setAction('Send Email', 4); setSelected('Send Email')">Send Email</td><td>4</td>  
         </tr>
       </form>
       <form>
-        <tr>
-          <td ng-click="setAction('Dinner', 10)">Dinner</td> <td>10</td> 
+        <tr ng-class="{selected: 'Dinner' === selectedAction}">
+          <td ng-click="setAction('Dinner', 10); setSelected('Dinner')">Dinner</td><td>10</td> 
         </tr>
       </form>
       <form>
-        <tr>
-          <td ng-click="setAction('Drinks', 10)">Drinks</td> <td>10</td>
+        <tr ng-class="{selected: 'Drinks' === selectedAction}">
+          <td ng-click="setAction('Drinks', 10); setSelected('Drinks')">Drinks</td><td>10</td>
         </tr>
       </form>
       <form>
-        <tr>
-          <td ng-click="setAction('Lunch', 10)">Lunch</td> <td>10</td>
+        <tr ng-class="{selected: 'Lunch' === selectedAction}">
+          <td ng-click="setAction('Lunch', 10); setSelected('Lunch')">Lunch</td><td>10</td>
         </tr>
       </form>
         <form>
-        <tr>
-          <td ng-click="setAction('Coffee', 10)">Coffee</td> <td>10</td>
+        <tr ng-class="{selected: 'Coffee' === selectedAction}">
+          <td ng-click="setAction('Coffee', 10); setSelected('Coffee')">Coffee</td><td>10</td>
         </tr>
       </form>
     </table>
     <br>
 
-    <p><b>Selected action is:</b> <span class="actionChoice">{{selectedAction}}</span> <b>   Point Value: </b><span class="actionChoice">{{points}}</span></p>
+
+    <!-- No longer using this because the selected action is now highlighted -->
+    <!-- 
+      <p><b>Selected action is:</b> <span class="actionChoice">{{selectedAction}}</span> <b>   Point Value: </b><span class="actionChoice">{{points}}</span></p> 
+    -->
     
 
   <!-- Notes for the action -->
@@ -63,7 +67,6 @@
     <button class="dropDownNotesButton" ng-click="showNotes = !showNotes">Add note to your action</button> 
     -->
     <div>
-      <br>
       <p><i>Enter a note (to add to your action)</i></p>
       <!-- <form> -->
         <!-- <input type="text" ng-model="singleNote"> -->
