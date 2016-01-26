@@ -4,10 +4,14 @@
 <div class="familyWrapper" >
   <div class="familyHeader">
     <h2>Family</h2>
-    <div class="searchBox">
-      <input type="search" ng-model="search" class="query">
+    <div class="userActions">
+      <div class="searchBox">
+        <input type="search" ng-model="search" class="query">
+      </div>
+      <div class="addToggle">
+        <img ng-click='toggleModal()' src="../assets/add.png" alt="Add Family" />
+      </div>
     </div>
-    <a ng-click='toggleModal()'> <img src="../assets/add.png" alt="Add Family" /> </a>
   </div>
 
 
