@@ -31,11 +31,17 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
       $scope.activeFamilyMember = undefined;
     });
 
+    // Recieving the points from the Summary View Controller, using $scope.$emit
     $scope.$on('points', function(event, totalPoints) {
       // console.log("Here are the Points from the Summary Controller: ", totalPoints);
+      // The family controller, loads on the login page. If this check is not put, here
+      // familyData will be pulled on the login page and will get a 404 deined, without logging in.
       if(!$scope.familyData){
         return;
       }
+
+      // Add a property of points when, the familyData is valid
+      // Set the property of Points fromt the totalPoints, which comes from the Summary Controller
       for (var i = 0; i < $scope.familyData.length; i++) {
         for (var key in totalPoints) {
           if (key === $scope.familyData[i]._id){
@@ -79,17 +85,22 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
        $scope.login = data;
     });
 
-    //helper function
+    // Make a function, that gets all the family Data, using the id, in the local Storage
     function getFamilyData(id){
 
+     // If there's no id provided, exit the function.
      if(!id){
       return;
      }
 
+     // Use the function from the Family Factory from the Family Services using a promise
+     // Set the data equal to familyData, which is the object on the DOM, which is an array
+     // of Objects.
      FamilyFactory.getAllFamilyMembers(id)
       .then(function(res) {
         $scope.familyData = res.data;
 
+        // Add color borders to all the familyData
         _.each($scope.familyData, $scope.changeOneActionColor)
           
         // Calculate the total Points from the Family History Action Points Property
@@ -101,20 +112,23 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
           }, 0);
         });
 
-        //let the summaryView know that there are new things to graph
+        // let the summaryView know that there are new things to graph
         console.log('new family data loaded');
 
+        // Broadcast an event to the Summary Controller, to listen for "familyChange"
         $scope.$broadcast('familyChange',$scope.familyData);
 
       });
     }
 
-    //on controller load (page refresh), get family data
+    // On controller load (page refresh), get family data using the $window.localStorage
     getFamilyData($window.localStorage.getItem('com.hyrax'));
 
 
+    // Make a function, that codes the Family Members, based on when you last contacted them.
     $scope.changeOneActionColor = function(eachFamilyMember, index) {
-             
+            
+             // Format eachFamilyMember using Moment (MMM DD YYYY)
              eachFamilyMember.nextContactDate = moment(eachFamilyMember.nextContactDate).format('MMM DD YYYY');
 
              if(moment.duration(moment(eachFamilyMember.nextContactDate).diff(eachFamilyMember.date)).days() < 3 ){
@@ -136,25 +150,22 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
       $scope.modalShown = !$scope.modalShown;
     };
 
-    // $scope.expandActionsView = false;
-    $scope.checkActions = function(familyMemberObj) {
-      // console.log(familyMemberObj);
-      $scope.expandActionsView = familyMemberObj;
-
-    }
-
+    // When the user clicks the Family Member, we want to update the Summary View, to show the
+    // interactions with that family Member and show the individual Graph, Points and Donut Graph.
     $scope.singleFamilyMemberInfo = function(familyMemberObj) {
       console.log(familyMemberObj);
       //change the $scope.activeFamilyMember so that a $watch event will fire
       $scope.activeFamilyMember = familyMemberObj;
     }
 
+    // sort the familyMembers using this function 'orderBy:- 'sortByFamilyMember: true'.
     $scope.sortFamilyMembers = function(member) {
       var date = new Date(member.nextContactDate);
       return date;
     };
 
 }])
+
 
 .directive('modalDialog', function() {
   return {

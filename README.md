@@ -1,8 +1,16 @@
 # GaussHyrax
 Manage the people in your life
 
-Add a family member
+### Family View ###
 
+### Action View ###
+
+### Notes View ###
+
+### Summary View ###
+
+
+Add a family member
 
 USERS 
 inserting a new user
