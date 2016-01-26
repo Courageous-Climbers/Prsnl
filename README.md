@@ -1,6 +1,8 @@
 # Prsnl
 Manage the people in your life.
 
+![prsnl-ui](https://github.com/Courageous-Climbers/GaussHyrax/blob/master/readme_imgs/prsnl-ui.png?raw=true)
+
 ##Why
 
 Because your a hard working individual and it is challenging to maintain relationships with people that are not in your daily path.
