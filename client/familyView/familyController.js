@@ -2,12 +2,27 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
 
 .controller('familyController', ['$scope', '$window', 'FamilyFactory',
   function($scope, $window, FamilyFactory){
-
+    var everybody = {
+      firstName:"Everybody"
+    }
     $scope.familyData;
-    $scope.activeFamilyMember;
+    //$scope.activeFamilyMember;
+    $scope.activeFamilyMember = {
+      firstName:"Everybody"
+    }
 
+    $scope.plusNewMember = function(){
+      $scope.toggleModal();
+      $scope.$broadcast('addThisGuy');
+    };
+
+    //edit a user receievd from the SummaryView, pass it down to the newFamilyMemberController
+    $scope.$on('editMe', function(event){
+      $scope.$broadcast('editThisGuy');
+    })
+
+    //edit history recievd from the ActionViewContoller, broadcast this event down to the summary view
     $scope.$on('historyUpdateEvent',function(event,famMemberId,historyEvent){
-       //broadcast this event down to the summary view
        $scope.$broadcast('updateGraph',famMemberId,historyEvent);
     });
 
@@ -38,24 +53,26 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
 
     angular.forEach(['summaryCtrlLoaded','addedFam','reload'], function(value){
       $scope.$on(value, function(event){
-         $scope.activeFamilyMember = undefined;
+         $scope.activeFamilyMember = {
+           firstName:"Everybody"
+         };
          $scope.$broadcast('familyChange',$scope.familyData);
       });
     });
 
+    $scope.$on('removeFam',function(event,id){
+      console.log('removing user from familyData');
+      //remove user from the list so it does not show in the UI
+      for (var i = 0; i < $scope.familyData.length; i++) {
+        if($scope.familyData[i]._id === id){
+          console.log('deleting',id);
+          $scope.familyData.splice(i, 1);
 
-    // //when summary controller loads, let it know that there is family data available
-    // $scope.$on('summaryCtrlLoaded',function(){
-    //   console.log('plot initialization');
-    //   $scope.$broadcast('familyChange',$scope.familyData);
-    // });
-    //
-    // // Update when new member is added
-    // $scope.$on('addedFam, reload',  function(){
-    //   $scope.$broadcast('familyChange',$scope.familyData);
-    // })
-    //
-    //
+        }
+      }
+      //tell the graph to update
+      $scope.$broadcast('familyChange',$scope.familyData);
+    });
 
     // Listen for an emit Event from the login Controller (Child Scope)
     $scope.$on('userLoggedIn', function(event, data){
@@ -86,6 +103,7 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
 
         //let the summaryView know that there are new things to graph
         console.log('new family data loaded');
+
         $scope.$broadcast('familyChange',$scope.familyData);
 
       });
@@ -137,6 +155,7 @@ angular.module('gaussHyrax.family', ['FamilyServices'])
     };
 
 }])
+
 .directive('modalDialog', function() {
   return {
    restrict: 'E',

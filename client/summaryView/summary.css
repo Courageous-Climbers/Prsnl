@@ -110,3 +110,10 @@ g .c3-axis-x .tick{
 .summaryContent .action-text{
   text-transform: lowercase;
 }
+
+.summaryContent .editButton{
+  color:#00f;
+  text-decoration: underline;
+  font-size:12px;
+  cursor:pointer;
+}
