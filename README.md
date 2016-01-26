@@ -16,12 +16,12 @@ One thing you specify for each member in your 'family' is a contact frequency.  
 
 Once a family member is successfully added, they will appear in your family list (see picture below).
 
-![family-view](https://github.com/Courageous-Climbers/GaussHyrax/tree/master/readme/family-view.png)
+![family-view](https://github.com/Courageous-Climbers/GaussHyrax/tree/master/readme_imgs/family-view.png)
 
 ###Adding Interactions
 By clicking on the arrow next to each family member, an action pane opens and you can select an action, add some notes about that interaction, and save it (see picture below).  
 
-![family-view](https://github.com/Courageous-Climbers/GaussHyrax/tree/master/readme/action-view.png)
+![family-view](https://github.com/Courageous-Climbers/GaussHyrax/tree/master/readme_imgs/action-view.png)
 
 Each interaction has an assigned point value.  A small interaction such as a text message, will not earn as much points as a large interaction, such as sharing a meal together.  
 
@@ -32,7 +32,7 @@ When you add interactions with people, you earn points for that person. Over tim
 
 Below is a screenshot of an example. You can see that on January 9th, that person had coffee with Bianca and earned 10 points.  But those 10 points lost value each day, until on Jan 19 that person sent Bianca a letter and earned 6 points.
 
-![family-view](https://github.com/Courageous-Climbers/GaussHyrax/tree/master/readme/summary-view.png)
+![family-view](https://github.com/Courageous-Climbers/GaussHyrax/tree/master/readme_imgs/summary-view.png)
 
 ##Deploying Your Own Prnsl Server
 
