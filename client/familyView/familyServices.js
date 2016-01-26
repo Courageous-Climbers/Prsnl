@@ -1,9 +1,10 @@
 angular.module('FamilyServices', [])
 
-.factory('FamilyFactory', ['$http', '$window', function($http, $window) {
+.factory('FamilyFactory', ['$http', function($http) {
 
   var familyFactory = {};
 
+  // Get all the family Members data from the Mongo Database using the user id
   familyFactory.getAllFamilyMembers = function(id) {
     
     return $http({
@@ -15,15 +16,6 @@ angular.module('FamilyServices', [])
       return res;
     })
   }
-
-/*  family.factory.getSingleFamilyMember = function() {
-
-    return $http({
-      method: 'GET',
-      url : '/api/family/' + 
-    })
-
-  }*/
 
   return familyFactory;
 
