@@ -9,7 +9,6 @@ angular.module('gaussHyrax', ['ngAnimate', 'ui.router',
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-
   $stateProvider
     .state('dashboard', {
       url : '/dashboard',
@@ -22,26 +21,6 @@ angular.module('gaussHyrax', ['ngAnimate', 'ui.router',
       templateUrl : '/login/login.html',
       controller : 'loginController'
     })
-
-
-    //
-    // .state('summary', {
-    //   url : '/summary',
-    //   templateUrl : 'summaryView/summary.html',
-    //   controller : 'summaryControlller'
-    // })
-    //
-    // .state('notes', {
-    //   url : '/notes',
-    //   templateUrl : 'notesView/notes.html',
-    //   controller : 'notesControlller'
-    // })
-    //
-    // .state('action', {
-    //   url : '/action',
-    //   templateUrl : 'actionView/action.html',
-    //   controller : 'actionControlller'
-    // })
 
     $urlRouterProvider.otherwise('/login');
 

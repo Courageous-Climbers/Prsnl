@@ -149,7 +149,6 @@ db.once('open', function() {
   
   User.create([user1]);
 
-
   //handles the different possible 'action' values
   var performActionOnUser = {
     "get family": function(user, callback){

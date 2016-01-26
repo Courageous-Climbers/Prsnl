@@ -46,6 +46,11 @@ ul.nav{
   color: orange;
 }
 
+.readme a{
+  color:inherit;
+  text-decoration: inherit;
+}
+
 /*.nav li.username {
   border-right: 2px solid rgba(255, 255, 255, 0.4);
   color: #FDA300;
