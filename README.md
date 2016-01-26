@@ -1,5 +1,6 @@
 # Prsnl
 Manage the people in your life.
+[Click here to checkout PRSNL's Website](https://prsnl.herokuapp.com/)
 
 ![prsnl-ui](https://github.com/Courageous-Climbers/GaussHyrax/blob/master/readme_imgs/prsnl-ui.png?raw=true)
 
