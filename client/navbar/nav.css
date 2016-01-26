@@ -43,3 +43,8 @@ ul.nav{
 .nav li:visited{
   color: orange;
 }
+
+.readme a{
+  color:inherit;
+  text-decoration: inherit;
+}

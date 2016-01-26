@@ -1,5 +1,4 @@
-<!-- IMPORTANT -->
-<!-- Added for MODULAR testing only. Move to a central css file location? -->
+
 <link rel="stylesheet" type="text/css" href="actionView/action.css">
 
 <div class="actionWrapper">
@@ -7,14 +6,17 @@
   <div ng-controller="actionController">
     <p class="date">Date of your action<input type="text" ng-model="dateEntered"></p>
 
+    <!-- Table that lists all the action options -->
     <table>
       <tr>
         <th></th><th></th>
       </tr>
 
       <form>
+        <!-- Used this stackoverflow post to make the clicked action be highlighted 
+        http://stackoverflow.com/questions/19331779/how-to-highlight-a-selected-row-in-ngrepeat -->
         <tr ng-class="{selected: 'Call' === selectedAction}" class="highlight">
-          <td ng-click="setAction('Call', 8); setSelected('Call')">Call</td><td>8</td>
+          <td ng-click="setAction('Call', 8); setSelected('Call')">Call</td><td>8</td> <!-- Call these functions when the action is clicked-->
         </tr>
       </form>
       <form>
@@ -53,31 +55,20 @@
         </tr>
       </form>
     </table>
-    <br>
+    <br> 
 
-
-    <!-- No longer using this because the selected action is now highlighted -->
-    <!-- 
-      <p><b>Selected action is:</b> <span class="actionChoice">{{selectedAction}}</span> <b>   Point Value: </b><span class="actionChoice">{{points}}</span></p> 
-    -->
-    
-
-  <!-- Notes for the action -->
-    <!-- Removing the drop down Notes button.
-    <button class="dropDownNotesButton" ng-click="showNotes = !showNotes">Add note to your action</button> 
-    -->
+    <!-- User will enter the note here -->
     <div>
       <p><i>Enter a note (to add to your action)</i></p>
-      <!-- <form> -->
-        <!-- <input type="text" ng-model="singleNote"> -->
-        <textarea rows="4" ng-model="singleNote">
-        </textarea>
-
-        <!-- <input type="submit" ng-click="saveNote(singleNote)" value="Save note"/> -->
-      <!-- </form> -->
+        <textarea rows="4" ng-model="singleNote"></textarea>
     </div>
+
     <br>
+    <!-- Submit button that calls the function that will submit the action to the database -->
     <input class="submitAction" type="submit" ng-click="saveAction(selectedAction, points, dateEntered, singleNote)" value="Submit"/>
+
+    <!-- Display a message if no action was clicked before clicking submit -->
+    <!-- Display a message if the action was saved -->
     <span class="noActionYet">{{noActionYet}}<span><span class="actionSaved">{{actionSaved}}<span>
 
     </div>

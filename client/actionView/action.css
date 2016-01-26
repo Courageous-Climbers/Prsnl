@@ -1,21 +1,19 @@
 
-/*Column header*/
 .actionWrapper {
   font-size: 15px;
-}
-
-.actionWrapper th {
-  text-align: left;
-  width: 200px;
-  color:red;
 }
 
 .actionWrapper td {
  cursor: pointer; 
 }
 
+.actionWrapper p{
+    margin: 4px;
+    margin-left: 0px;
+    padding: 0px;
+}
+
 .date {
-  /*padding: 10px;*/
   font-weight: bold;
 }
 
@@ -25,16 +23,22 @@
   font-size: 15px;
 }
 
-.actionChoice {
-  font-size: 20px;
-  color: red;
-}
-.actionWrapper p{
-    margin: 4px;
-    margin-left: 0px;
-    padding: 0px;
+/* Color displayed when an action is clicked */
+.selected {
+  background-color: rgba(255, 152, 0, 0.2);
 }
 
+textarea {
+  font-size:15px;
+  border: 1px solid #DEDEDC;
+  box-shadow:
+    inset 0 0 3px rgba(222, 222,220,1);
+  border-radius: 3px;
+  padding: 10px;
+  background: rgba(255,255,255,0.5);
+  margin: 6px 0 15px 0;
+  width: 100%;
+}
 
 .submitAction {
  border: 2px solid #2CA02C;
@@ -53,17 +57,6 @@
 
 }
 
-textarea {
-  font-size:15px;
-  border: 1px solid #DEDEDC;
-  box-shadow:
-    inset 0 0 3px rgba(222, 222,220,1);
-  border-radius: 3px;
-  padding: 10px;
-  background: rgba(255,255,255,0.5);
-  margin: 6px 0 15px 0;
-  width: 100%;
-}
 
 .noActionYet{
   color:red;
@@ -73,9 +66,5 @@ textarea {
   color:green;
 }
 
-/* Color displayed when an action is clicked */
-.selected {
-  background-color: rgba(255, 152, 0, 0.2);
-}
 
 

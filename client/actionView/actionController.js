@@ -1,29 +1,25 @@
 angular.module('gaussHyrax.action', [])
 
+// Injecting $window and $timeout so they can be used
 .controller('actionController',['$scope', '$http', '$window', '$timeout', function($scope, $http, $window, $timeout){
 
+  // Default values
   $scope.actionArray = [];
-  $scope.allFamilyActionsArray = [];
   $scope.selectedAction = "Click an action";
   $scope.points = 0;
+  $scope.singleNote = "";  // Keep the note field blank by default
+  $scope.selectedAction = null;
   
   // Using moment to convert date into a simpler format
   $scope.dateEntered = moment(new Date()).format('MMM DD YYYY');
 
-  // get the user ID
+  // get the user ID from the window local storage
   var userId = $window.localStorage.getItem('com.hyrax');
-  // console.log("\nUserID: ", userId);
   
+  // $scope.member._id is set in the family.html (from familyView)
+  // This is the id of the family member of the current action view 
   var famMemberId = $scope.member._id;
-  // console.log("All the info for a this fam member: ", $scope.member);
 
-  // No longer needed because notes are now in the action controller/html instead
-  // of a notes controller/html
-  // var currentNote;
-  // Listen for the note to be emitted from the event in the child view (notes.js)
-  // $scope.$on('noteSavedEvent', function(event, data) { 
-  //   currentNote = data;
-  // });
 
   // Sets the action based on the user click
   $scope.setAction = function(anAction, pts){
@@ -31,33 +27,22 @@ angular.module('gaussHyrax.action', [])
     $scope.points = pts;
     $scope.noActionYet = "";  //remove noAction msg
     $scope.actionSaved = "";  //remove previous "Saved!" msg
-
   }
 
-  $scope.singleNote = "";  // Keep the note field blank by default
 
-
-  $scope.selectedAction = null;
+  // When an action is clicked, this function is invoked and that action will get highlighted
+  // in the action.html
   $scope.setSelected = function (actionClicked) {
     $scope.selectedAction = actionClicked;
   };
 
-  // Note gets captured from the DOM
-  // The note is then emitted so the parent controller (in action.js) can see it
-
-  // No longer needed
-  // $scope.saveNote = function(note){
-  //   $scope.$emit('noteSavedEvent', note);
-  //   $scope.singleNote = "";  //Empty notes field once its submitted
-  // }
-
+  // Invoked when the actionView submit button is clicked 
   $scope.saveAction = function(someAction, pointValue, dateOccured, someNote){
     if (someAction === null){
-      console.log("No action selected, submit ignored");
       $scope.noActionYet = "No action selected."
       return
     }
-    $scope.noActionYet = "";
+    $scope.noActionYet = ""; 
     
     var actionObj = {
       action: someAction,
@@ -68,6 +53,7 @@ angular.module('gaussHyrax.action', [])
 
     $scope.singleNote = "";  // Clear the notes field after submission
 
+    // Post this action to the history of the current family member's action view
     $http({
       method : 'POST',
       url : '/api/history/' + userId + "/" + famMemberId,
@@ -75,57 +61,29 @@ angular.module('gaussHyrax.action', [])
       headers: {'Content-Type': 'application/json'}
     })
     .then(function(res) {
+      
       $scope.actionSaved = "Saved!";  // {{actionSaved}} will be displayed
 
       // using Angular's version of setTimeOut, erase the message after 3 seconds
       $timeout(function (){           
         $scope.actionSaved = "" }, 3000); 
 
-      //this will put the action in the notes field in summary view
+      // this will put the action in the notes field in summary view
       $scope.member.history.push(res.data.historyItem);
 
-      //action was submitted, so update the nextContactDate
+      // action was submitted, so update the nextContactDate
       $scope.member.nextContactDate = moment(res.data.nextContactDate).format("MMM DD YYYY");
-      console.log('action saved',res.data);
 
-      console.log("next contact date: ", $scope.member.nextContactDate);
-      console.log("current date: ", $scope.member.date);
-
+      // Call the changeActionColor (which is in the family controller)
+      // This will set the border-left color bar of the family member
       $scope.changeOneActionColor($scope.member);
 
-      /*if(moment.duration(moment($scope.member.nextContactDate).diff($scope.member.date)).days() < 5 ){
-        console.log("Change the border color on action submission");
-        // $scope.member.urgency = '#ff0000;';
-        
-    }*/
-      console.log('changing urgency',$scope.member.urgency);
-      //this is to signify that the graph needs to be updated
+      // This is to signify that the graph needs to be updated
+      // The summaryController is listening for this event
       $scope.$emit('historyUpdateEvent', famMemberId, res.data.historyItem);
-
-
     })
   
   };
-
-  $scope.getAFamilyMemberActions = function (familyId){
-    $http({
-      method : 'GET',
-      url: '/api/family/' + userId + "/" + famMemberId
-    }).then(function(res){
-      // Check that history of actions exist for this family member
-      if(res.data.history.length){
-        for (var i=0; i<res.data.history.length; i++){
-          // convert the date into a simpler format
-          res.data.history[i].date = moment(res.data.history[i].date).format('MMM DD YYYY');
-          $scope.actionArray.push(res.data.history[i])
-        }
-      }
-    },function(err){
-      console.log('error!!',err);
-    });
-  }
-
-
 
 }]);
 
