@@ -10,7 +10,7 @@ Prsnl is an app that aims to make you more cognizant of your relationships.  It 
 ##Using the App
 
 ###Adding Family
-When you create an account, you will start with a blank profile.  The first thing you need to do is add some 'Family' to your account.  These are people you would like to keep in touch with.
+When you create an account, you will start with a blank profile.  The first thing you need to do is add some 'Family' to your account.  These are people you would like to keep in touch with.  You can add family by clicking on the plus icon located on the left side.
 
 One thing you specify for each member in your 'family' is a contact frequency.  This is the number of days you would like Prnsl to remind you to contact that particular person.  From the contact frequency, the  'next interaction date' will be set, which serves as a reminder of when to contact that person again.
 
